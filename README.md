@@ -28,7 +28,7 @@ Once started, the server will listen on port 8080 and hang until you close it wi
 
 ## Installing the library
 
-The client bindings are located in this repository at [`./fuse_python`](./fuse_python/), and are published to PyPI as both a wheel and source distribution. Install them using the following command:
+The client bindings are located in this repository at [`./fuse_python`](./fuse_python/), and are [published to PyPI](https://pypi.org/project/declaredata_fuse/#description) as both a wheel and source distribution. Install them using the following command:
 
 
 ```shell
