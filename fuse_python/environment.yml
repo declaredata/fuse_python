@@ -1,0 +1,13 @@
+name: declaredata
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - jupyter
+  - protobuf
+  - grpcio==1.65.5
