@@ -66,3 +66,12 @@ df \
 .select(df.year, df.state_abbr, df.population) \
 .show(10)
 ```
+
+And finally, let's put it all together with some grouping and aggregating:
+
+```python
+import fuse_python.functions as F
+df.groupBy("year").agg(
+    F.first("population").alias("highest_population_of_year"),
+).sort(df.highest_population_of_year, ascending=False).show(10)
+```
