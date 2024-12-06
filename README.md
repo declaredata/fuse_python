@@ -53,6 +53,8 @@ df = fs.read.csv("data.csv")
 df.show(10)
 ```
 
+>Note: you can read CSV, Parquet and JSON files from local files or remote sources like S3 or DigitalOcean Spaces.
+
 You can also do some basic operations like filtering and sorting:
 
 ```python
