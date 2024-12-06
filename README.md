@@ -46,9 +46,23 @@ from fuse_python.session import FuseSession
 fs = FuseSession.builder.getOrCreate()
 ```
 
-Then, you can read data from a CSV file and perform some basic operations:
+Then, you can read data from a CSV file and show a little bit of data:
 
 ```python
 df = fs.read.csv("data.csv")
 df.show(10)
+```
+
+You can also do some basic operations like filtering and sorting:
+
+```python
+# get all rows from 2000 to modern day
+df.filter(df.year >= 2000).show(10)
+
+# sort rows by highest to lowest population, then show the
+# top 10 rows
+df \
+.sort(df.population, ascending=False) \
+.select(df.year, df.state_abbr, df.population) \
+.show(10)
 ```
