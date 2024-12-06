@@ -14,14 +14,14 @@ See below for information on installing dependencies and running the server.
 The server is a single self-contained binary which you can download using the following `curl` command:
 
 ```shell
-curl -o /usr/local/bin/fuse-server -L https://declaredata-test.sfo3.cdn.digitaloceanspaces.com/fuse-server
-chmod +x /usr/local/bin/fuse_server
+curl -o ./fuse_server -L https://declaredata-test.sfo3.cdn.digitaloceanspaces.com/fuse-server
+chmod +x ./fuse_server
 ```
 
 When you're ready to run the server, do so with this command:
 
 ```shell
-RUST_LOG=info /usr/local/bin/fuse_server
+RUST_LOG=info ./fuse_server
 ```
 
 Once started, the server will listen on port 8080 and hang until you close it with `ctrl+C`. Make sure you keep it running in a separate tab or window while you work.
@@ -33,4 +33,22 @@ The client bindings are located in this repository at [`./fuse_python`](./fuse_p
 
 ```shell
 pip install declaredata_fuse
+```
+
+## Basic Usage
+
+The first step to using the library is to import it and create a `FuseSession` instance:
+
+```python
+from fuse_python.session import FuseSession
+
+# assumes the server is running on localhost:8080
+fs = FuseSession.builder.getOrCreate()
+```
+
+Then, you can read data from a CSV file and perform some basic operations:
+
+```python
+df = fs.read.csv("data.csv")
+df.show(10)
 ```
