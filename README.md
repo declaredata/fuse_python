@@ -14,7 +14,7 @@ See below for information on installing dependencies and running the server.
 The server is a single self-contained binary which you can download using the following `curl` command:
 
 ```shell
-curl -o /usr/local/bin/fuse-server -L https://declaredata-test.sfo3.cdn.digitaloceanspaces.com/
+curl -o /usr/local/bin/fuse-server -L https://declaredata-test.sfo3.cdn.digitaloceanspaces.com/fuse-server
 chmod +x /usr/local/bin/fuse_server
 ```
 
