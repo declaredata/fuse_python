@@ -63,10 +63,11 @@ df.filter(df.year >= 2000).show(10)
 
 # sort rows by highest to lowest population, then show the
 # top 10 rows
-df \
-.sort(df.population, ascending=False) \
-.select(df.year, df.state_abbr, df.population) \
-.show(10)
+df.sort(
+    df.population, ascending=False,
+).select(
+    df.year, df.state_abbr, df.population,
+).show(10)
 ```
 
 And finally, let's put it all together with some grouping and aggregating:
