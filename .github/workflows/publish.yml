@@ -24,6 +24,6 @@ jobs:
           version: "0.5.7"
           enable-cache: true
       - name: Build
-        run: uv build declaredata_fuse
+        run: make build-release
       - name: Publish
-        run: uv publish dist/*
+        run: make publish-release
