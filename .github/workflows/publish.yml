@@ -1,0 +1,29 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      # only run on tags like v1.0.0, etc...
+      - "v*"
+  # allow manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.5.7"
+          enable-cache: true
+      - name: Build
+        run: make build-release
+      - name: Publish
+        run: make publish-release

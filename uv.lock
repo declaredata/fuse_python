@@ -3,9 +3,9 @@ requires-python = ">=3.10"
 
 [manifest]
 members = [
+    "bench",
+    "declaredata-fuse",
     "fuse",
-    "fuse-bench",
-    "fuse-python",
 ]
 
 [[package]]
@@ -27,6 +27,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/45/1d/f03bcb60c4a3212e15f99a56085d93093a497718adf828d050b9d675da81/asttokens-2.4.1.tar.gz", hash = "sha256:b03869718ba9a6eb027e134bfdf69f38a236d681c83c160d510768af11254ba0", size = 62284 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/45/86/4736ac618d82a20d87d2f92ae19441ebc7ac9e7a581d7e58bbe79233b24a/asttokens-2.4.1-py2.py3-none-any.whl", hash = "sha256:051ed49c3dcae8913ea7cd08e46a606dba30b79993209636c4875bc1d637bc24", size = 27764 },
+]
+
+[[package]]
+name = "bench"
+version = "0.1.0"
+source = { editable = "bench" }
+dependencies = [
+    { name = "click" },
+    { name = "declaredata-fuse" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "click", specifier = ">=8.1.7" },
+    { name = "declaredata-fuse", editable = "declaredata_fuse" },
 ]
 
 [[package]]
@@ -145,6 +160,23 @@ wheels = [
 ]
 
 [[package]]
+name = "declaredata-fuse"
+version = "0.1.2"
+source = { editable = "declaredata_fuse" }
+dependencies = [
+    { name = "grpc-stubs" },
+    { name = "grpcio" },
+    { name = "protobuf" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "grpc-stubs", specifier = ">=1.53" },
+    { name = "grpcio", specifier = ">=1.67" },
+    { name = "protobuf", specifier = ">=5.28" },
+]
+
+[[package]]
 name = "decorator"
 version = "5.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -176,8 +208,8 @@ name = "fuse"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "fuse-bench" },
-    { name = "fuse-python" },
+    { name = "bench" },
+    { name = "declaredata-fuse" },
 ]
 
 [package.dependency-groups]
@@ -187,44 +219,12 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fuse-bench", editable = "fuse_bench" },
-    { name = "fuse-python", editable = "fuse_python" },
+    { name = "bench", editable = "bench" },
+    { name = "declaredata-fuse", editable = "declaredata_fuse" },
 ]
 
 [package.metadata.dependency-groups]
 dev = [{ name = "ipykernel", specifier = ">=6.29" }]
-
-[[package]]
-name = "fuse-bench"
-version = "0.1.0"
-source = { editable = "fuse_bench" }
-dependencies = [
-    { name = "click" },
-    { name = "fuse-python" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "click", specifier = ">=8.1.7" },
-    { name = "fuse-python", editable = "fuse_python" },
-]
-
-[[package]]
-name = "fuse-python"
-version = "0.1.0"
-source = { editable = "fuse_python" }
-dependencies = [
-    { name = "grpc-stubs" },
-    { name = "grpcio" },
-    { name = "protobuf" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "grpc-stubs", specifier = ">=1.53" },
-    { name = "grpcio", specifier = ">=1.67" },
-    { name = "protobuf", specifier = ">=5.28" },
-]
 
 [[package]]
 name = "grpc-stubs"

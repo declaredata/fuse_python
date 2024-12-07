@@ -1,0 +1,22 @@
+[project]
+name = "declaredata_fuse"
+version = "0.1.2"
+description = "Python client bindings for DeclareData Fuse server"
+authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
+dependencies = ["grpcio>=1.67", "protobuf>=5.28", "grpc-stubs>=1.53"]
+readme = "README.md"
+requires-python = ">= 3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/declaredata_fuse"]
+
+[tool.pyright]
+exclude = ["**/proto/**/*.py"]

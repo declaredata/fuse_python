@@ -4,8 +4,8 @@ This is the client library for the DeclareData Fuse Server. It provides an API v
 
 The API is documented in two ways:
 
-- Basic Python documentation is included under the `fuse_python` directory
-- Several usage examples are included in the `fuse_bench` directory
+- Basic Python documentation is included under the `declaredata_fuse` directory
+- Several usage examples are included in the `bench` directory
 
 See below for information on installing dependencies and running the server.
 
@@ -28,7 +28,7 @@ Once started, the server will listen on port 8080 and hang until you close it wi
 
 ## Installing the library
 
-The client bindings are located in this repository at [`./fuse_python`](./fuse_python/), and are [published to PyPI](https://pypi.org/project/declaredata_fuse/#description) as both a wheel and source distribution. Install them using the following command:
+The client bindings are located in this repository at [`./declaredata_Fuse`](./declaredata_fuse/), and are [published to PyPI](https://pypi.org/project/declaredata_fuse/#description) as both a wheel and source distribution. Install them using the following command:
 
 
 ```shell
@@ -40,7 +40,7 @@ pip install declaredata_fuse
 The first step to using the library is to import it and create a `FuseSession` instance:
 
 ```python
-from fuse_python.session import FuseSession
+from declaredata_fuse.session import FuseSession
 
 # assumes the server is running on localhost:8080
 fs = FuseSession.builder.getOrCreate()
@@ -73,7 +73,7 @@ df.sort(
 And finally, let's put it all together with some grouping and aggregating:
 
 ```python
-import fuse_python.functions as F
+import declaredata_fuse.functions as F
 df.groupBy("year").agg(
     F.first("population").alias("highest_population_of_year"),
 ).sort(df.highest_population_of_year, ascending=False).show(10)
