@@ -9,21 +9,21 @@ ruff:
 
 .PHONY: pyright
 pyright:
-	uv run pyright ./fuse_python
-	uv run pyright ./fuse_bench
+	uv run pyright ./declaredata_fuse
+	uv run pyright ./bench
 
 .PHONY: run-bench
 run-bench:
-	uv run python fuse_bench/src/fuse_bench/main.py
+	uv run python bench/src/bench/main.py
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
-	uv run python fuse_bench/src/fuse_bench/main.py --verbose true
+	uv run python bench/src/bench/main.py --verbose true
 
 .PHONY: build-release
 build-release:
 	rm -r ./dist
-	uv build --project fuse_python --sdist --wheel
+	uv build --project declaredata_fuse --sdist --wheel
 
 .PHONY: publish-release
 publish-release: build-release

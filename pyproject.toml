@@ -4,14 +4,15 @@ version = "0.1.0"
 description = "Top-level virtual project for the fuse server"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
 requires-python = ">= 3.10"
-dependencies = ["fuse_bench", "fuse_python"]
+dependencies = ["bench", "declaredata_fuse"]
 
 [tool.uv]
 dev-dependencies = ["ipykernel>=6.29"]
 
 [tool.uv.workspace]
-members = ["fuse_python", "fuse_bench"]
+# directories that point to subprojects in this workspace
+members = ["declaredata_fuse", "bench"]
 
 [tool.uv.sources]
-fuse_python = { workspace = true }
-fuse_bench = { workspace = true }
+declaredata_fuse = { workspace = true }
+bench = { workspace = true }
