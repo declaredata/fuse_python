@@ -1,6 +1,6 @@
 [project]
 name = "declaredata_fuse"
-version = "0.1.2"
+version = "0.1.4"
 description = "Python client bindings for DeclareData Fuse server"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
 dependencies = ["grpcio>=1.67", "protobuf>=5.28", "grpc-stubs>=1.53"]
