@@ -22,7 +22,7 @@ run-bench-verbose:
 
 .PHONY: build-release
 build-release:
-	rm -r ./dist
+	rm -rf ./dist
 	uv build --project declaredata_fuse --sdist --wheel
 
 .PHONY: publish-release
