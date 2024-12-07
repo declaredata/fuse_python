@@ -1,5 +1,9 @@
 from dataclasses import dataclass
-from declaredata_fuse.proto.sds_pb2 import AggOperation, Agg, WindowSpec as ProtoWindowSpec
+from declaredata_fuse.proto.sds_pb2 import (
+    AggOperation,
+    Agg,
+    WindowSpec as ProtoWindowSpec,
+)
 from declaredata_fuse.window import WindowSpec
 
 
