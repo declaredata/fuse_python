@@ -45,6 +45,12 @@ The client bindings are located in this repository at [`./declaredata_fuse`](./d
 pip install declaredata_fuse
 ```
 
+Update the library using the following command:
+
+```shell
+pip install --upgrade declaredata_fuse
+```
+
 ## Documentation
 
 The API is documented in two ways:
