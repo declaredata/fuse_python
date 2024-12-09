@@ -5,7 +5,7 @@ This is the client library for the DeclareData Fuse Server. It provides an API v
 ## Prerequisites
 
 Before installing DeclareData Fuse, ensure you have the following:
-- Python 3.7+
+- Python 3.10+
 - pip package manager
 - Docker (if using Docker method)
 - curl (for downloading the server binary if using direct method)
