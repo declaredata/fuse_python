@@ -97,9 +97,9 @@ df.groupBy("year").agg(
 
 If you encounter any problems while using DeclareData Fuse, please submit an issue on our GitHub repository:
 
-1. Go to the [Issues](https://github.com/declaredata/fuse/issues) page
+1. Go to the [Issues](https://github.com/declaredata/fuse_python/issues) tab
 2. Click "New Issue"
-3. Use our issue template to provide:
+3. Feel free to use our issue template below to provide:
    - Description of the problem
    - Steps to reproduce
    - Expected behavior
@@ -107,4 +107,4 @@ If you encounter any problems while using DeclareData Fuse, please submit an iss
    - Environment details (OS, Python version, etc.)
    - Relevant error messages or logs
 
-For security-related issues, please email security@declaredata.com instead of creating a public issue.
+For security-related issues, please email us.
