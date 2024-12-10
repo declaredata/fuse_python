@@ -27,8 +27,9 @@ Run the server using Docker:
 docker run 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:1b70474
 ```
 
-> [!NOTE]
-> There is an experimental single install script command for MacOS/Linux that will download the server as a Docker image and automatically install the python client library: `curl -LsSf https://declaredata.com/fuse/install.sh | sh`
+> [!CAUTION]
+> There is an experimental single install script command for MacOS/Linux that will download the server as a Docker image and automatically install the python client library: 
+> `curl -LsSf https://declaredata.com/fuse/install.sh | sh`
 
 ### Method 2: Direct Binary Download
 
