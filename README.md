@@ -1,15 +1,19 @@
 # DeclareData Fuse Client Bindings for Python
 
-This is the client library for the DeclareData Fuse Server. It provides an API very similar to and compatible with the pyspark API, but connects to a proprietary server (called `fuse-server`) that can be quickly downloaded.
+This is the python client library for the **DeclareData Fuse Server**. It provides an API very similar to and compatible with the pyspark API, but connects to a proprietary server (called `fuse-server`) that can be quickly downloaded.
+
+> [!NOTE]
+>
+> **DeclareData** is under active development. This is a pre-release version and may contain bugs, incomplete features or other issues. Also, please review and add to the latest [open compatibility development status](https://github.com/declaredata/fuse_python/issues/6).
 
 ## Prerequisites
 
 Before installing DeclareData Fuse, ensure you have the following:
 - Python 3.10+
+- At least 8GB of available memory
 - pip package manager
 - Docker (if using Docker method)
 - curl (for downloading the server binary if using direct method)
-- At least 8GB of available RAM
 - Port 8080 available on your machine (future versions will allow changing the port)
 
 ## Getting and Running the Server
@@ -22,6 +26,9 @@ Run the server using Docker:
 ```shell
 docker run 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:1b70474
 ```
+
+> [!EXPERIMENTAL]
+> There is an experimental single install script command for MacOS/Linux that will download the server and run it in a Docker container: `curl -LsSf https://declaredata.com/fuse/install.sh | sh`
 
 ### Method 2: Direct Binary Download
 
