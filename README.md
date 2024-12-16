@@ -34,7 +34,7 @@ Choose one of these installation methods:
 ### Method 1: Docker Container (Recommended)
 
 ```bash
-docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:1b70474
+docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:187c3118082527ce2796785d5aab00b8f09e8290
 ```
 
 > **Note:** Currently requires AWS account access to pull from ECR. Broader availability coming soon.
