@@ -918,3 +918,24 @@ class JoinRequest(google.protobuf.message.Message):
     ) -> None: ...
 
 global___JoinRequest = JoinRequest
+
+@typing.final
+class UnionRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    DF_UID_1_FIELD_NUMBER: builtins.int
+    DF_UID_2_FIELD_NUMBER: builtins.int
+    df_uid_1: builtins.str
+    df_uid_2: builtins.str
+    def __init__(
+        self,
+        *,
+        df_uid_1: builtins.str = ...,
+        df_uid_2: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal["df_uid_1", b"df_uid_1", "df_uid_2", b"df_uid_2"],
+    ) -> None: ...
+
+global___UnionRequest = UnionRequest

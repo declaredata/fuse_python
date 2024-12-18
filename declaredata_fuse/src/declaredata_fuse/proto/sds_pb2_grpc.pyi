@@ -149,6 +149,24 @@ class sdsStub:
     ]
     """Join 2 dataframes together into one"""
 
+    Distinct: grpc.UnaryUnaryMultiCallable[
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Return a new DataFrame whose contents are the same as the given
+    DataFrame, except with duplicate rows removed
+    """
+
+    Union: grpc.UnaryUnaryMultiCallable[
+        proto.sds_pb2.UnionRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Combine two DataFrames together to calculate the union of the two.
+
+    Both DataFrames must have the same schema. If they do not, return
+    an error. If they do, preserve duplicate rows in the final result.
+    """
+
     Drop: grpc.UnaryUnaryMultiCallable[
         proto.sds_pb2.DropRequest,
         proto.sds_pb2.DataFrameUID,
@@ -290,6 +308,24 @@ class sdsAsyncStub:
         proto.sds_pb2.DataFrameUID,
     ]
     """Join 2 dataframes together into one"""
+
+    Distinct: grpc.aio.UnaryUnaryMultiCallable[
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Return a new DataFrame whose contents are the same as the given
+    DataFrame, except with duplicate rows removed
+    """
+
+    Union: grpc.aio.UnaryUnaryMultiCallable[
+        proto.sds_pb2.UnionRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Combine two DataFrames together to calculate the union of the two.
+
+    Both DataFrames must have the same schema. If they do not, return
+    an error. If they do, preserve duplicate rows in the final result.
+    """
 
     Drop: grpc.aio.UnaryUnaryMultiCallable[
         proto.sds_pb2.DropRequest,
@@ -509,6 +545,34 @@ class sdsServicer(metaclass=abc.ABCMeta):
         collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Join 2 dataframes together into one"""
+
+    @abc.abstractmethod
+    def Distinct(
+        self,
+        request: proto.sds_pb2.DataFrameUID,
+        context: _ServicerContext,
+    ) -> typing.Union[
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
+    ]:
+        """Return a new DataFrame whose contents are the same as the given
+        DataFrame, except with duplicate rows removed
+        """
+
+    @abc.abstractmethod
+    def Union(
+        self,
+        request: proto.sds_pb2.UnionRequest,
+        context: _ServicerContext,
+    ) -> typing.Union[
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
+    ]:
+        """Combine two DataFrames together to calculate the union of the two.
+
+        Both DataFrames must have the same schema. If they do not, return
+        an error. If they do, preserve duplicate rows in the final result.
+        """
 
     @abc.abstractmethod
     def Drop(

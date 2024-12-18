@@ -268,3 +268,13 @@ class DataFrame:
         )
         resp = self.stub.Join(req)
         return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+
+    def union(self, other: "DataFrame") -> "DataFrame":
+        req = sds_pb2.UnionRequest(df_uid_1=self.df_uid, df_uid_2=other.df_uid)
+        resp = self.stub.Union(req)
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+
+    def distinct(self) -> "DataFrame":
+        req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
+        resp = self.stub.Distinct(req)
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)

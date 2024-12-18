@@ -114,6 +114,18 @@ class sdsStub(object):
             response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
             _registered_method=True,
         )
+        self.Distinct = channel.unary_unary(
+            "/sds.sds/Distinct",
+            request_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+            response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            _registered_method=True,
+        )
+        self.Union = channel.unary_unary(
+            "/sds.sds/Union",
+            request_serializer=proto_dot_sds__pb2.UnionRequest.SerializeToString,
+            response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            _registered_method=True,
+        )
         self.Drop = channel.unary_unary(
             "/sds.sds/Drop",
             request_serializer=proto_dot_sds__pb2.DropRequest.SerializeToString,
@@ -254,6 +266,24 @@ class sdsServicer(object):
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
+    def Distinct(self, request, context):
+        """Return a new DataFrame whose contents are the same as the given
+        DataFrame, except with duplicate rows removed
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
+    def Union(self, request, context):
+        """Combine two DataFrames together to calculate the union of the two.
+
+        Both DataFrames must have the same schema. If they do not, return
+        an error. If they do, preserve duplicate rows in the final result.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
     def Drop(self, request, context):
         """return a new DataFrame with the given columns missing.
 
@@ -351,6 +381,16 @@ def add_sdsServicer_to_server(servicer, server):
         "Join": grpc.unary_unary_rpc_method_handler(
             servicer.Join,
             request_deserializer=proto_dot_sds__pb2.JoinRequest.FromString,
+            response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+        ),
+        "Distinct": grpc.unary_unary_rpc_method_handler(
+            servicer.Distinct,
+            request_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+        ),
+        "Union": grpc.unary_unary_rpc_method_handler(
+            servicer.Union,
+            request_deserializer=proto_dot_sds__pb2.UnionRequest.FromString,
             response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
         ),
         "Drop": grpc.unary_unary_rpc_method_handler(
@@ -846,6 +886,66 @@ class sds(object):
             target,
             "/sds.sds/Join",
             proto_dot_sds__pb2.JoinRequest.SerializeToString,
+            proto_dot_sds__pb2.DataFrameUID.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True,
+        )
+
+    @staticmethod
+    def Distinct(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/sds.sds/Distinct",
+            proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+            proto_dot_sds__pb2.DataFrameUID.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True,
+        )
+
+    @staticmethod
+    def Union(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/sds.sds/Union",
+            proto_dot_sds__pb2.UnionRequest.SerializeToString,
             proto_dot_sds__pb2.DataFrameUID.FromString,
             options,
             channel_credentials,
