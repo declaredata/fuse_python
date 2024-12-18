@@ -59,6 +59,14 @@ service sds {
     rpc Collect(DataFrameUID) returns (DataFrameContents);
     // Join 2 dataframes together into one
     rpc Join(JoinRequest) returns (DataFrameUID);
+    // Return a new DataFrame whose contents are the same as the given
+    // DataFrame, except with duplicate rows removed
+    rpc Distinct(DataFrameUID) returns (DataFrameUID);
+    // Combine two DataFrames together to calculate the union of the two.
+    // 
+    // Both DataFrames must have the same schema. If they do not, return
+    // an error. If they do, preserve duplicate rows in the final result.
+    rpc Union(UnionRequest) returns (DataFrameUID);
     // return a new DataFrame with the given columns missing.
     // 
     // if you pass a column that does not exist, this entire operation
@@ -260,4 +268,9 @@ message JoinRequest {
     JoinType join_type = 3;
     repeated string left_cols = 4;
     repeated string right_cols = 5;
+}
+
+message UnionRequest {
+    string df_uid_1 = 1;
+    string df_uid_2 = 2;
 }
