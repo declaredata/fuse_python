@@ -247,7 +247,7 @@ class DataFrame:
         )
         resp = self.stub.WithColumn(req)
         return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
-    
+
     def join(
         self,
         other: "DataFrame",

@@ -73,5 +73,5 @@ def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
             file_name=file,
             runner=joins_basic,
             verbose=verbose,
-        )
+        ),
     ]
