@@ -8,7 +8,7 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 
 * [Prerequisites](#prerequisites)
 * [Components](#components)
-* [Server Installation](#server-installation)
+* [Server Setup](#server-setup)
 * [Python Client Installation](#python-client-installation)
 * [Quick Start Guide](#quick-start-guide)
 * [Issue Reporting](#issue-reporting)
@@ -24,12 +24,12 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 
 ## Components
 
-* [**DeclareData Fuse Server**](#server-installation): Blazing fast, low-overhead drop-in alternative to Apache Spark clusters that runs anywhere
+* [**DeclareData Fuse Server**](#server-setup): Blazing fast, low-overhead drop-in alternative to Apache Spark clusters that runs anywhere
 * [**DeclareData Fuse Python**](#python-client-installation): Python client library providing PySpark-compatible APIs
 
-## Server Installation
+## Server Setup
 
-Simple Docker-based installation command:
+Run the Fuse server using Docker:
 
 ```bash
 docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:187c3118082527ce2796785d5aab00b8f09e8290
