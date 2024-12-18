@@ -9,6 +9,7 @@ from bench.selects import select
 from bench.basic_df import simple
 from bench.test_case.runner import TestCase
 from bench.window import window_crimes_per_state, window_total_violent_crimes
+from bench.join import joins_basic
 
 
 def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
@@ -65,6 +66,12 @@ def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
             test_name="DataFrame.aggregation.crimes_per_state",
             file_name=file,
             runner=window_crimes_per_state,
+            verbose=verbose,
+        ),
+        TestCase(
+            test_name="DataFrame.joins.basic",
+            file_name=file,
+            runner=joins_basic,
             verbose=verbose,
         ),
     ]

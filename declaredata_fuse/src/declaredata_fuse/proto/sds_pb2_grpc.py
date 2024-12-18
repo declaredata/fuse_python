@@ -108,6 +108,12 @@ class sdsStub(object):
             response_deserializer=proto_dot_sds__pb2.DataFrameContents.FromString,
             _registered_method=True,
         )
+        self.Join = channel.unary_unary(
+            "/sds.sds/Join",
+            request_serializer=proto_dot_sds__pb2.JoinRequest.SerializeToString,
+            response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            _registered_method=True,
+        )
         self.Drop = channel.unary_unary(
             "/sds.sds/Drop",
             request_serializer=proto_dot_sds__pb2.DropRequest.SerializeToString,
@@ -242,6 +248,12 @@ class sdsServicer(object):
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
+    def Join(self, request, context):
+        """Join 2 dataframes together into one"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
     def Drop(self, request, context):
         """return a new DataFrame with the given columns missing.
 
@@ -335,6 +347,11 @@ def add_sdsServicer_to_server(servicer, server):
             servicer.Collect,
             request_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
             response_serializer=proto_dot_sds__pb2.DataFrameContents.SerializeToString,
+        ),
+        "Join": grpc.unary_unary_rpc_method_handler(
+            servicer.Join,
+            request_deserializer=proto_dot_sds__pb2.JoinRequest.FromString,
+            response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
         ),
         "Drop": grpc.unary_unary_rpc_method_handler(
             servicer.Drop,
@@ -800,6 +817,36 @@ class sds(object):
             "/sds.sds/Collect",
             proto_dot_sds__pb2.DataFrameUID.SerializeToString,
             proto_dot_sds__pb2.DataFrameContents.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True,
+        )
+
+    @staticmethod
+    def Join(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/sds.sds/Join",
+            proto_dot_sds__pb2.JoinRequest.SerializeToString,
+            proto_dot_sds__pb2.DataFrameUID.FromString,
             options,
             channel_credentials,
             insecure,

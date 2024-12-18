@@ -84,6 +84,28 @@ class NullValue(_NullValue, metaclass=_NullValueEnumTypeWrapper):
 NULL: NullValue.ValueType  # 0
 global___NullValue = NullValue
 
+class _JoinType:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _JoinTypeEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_JoinType.ValueType],
+    builtins.type,
+):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    INNER: _JoinType.ValueType  # 0
+    LEFT: _JoinType.ValueType  # 1
+    RIGHT: _JoinType.ValueType  # 2
+    FULL: _JoinType.ValueType  # 3
+
+class JoinType(_JoinType, metaclass=_JoinTypeEnumTypeWrapper): ...
+
+INNER: JoinType.ValueType  # 0
+LEFT: JoinType.ValueType  # 1
+RIGHT: JoinType.ValueType  # 2
+FULL: JoinType.ValueType  # 3
+global___JoinType = JoinType
+
 @typing.final
 class Empty(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -845,3 +867,54 @@ class DropRequest(google.protobuf.message.Message):
     ) -> None: ...
 
 global___DropRequest = DropRequest
+
+@typing.final
+class JoinRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    DF_UID_1_FIELD_NUMBER: builtins.int
+    DF_UID_2_FIELD_NUMBER: builtins.int
+    JOIN_TYPE_FIELD_NUMBER: builtins.int
+    LEFT_COLS_FIELD_NUMBER: builtins.int
+    RIGHT_COLS_FIELD_NUMBER: builtins.int
+    df_uid_1: builtins.str
+    df_uid_2: builtins.str
+    join_type: global___JoinType.ValueType
+    @property
+    def left_cols(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
+        builtins.str
+    ]: ...
+    @property
+    def right_cols(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
+        builtins.str
+    ]: ...
+    def __init__(
+        self,
+        *,
+        df_uid_1: builtins.str = ...,
+        df_uid_2: builtins.str = ...,
+        join_type: global___JoinType.ValueType = ...,
+        left_cols: collections.abc.Iterable[builtins.str] | None = ...,
+        right_cols: collections.abc.Iterable[builtins.str] | None = ...,
+    ) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal[
+            "df_uid_1",
+            b"df_uid_1",
+            "df_uid_2",
+            b"df_uid_2",
+            "join_type",
+            b"join_type",
+            "left_cols",
+            b"left_cols",
+            "right_cols",
+            b"right_cols",
+        ],
+    ) -> None: ...
+
+global___JoinRequest = JoinRequest

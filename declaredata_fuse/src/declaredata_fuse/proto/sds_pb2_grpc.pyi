@@ -143,6 +143,12 @@ class sdsStub:
     ]
     """eagerly evaluate the dataframe, then return its contents"""
 
+    Join: grpc.UnaryUnaryMultiCallable[
+        proto.sds_pb2.JoinRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Join 2 dataframes together into one"""
+
     Drop: grpc.UnaryUnaryMultiCallable[
         proto.sds_pb2.DropRequest,
         proto.sds_pb2.DataFrameUID,
@@ -278,6 +284,12 @@ class sdsAsyncStub:
         proto.sds_pb2.DataFrameContents,
     ]
     """eagerly evaluate the dataframe, then return its contents"""
+
+    Join: grpc.aio.UnaryUnaryMultiCallable[
+        proto.sds_pb2.JoinRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Join 2 dataframes together into one"""
 
     Drop: grpc.aio.UnaryUnaryMultiCallable[
         proto.sds_pb2.DropRequest,
@@ -486,6 +498,17 @@ class sdsServicer(metaclass=abc.ABCMeta):
         collections.abc.Awaitable[proto.sds_pb2.DataFrameContents],
     ]:
         """eagerly evaluate the dataframe, then return its contents"""
+
+    @abc.abstractmethod
+    def Join(
+        self,
+        request: proto.sds_pb2.JoinRequest,
+        context: _ServicerContext,
+    ) -> typing.Union[
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
+    ]:
+        """Join 2 dataframes together into one"""
 
     @abc.abstractmethod
     def Drop(

@@ -161,7 +161,7 @@ wheels = [
 
 [[package]]
 name = "declaredata-fuse"
-version = "0.1.2"
+version = "0.1.4"
 source = { editable = "declaredata_fuse" }
 dependencies = [
     { name = "grpc-stubs" },
@@ -212,7 +212,7 @@ dependencies = [
     { name = "declaredata-fuse" },
 ]
 
-[package.dependency-groups]
+[package.dev-dependencies]
 dev = [
     { name = "ipykernel" },
 ]
@@ -223,7 +223,7 @@ requires-dist = [
     { name = "declaredata-fuse", editable = "declaredata_fuse" },
 ]
 
-[package.metadata.dependency-groups]
+[package.metadata.requires-dev]
 dev = [{ name = "ipykernel", specifier = ">=6.29" }]
 
 [[package]]
