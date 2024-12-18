@@ -11,6 +11,7 @@ from declaredata_fuse.functions import Function as F
 from declaredata_fuse.column import SelectColumn, DropColumn
 from declaredata_fuse.agg import AggBuilder
 from declaredata_fuse.row import Row
+from declaredata_fuse.dataframe_impl.join import reify_join_cols, str_to_join_type
 
 
 @dataclass(frozen=True)
@@ -245,4 +246,25 @@ class DataFrame:
             aggregation=agg,
         )
         resp = self.stub.WithColumn(req)
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+    
+    def join(
+        self,
+        other: "DataFrame",
+        on: list[str] | str | Column | None = None,
+        how: str | None = None,
+    ):
+        """
+        Join this DataFrame to the given 'other' one
+        """
+        join_type = str_to_join_type(how or "inner")
+        on_reified = reify_join_cols(on)
+        req = sds_pb2.JoinRequest(
+            df_uid_1=self.df_uid,
+            df_uid_2=other.df_uid,
+            join_type=join_type,
+            left_cols=on_reified,
+            right_cols=on_reified,
+        )
+        resp = self.stub.Join(req)
         return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
