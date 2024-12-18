@@ -247,7 +247,17 @@ message DropRequest {
     repeated string col_names = 2;
 }
 
+enum JoinType {
+    INNER = 0;
+    LEFT = 1;
+    RIGHT = 2;
+    FULL = 3;
+}
+
 message JoinRequest {
     string df_uid_1 = 1;
     string df_uid_2 = 2;
+    JoinType join_type = 3;
+    repeated string left_cols = 4;
+    repeated string right_cols = 5;
 }
