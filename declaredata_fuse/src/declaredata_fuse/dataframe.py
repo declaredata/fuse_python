@@ -234,6 +234,10 @@ class DataFrame:
         resp = self.stub.FilterDataFrame(req)
         return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
 
+    def where(self, condition: Condition) -> "DataFrame":
+        """An alias for df.filter(self, condition)"""
+        return self.filter(condition)
+
     def withColumn(self, new_col_name: str, f: F) -> "DataFrame":
         """
         Return a new DataFrame with a single column added to it with the given
