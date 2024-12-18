@@ -4,10 +4,12 @@ from bench.agg import (
     agg_last,
     agg_total_crimes_per_year,
 )
+from bench.distinct import distinct_basic
 from bench.drop import drop
 from bench.selects import select
 from bench.basic_df import simple
 from bench.test_case.runner import TestCase
+from bench.union import union_basic
 from bench.window import window_crimes_per_state, window_total_violent_crimes
 from bench.join import joins_basic
 
@@ -74,4 +76,16 @@ def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
             runner=joins_basic,
             verbose=verbose,
         ),
+        TestCase(
+            test_name="DataFrame.distinct.basic",
+            file_name=file,
+            runner=distinct_basic,
+            verbose=verbose,
+        ),
+        TestCase(
+            test_name="DataFrame.union.basic",
+            file_name=file,
+            runner=union_basic,
+            verbose=verbose,
+        )
     ]
