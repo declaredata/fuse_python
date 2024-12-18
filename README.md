@@ -4,16 +4,21 @@
 
 A Python client library for **DeclareData Fuse Server** that provides a PySpark-compatible API. Scale down your Spark clusters and speed up workloads without changing your code.
 
-## Contents
+# Contents
 
-* [Prerequisites](#prerequisites)
-* [Components](#components)
-* [Server Setup](#server-setup)
-* [Python Client Installation](#python-client-installation)
-* [Quick Start Guide](#quick-start-guide)
-* [Issue Reporting](#issue-reporting)
+- [DeclareData Fuse Client Bindings for Python](#declaredata-fuse-client-bindings-for-python)
+- [Contents](#contents)
+- [Prerequisites](#prerequisites)
+- [Components](#components)
+- [Server Setup](#server-setup)
+- [Python Client Installation](#python-client-installation)
+- [Quick Start Guide](#quick-start-guide)
+  - [Initialize a Session](#initialize-a-session)
+  - [Basic Data Operations](#basic-data-operations)
+- [Other Documentation 🚧 WIP](#other-documentation--wip)
+- [Issue Reporting](#issue-reporting)
 
-## Prerequisites
+# Prerequisites
 
 * Python 3.10 or higher
 * 8GB+ available memory
@@ -22,20 +27,20 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 * curl (for binary download)
 * Available port 8080 (port customization coming in future versions)
 
-## Components
+# Components
 
 * [**DeclareData Fuse Server**](#server-setup): Blazing fast, low-overhead drop-in alternative to Apache Spark clusters that runs anywhere
 * [**DeclareData Fuse Python**](#python-client-installation): Python client library providing PySpark-compatible APIs
 
-## Server Setup
+# Server Setup
 
 Run the Fuse server using Docker:
 
 ```bash
-docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:187c3118082527ce2796785d5aab00b8f09e8290
+docker run -p 8080:8080 ghcr.io/declaredata/fuse:latest
 ```
 
-> **Note:** Currently requires AWS account access to pull from ECR. Broader availability coming soon.
+> **Note:** All images are published to our GitHub Package Docker repository, which can be found at [github.com/orgs/declaredata/packages/container/package/fuse](https://github.com/orgs/declaredata/packages/container/package/fuse).
 
 <!--
 ### Method 2: Direct Binary Download
@@ -58,7 +63,7 @@ curl -LsSf https://declaredata.com/fuse/install.sh | sh
 This script downloads the Docker image and installs the DeclareData Fuse Python client library automatically.
 -->
 
-## Python Client Installation
+# Python Client Installation
 
 Install from PyPI:
 
@@ -72,9 +77,9 @@ Update to the latest version:
 pip install --upgrade declaredata_fuse
 ```
 
-## Quick Start Guide
+# Quick Start Guide
 
-### Initialize a Session
+## Initialize a Session
 
 ```python
 from declaredata_fuse.session import FuseSession
@@ -83,7 +88,7 @@ from declaredata_fuse.session import FuseSession
 fs = FuseSession.builder.getOrCreate()
 ```
 
-### Basic Data Operations
+## Basic Data Operations
 
 ```python
 # Read CSV file
@@ -110,12 +115,12 @@ df.groupBy("year").agg(
 ).show(10)
 ```
 
-## Other Documentation 🚧 WIP
+# Other Documentation 🚧 WIP
 
 * API documentation is available in the [`declaredata_fuse`](./declaredata_fuse/) directory
 * Usage examples can be found in the [`bench`](./bench/) directory
 
-## Issue Reporting
+# Issue Reporting
 
 Please report issues via our [GitHub Issues](https://github.com/declaredata/fuse_python/issues) page with the following information:
 
