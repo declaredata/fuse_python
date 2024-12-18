@@ -29,9 +29,7 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 
 ## Server Installation
 
-Choose one of these installation methods:
-
-### Method 1: Docker Container (Recommended)
+Simple Docker-based installation command:
 
 ```bash
 docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata_fuse:187c3118082527ce2796785d5aab00b8f09e8290
@@ -39,6 +37,7 @@ docker run -p 8080:8080 021939395539.dkr.ecr.us-west-1.amazonaws.com/declaredata
 
 > **Note:** Currently requires AWS account access to pull from ECR. Broader availability coming soon.
 
+<!--
 ### Method 2: Direct Binary Download
 
 ```bash
@@ -57,6 +56,7 @@ curl -LsSf https://declaredata.com/fuse/install.sh | sh
 ```
 
 This script downloads the Docker image and installs the DeclareData Fuse Python client library automatically.
+-->
 
 ## Python Client Installation
 
