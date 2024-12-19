@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from proto import sds_pb2 as proto_dot_sds__pb2
+from declaredata_fuse.proto import sds_pb2 as proto_dot_sds__pb2
 
 
 class sdsStub(object):
