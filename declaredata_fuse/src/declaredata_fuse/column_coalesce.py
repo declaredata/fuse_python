@@ -11,7 +11,7 @@ class CoalesceColumn(BasicColumn):
 
     def alias(self, new_name: str) -> Column:
         return CoalesceColumn(_name=new_name, cols=self.cols)
-    
+
     def to_pb(self) -> sds_pb2.Column:
         col_names = [col.cur_name() for col in self.cols]
         return sds_pb2.Column(

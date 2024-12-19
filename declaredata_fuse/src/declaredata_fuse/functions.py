@@ -33,11 +33,13 @@ def column(col_name: str) -> Column:
 def lit(val: Any) -> Column:
     return LiteralColumn(_name=f"lit_{val}", lit_val=val)
 
+
 def coalesce(*cols: ColumnOrName) -> Column:
     cols_reified: list[Column] = [col_or_name_to_basic(col) for col in cols]
     names = [col.cur_name() for col in cols_reified]
     new_col_name = f"coalesce({', '.join(names)})"
     return CoalesceColumn(_name=new_col_name, cols=cols_reified)
+
 
 def sum(col_name: str) -> "Function":
     """Create a function to sum the values of a column"""
