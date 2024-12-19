@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
+from declaredata_fuse.column_contains import ContainsColumn
 from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
@@ -55,6 +56,12 @@ def first(col_name: str) -> "Function":
 def last(col_name: str) -> "Function":
     """Create a function to find the last value"""
     return Function(col_name=col_name, op=AggOperation.LAST)
+
+def contains(left: ColumnOrName, right: ColumnOrName) -> Column:
+    return ContainsColumn(
+        left=col_or_name_to_basic(left),
+        right=col_or_name_to_basic(right),
+    )
 
 
 @dataclass(frozen=True)
