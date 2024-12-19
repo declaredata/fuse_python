@@ -99,6 +99,6 @@ def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
             test_name="DataFrame.coalesce.basic",
             file_name=file,
             runner=coalesce_basic,
-            verbose=verbose
+            verbose=verbose,
         ),
     ]
