@@ -102,24 +102,6 @@ class Column:
         return sds_pb2.Column(col_name=self.name)
 
 
-def asc(col_name: str) -> SortedColumn:
-    """Return a SortedColumn to sort the given column in ascending"""
-    return SortedColumn(col=Column(name=col_name), dir=SortDirection.ASC)
-
-
-def desc(col_name: str) -> SortedColumn:
-    """Return a SortedColumn to sort the given column in descending"""
-    return SortedColumn(col=Column(name=col_name), dir=SortDirection.DESC)
-
-
-def col(col_name: str) -> Column:
-    return Column(name=col_name)
-
-
-def column(col_name: str) -> Column:
-    return col(col_name)
-
-
 SelectColumn = str | Column | NamedDerivedColumn
 DropColumn = str | Column
 

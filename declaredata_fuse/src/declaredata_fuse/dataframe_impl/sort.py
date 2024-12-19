@@ -1,6 +1,7 @@
 from itertools import chain
 from typing import Any
-from declaredata_fuse.column import Column, SortedColumn, asc, desc
+from declaredata_fuse.column import Column, SortedColumn
+from declaredata_fuse.functions import asc, desc
 
 
 _KWARGS_ASC_KEY = "ascending"

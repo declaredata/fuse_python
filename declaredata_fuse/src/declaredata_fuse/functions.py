@@ -1,12 +1,29 @@
 from dataclasses import dataclass
-from declaredata_fuse.column import Column
+from declaredata_fuse.column import Column, SortDirection, SortedColumn
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
     Agg,
     WindowSpec as ProtoWindowSpec,
 )
 from declaredata_fuse.window import WindowSpec
-from declaredata_fuse.functions_filter import FilterFunctionDef, FilterFunction
+
+
+def asc(col_name: str) -> SortedColumn:
+    """Return a SortedColumn to sort the given column in ascending"""
+    return SortedColumn(col=Column(name=col_name), dir=SortDirection.ASC)
+
+
+def desc(col_name: str) -> SortedColumn:
+    """Return a SortedColumn to sort the given column in descending"""
+    return SortedColumn(col=Column(name=col_name), dir=SortDirection.DESC)
+
+
+def col(col_name: str) -> Column:
+    return Column(name=col_name)
+
+
+def column(col_name: str) -> Column:
+    return col(col_name)
 
 
 def sum(col_name: str) -> "Function":
@@ -39,11 +56,11 @@ def last(col_name: str) -> "Function":
     return Function(col_name=col_name, op=AggOperation.LAST)
 
 
-def filter(col: Column | str, func: FilterFunctionDef) -> FilterFunction:
-    return FilterFunction(
-        col_name=col if isinstance(col, str) else col.name,
-        filter_func=func,
-    )
+# def filter(col: Column | str, func: FilterFunctionDef) -> FilteredColumn:
+#     return FilteredColumn(
+#         orig_col=col if isinstance(col, Column) else Column(name=col),
+#         filter_func=func,
+#     )
 
 
 @dataclass(frozen=True)
