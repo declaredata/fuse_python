@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
-from declaredata_fuse.column_filter import FilterColumn
+from declaredata_fuse.column_filter import FilterColumn, FilterFunction
 from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
-from declaredata_fuse.functions_filter import FilterFunction
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
     Agg,
@@ -60,7 +59,8 @@ def last(col_name: str) -> "Function":
 
 
 def filter(col: Column | str, func: FilterFunction) -> Column:
-    return FilterColumn(col_name=col.cur_name(), func=func)
+    col_reified = col.cur_name() if isinstance(col, Column) else col
+    return FilterColumn(col_name=col_reified, func=func)
 
 
 #     return FilteredColumn(

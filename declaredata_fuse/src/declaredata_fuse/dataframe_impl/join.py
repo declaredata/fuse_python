@@ -20,6 +20,6 @@ def reify_join_cols(on: list[str] | str | Column | None) -> list[str]:
     elif isinstance(on, str):
         return [on]
     elif isinstance(on, Column):
-        return [on.name]
+        return [on.cur_name()]
     else:
         return []

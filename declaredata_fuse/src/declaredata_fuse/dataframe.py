@@ -139,7 +139,7 @@ class DataFrame:
             new_t=lambda df_uid: DataFrame(df_uid=df_uid, stub=self.stub),
         )
 
-    def __getattr__(self, name: str) -> Column:
+    def __getattr__(self, name: str) -> BasicColumn:
         """
         Convenience method for referencing a column in this DataFrame.
 

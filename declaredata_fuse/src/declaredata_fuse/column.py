@@ -57,7 +57,7 @@ class SortedColumn:
 
 @dataclass
 class BasicColumn(Column):
-    """A column"""
+    """The representation of a column in a DataFrame"""
 
     _name: str
 
