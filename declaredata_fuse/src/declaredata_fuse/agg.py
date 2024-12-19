@@ -25,8 +25,8 @@ class AggBuilder[T]:
             group_by=self.group_cols,
             aggs=aggs,
         )
-        resp = self.stub.Aggregate(req)
-        return self.new_t(resp.dataframe_uid)
+        resp = self.stub.Aggregate(req)  # type: ignore
+        return self.new_t(resp.dataframe_uid) # type: ignore
 
     def run(self) -> T:
         raise NotImplementedError("can't run aggregations/group-by yet")

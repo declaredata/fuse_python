@@ -9,9 +9,13 @@ ruff:
 
 
 .PHONY: pyright
-pyright:
+typecheck:
 	cd declaredata_fuse && uv run pyright
 	cd bench && uv run pyright
+
+.PHONY: test
+test:
+	cd declaredata_fuse && uv run pytest
 
 .PHONY: run-bench
 run-bench:
