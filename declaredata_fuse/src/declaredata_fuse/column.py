@@ -55,7 +55,7 @@ class SortedColumn:
         )
 
 
-@dataclass
+@dataclass(frozen=True)
 class BasicColumn(Column):
     """The representation of a column in a DataFrame"""
 

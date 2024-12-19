@@ -727,20 +727,26 @@ class Column(google.protobuf.message.Message):
 
     COL_NAME_FIELD_NUMBER: builtins.int
     COL_DERIVED_FIELD_NUMBER: builtins.int
+    COL_LIT_FIELD_NUMBER: builtins.int
     col_name: builtins.str
     @property
     def col_derived(self) -> global___NamedDerivedColumn: ...
+    @property
+    def col_lit(self) -> global___LiteralColumn: ...
     def __init__(
         self,
         *,
         col_name: builtins.str = ...,
         col_derived: global___NamedDerivedColumn | None = ...,
+        col_lit: global___LiteralColumn | None = ...,
     ) -> None: ...
     def HasField(
         self,
         field_name: typing.Literal[
             "col_derived",
             b"col_derived",
+            "col_lit",
+            b"col_lit",
             "col_name",
             b"col_name",
             "col_spec",
@@ -752,6 +758,8 @@ class Column(google.protobuf.message.Message):
         field_name: typing.Literal[
             "col_derived",
             b"col_derived",
+            "col_lit",
+            b"col_lit",
             "col_name",
             b"col_name",
             "col_spec",
@@ -760,7 +768,7 @@ class Column(google.protobuf.message.Message):
     ) -> None: ...
     def WhichOneof(
         self, oneof_group: typing.Literal["col_spec", b"col_spec"]
-    ) -> typing.Literal["col_name", "col_derived"] | None: ...
+    ) -> typing.Literal["col_name", "col_derived", "col_lit"] | None: ...
 
 global___Column = Column
 
@@ -842,6 +850,80 @@ class NamedDerivedColumn(google.protobuf.message.Message):
     ) -> typing.Literal["str_val", "i32_val", "i64_val"] | None: ...
 
 global___NamedDerivedColumn = NamedDerivedColumn
+
+@typing.final
+class TypedAny(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    STR_VAL_FIELD_NUMBER: builtins.int
+    I32_VAL_FIELD_NUMBER: builtins.int
+    I64_VAL_FIELD_NUMBER: builtins.int
+    str_val: builtins.str
+    i32_val: builtins.str
+    i64_val: builtins.str
+    def __init__(
+        self,
+        *,
+        str_val: builtins.str = ...,
+        i32_val: builtins.str = ...,
+        i64_val: builtins.str = ...,
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing.Literal[
+            "i32_val",
+            b"i32_val",
+            "i64_val",
+            b"i64_val",
+            "str_val",
+            b"str_val",
+            "value",
+            b"value",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal[
+            "i32_val",
+            b"i32_val",
+            "i64_val",
+            b"i64_val",
+            "str_val",
+            b"str_val",
+            "value",
+            b"value",
+        ],
+    ) -> None: ...
+    def WhichOneof(
+        self, oneof_group: typing.Literal["value", b"value"]
+    ) -> typing.Literal["str_val", "i32_val", "i64_val"] | None: ...
+
+global___TypedAny = TypedAny
+
+@typing.final
+class LiteralColumn(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    VAL_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    @property
+    def val(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
+        global___TypedAny
+    ]: ...
+    def __init__(
+        self,
+        *,
+        name: builtins.str = ...,
+        val: collections.abc.Iterable[global___TypedAny] | None = ...,
+    ) -> None: ...
+    def ClearField(
+        self, field_name: typing.Literal["name", b"name", "val", b"val"]
+    ) -> None: ...
+
+global___LiteralColumn = LiteralColumn
 
 @typing.final
 class DropRequest(google.protobuf.message.Message):
