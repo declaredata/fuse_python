@@ -7,10 +7,11 @@ ruff:
 	uv run ruff check
 	uv run ruff format
 
+
 .PHONY: pyright
 pyright:
-	uv run pyright ./declaredata_fuse
-	uv run pyright ./bench
+	cd declaredata_fuse && uv run pyright
+	cd bench && uv run pyright
 
 .PHONY: run-bench
 run-bench:

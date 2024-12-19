@@ -26,6 +26,8 @@ jobs:
 
       - name: uv sync
         run: uv sync --all-extras --dev
+      - name: uv pyright
+        run: make pyright
       - uses: astral-sh/ruff-action@v1
         with:
           args: "format --check"

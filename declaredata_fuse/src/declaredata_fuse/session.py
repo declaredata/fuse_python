@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Optional
-from grpc import Channel, insecure_channel
+from grpc import Channel, insecure_channel # ignore: import-not-found
 from declaredata_fuse.proto import sds_pb2_grpc, sds_pb2
 from declaredata_fuse.dataframe import DataFrame
 from uuid import uuid4

@@ -25,7 +25,7 @@ def _convert_col(
         case str():
             return [sort_fn(col)]
         case Column():
-            return [sort_fn(col.name)]
+            return [sort_fn(col.cur_name())]
         case _:
             list_of_lists = [_convert_col(col=c, is_asc=is_asc) for c in col]
             ch = chain.from_iterable(list_of_lists)

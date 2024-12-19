@@ -3,7 +3,12 @@ name = "declaredata_fuse"
 version = "0.1.4"
 description = "Python client bindings for DeclareData Fuse server"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
-dependencies = ["grpcio>=1.67", "protobuf>=5.28", "grpc-stubs>=1.53"]
+dependencies = [
+    "grpcio>=1.67",
+    "protobuf>=5.28",
+    "grpc-stubs>=1.53",
+    "types-protobuf>=5.29.1.20241207",
+]
 readme = "README.md"
 requires-python = ">= 3.10"
 
@@ -19,4 +24,5 @@ allow-direct-references = true
 packages = ["src/declaredata_fuse"]
 
 [tool.pyright]
-exclude = ["**/proto/**/*.py"]
+include = ["src"]
+exclude = ["src/declaredata_fuse/proto"]

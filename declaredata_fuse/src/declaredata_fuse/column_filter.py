@@ -1,6 +1,7 @@
 from typing import Callable
 
 from declaredata_fuse.column_abc import Column
+from declaredata_fuse.proto import sds_pb2
 
 FilterFunction = Callable[[Column], bool] | Callable[[Column, int], bool]
 
@@ -20,8 +21,11 @@ class FilterColumn(Column):
             func=self._func,
         )
 
+    def to_pb(self) -> sds_pb2.Column:
+        raise NotImplementedError("not implemented")
 
-class AliasedFilterColumn:
+
+class AliasedFilterColumn(Column):
     def __init__(self, orig_col_name: str, new_col_name: str, func: FilterFunction):
         self._orig_col_name = orig_col_name
         self._new_col_name = new_col_name
@@ -36,3 +40,6 @@ class AliasedFilterColumn:
             new_col_name=new_name,
             func=self._func,
         )
+
+    def to_pb(self) -> sds_pb2.Column:
+        raise NotImplementedError("not implemented")
