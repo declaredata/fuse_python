@@ -6,7 +6,7 @@ from declaredata_fuse.dataframe_impl.drop import drop_impl
 from declaredata_fuse.dataframe_impl.select import select_impl
 from declaredata_fuse.dataframe_impl.sort import to_sorted_col_list
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
-from declaredata_fuse.column import Column, Condition, SortedColumn
+from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
 from declaredata_fuse.functions import Function as F
 from declaredata_fuse.column import SelectColumn, DropColumn
 from declaredata_fuse.agg import AggBuilder
@@ -152,7 +152,7 @@ class DataFrame:
 
         https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.__getattr__.html
         """
-        return Column(name=name)
+        return BasicColumn(_name=name)
 
     def __getitem__(self, name: str) -> Column:
         """

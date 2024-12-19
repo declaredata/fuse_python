@@ -12,6 +12,6 @@ def drop_impl(df_uid: str, stub: sds_pb2_grpc.sdsStub, cols: list[DropColumn]) -
 def _drop_col_to_str(d: DropColumn) -> str:
     match d:
         case Column():
-            return d.name
+            return d.cur_name()
         case str():
             return d

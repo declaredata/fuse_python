@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
+from declaredata_fuse.column_filter import FilterColumn
+from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
+from declaredata_fuse.functions_filter import FilterFunction
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
     Agg,
@@ -8,18 +11,18 @@ from declaredata_fuse.proto.sds_pb2 import (
 from declaredata_fuse.window import WindowSpec
 
 
-def asc(col_name: str) -> SortedColumn:
+def asc(col: ColumnOrName) -> SortedColumn:
     """Return a SortedColumn to sort the given column in ascending"""
-    return SortedColumn(col=Column(name=col_name), dir=SortDirection.ASC)
+    return SortedColumn(col=col_or_name_to_basic(col), dir=SortDirection.ASC)
 
 
-def desc(col_name: str) -> SortedColumn:
+def desc(col: ColumnOrName) -> SortedColumn:
     """Return a SortedColumn to sort the given column in descending"""
-    return SortedColumn(col=Column(name=col_name), dir=SortDirection.DESC)
+    return SortedColumn(col=col_or_name_to_basic(col), dir=SortDirection.DESC)
 
 
 def col(col_name: str) -> Column:
-    return Column(name=col_name)
+    return col_or_name_to_basic(col_name)
 
 
 def column(col_name: str) -> Column:
@@ -56,7 +59,10 @@ def last(col_name: str) -> "Function":
     return Function(col_name=col_name, op=AggOperation.LAST)
 
 
-# def filter(col: Column | str, func: FilterFunctionDef) -> FilteredColumn:
+def filter(col: Column | str, func: FilterFunction) -> Column:
+    return FilterColumn(col_name=col.cur_name(), func=func)
+
+
 #     return FilteredColumn(
 #         orig_col=col if isinstance(col, Column) else Column(name=col),
 #         filter_func=func,
