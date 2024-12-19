@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from declaredata_fuse.column import Column
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
     Agg,
     WindowSpec as ProtoWindowSpec,
 )
 from declaredata_fuse.window import WindowSpec
+from declaredata_fuse.functions_filter import FilterFunctionDef, FilterFunction
 
 
 def sum(col_name: str) -> "Function":
@@ -37,6 +39,13 @@ def last(col_name: str) -> "Function":
     return Function(col_name=col_name, op=AggOperation.LAST)
 
 
+def filter(col: Column | str, func: FilterFunctionDef) -> FilterFunction:
+    return FilterFunction(
+        col_name=col if isinstance(col, str) else col.name,
+        filter_func=func,
+    )
+
+
 @dataclass(frozen=True)
 class Function:
     """
@@ -51,7 +60,7 @@ class Function:
     """
 
     col_name: str
-    op: AggOperation
+    op: AggOperation.ValueType
     alias_col_name: str | None = None
     window_spec: WindowSpec | None = None
 
