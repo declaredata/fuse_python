@@ -4,7 +4,7 @@ from bench.test_case import TestCaseResult
 from bench.timing import get_timing
 from declaredata_fuse.dataframe import DataFrame
 from declaredata_fuse.session import session
-from declaredata_fuse.column import Column, Condition, SortDirection, SortedColumn
+from declaredata_fuse.column import Condition, SortDirection, SortedColumn
 import declaredata_fuse.functions as F
 
 
@@ -33,14 +33,14 @@ def cases(orig_df: DataFrame) -> list[TestCaseResult]:
     ret: list[TestCaseResult] = []
 
     # sort by year ascending
-    year_col = Column(name="year")
+    year_col = F.col("year")
     sorted_df = orig_df.sort_typed(cols=[SortedColumn(year_col, SortDirection.ASC)])
     ret.append(
         TestCaseResult(description="sort by year ascending", dataframe=sorted_df)
     )
 
     # filter California only
-    state_col = Column(name="state_abbr")
+    state_col = F.col("state_abbr")
     condition = Condition(state_col, "==", "CA")
     filtered_df = orig_df.filter(condition)
     ret.append(
@@ -48,7 +48,7 @@ def cases(orig_df: DataFrame) -> list[TestCaseResult]:
     )
 
     # sort by violent crime descending
-    crime_col = Column(name="violent_crime")
+    crime_col = F.col("violent_crime")
     sorted_df = orig_df.sort_typed(cols=[SortedColumn(crime_col, SortDirection.DESC)])
     ret.append(
         TestCaseResult(
@@ -57,13 +57,13 @@ def cases(orig_df: DataFrame) -> list[TestCaseResult]:
     )
 
     # filter years > 2010
-    year_col = Column(name="year")
+    year_col = F.col("year")
     condition = Condition(year_col, ">", 2010)
     filtered_df = orig_df.filter(condition)
     ret.append(TestCaseResult(description="filter years > 2010", dataframe=filtered_df))
 
     # sort by property crime ascending
-    crime_col = Column(name="property_crime")
+    crime_col = F.col("property_crime")
     sorted_df = orig_df.sort_typed(cols=[SortedColumn(crime_col, SortDirection.ASC)])
     ret.append(
         TestCaseResult(

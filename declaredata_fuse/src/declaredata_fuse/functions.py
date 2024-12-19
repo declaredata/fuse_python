@@ -1,10 +1,30 @@
 from dataclasses import dataclass
+from declaredata_fuse.column import Column, SortDirection, SortedColumn
+from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
     Agg,
     WindowSpec as ProtoWindowSpec,
 )
 from declaredata_fuse.window import WindowSpec
+
+
+def asc(col: ColumnOrName) -> SortedColumn:
+    """Return a SortedColumn to sort the given column in ascending"""
+    return SortedColumn(col=col_or_name_to_basic(col), dir=SortDirection.ASC)
+
+
+def desc(col: ColumnOrName) -> SortedColumn:
+    """Return a SortedColumn to sort the given column in descending"""
+    return SortedColumn(col=col_or_name_to_basic(col), dir=SortDirection.DESC)
+
+
+def col(col_name: str) -> Column:
+    return col_or_name_to_basic(col_name)
+
+
+def column(col_name: str) -> Column:
+    return col(col_name)
 
 
 def sum(col_name: str) -> "Function":
@@ -51,7 +71,7 @@ class Function:
     """
 
     col_name: str
-    op: AggOperation
+    op: AggOperation.ValueType
     alias_col_name: str | None = None
     window_spec: WindowSpec | None = None
 

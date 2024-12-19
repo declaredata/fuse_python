@@ -1,6 +1,7 @@
 from itertools import chain
 from typing import Any
-from declaredata_fuse.column import Column, SortedColumn, asc, desc
+from declaredata_fuse.column import Column, SortedColumn
+from declaredata_fuse.functions import asc, desc
 
 
 _KWARGS_ASC_KEY = "ascending"
@@ -24,7 +25,7 @@ def _convert_col(
         case str():
             return [sort_fn(col)]
         case Column():
-            return [sort_fn(col.name)]
+            return [sort_fn(col.cur_name())]
         case _:
             list_of_lists = [_convert_col(col=c, is_asc=is_asc) for c in col]
             ch = chain.from_iterable(list_of_lists)

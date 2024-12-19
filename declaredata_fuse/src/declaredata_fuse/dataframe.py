@@ -6,7 +6,7 @@ from declaredata_fuse.dataframe_impl.drop import drop_impl
 from declaredata_fuse.dataframe_impl.select import select_impl
 from declaredata_fuse.dataframe_impl.sort import to_sorted_col_list
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
-from declaredata_fuse.column import Column, Condition, SortedColumn
+from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
 from declaredata_fuse.functions import Function as F
 from declaredata_fuse.column import SelectColumn, DropColumn
 from declaredata_fuse.agg import AggBuilder
@@ -39,7 +39,7 @@ class DataFrameWriter:
             dataframe_uid=self.df_uid,
             table_name=table_name,
         )
-        self.stub.SaveDataFrameAsTable(req)
+        self.stub.SaveDataFrameAsTable(req)  # type: ignore
 
 
 @dataclass(frozen=True)
@@ -80,8 +80,8 @@ class DataFrame:
         request = sds_pb2.DataFrameUID(
             dataframe_uid=self.df_uid,
         )
-        response = self.stub.PrettyPrintDataframe(request)
-        print(response.content)
+        response = self.stub.PrettyPrintDataframe(request)  # type: ignore
+        print(response.content)  # type: ignore
 
     def display(self) -> None:
         """
@@ -102,8 +102,8 @@ class DataFrame:
         req = sds_pb2.LimitDataFrameRequest(
             dataframe_uid=self.df_uid, start=start, end=end
         )
-        resp = self.stub.LimitDataFrame(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.LimitDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def take(self, num: int) -> list[Row]:
         """
@@ -139,7 +139,7 @@ class DataFrame:
             new_t=lambda df_uid: DataFrame(df_uid=df_uid, stub=self.stub),
         )
 
-    def __getattr__(self, name: str) -> Column:
+    def __getattr__(self, name: str) -> BasicColumn:
         """
         Convenience method for referencing a column in this DataFrame.
 
@@ -152,7 +152,7 @@ class DataFrame:
 
         https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.__getattr__.html
         """
-        return Column(name=name)
+        return BasicColumn(_name=name)
 
     def __getitem__(self, name: str) -> Column:
         """
@@ -175,8 +175,8 @@ class DataFrame:
         a CSV, and return the CSV contents as a str
         """
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
-        resp = self.stub.ExportCSV(req)
-        return resp.content
+        resp = self.stub.ExportCSV(req)  # type: ignore
+        return resp.content  # type: ignore
 
     def sort_typed(self, cols: list[SortedColumn]) -> "DataFrame":
         """
@@ -190,8 +190,8 @@ class DataFrame:
             dataframe_uid=self.df_uid,
             columns=pb_cols,
         )
-        resp = self.stub.SortDataFrame(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.SortDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def sort(
         self, *cols: str | Column | list[str | Column], **kwargs: Any
@@ -231,8 +231,12 @@ class DataFrame:
             dataframe_uid=self.df_uid,
             conditions=[pb_cond],
         )
-        resp = self.stub.FilterDataFrame(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.FilterDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+
+    def where(self, condition: Condition) -> "DataFrame":
+        """An alias for df.filter(self, condition)"""
+        return self.filter(condition)
 
     def withColumn(self, new_col_name: str, f: F) -> "DataFrame":
         """
@@ -245,8 +249,8 @@ class DataFrame:
             new_col_name=new_col_name,
             aggregation=agg,
         )
-        resp = self.stub.WithColumn(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.WithColumn(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def join(
         self,
@@ -266,15 +270,15 @@ class DataFrame:
             left_cols=on_reified,
             right_cols=on_reified,
         )
-        resp = self.stub.Join(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.Join(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def union(self, other: "DataFrame") -> "DataFrame":
         req = sds_pb2.UnionRequest(df_uid_1=self.df_uid, df_uid_2=other.df_uid)
-        resp = self.stub.Union(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.Union(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def distinct(self) -> "DataFrame":
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
-        resp = self.stub.Distinct(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)
+        resp = self.stub.Distinct(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore

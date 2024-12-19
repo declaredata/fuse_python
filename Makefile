@@ -2,15 +2,22 @@
 gen-proto:
 	buf generate
 
+check: ruff typecheck test
+
 .PHONY: ruff-python
 ruff:
 	uv run ruff check
 	uv run ruff format
 
+
 .PHONY: pyright
-pyright:
-	uv run pyright ./declaredata_fuse
-	uv run pyright ./bench
+typecheck:
+	cd declaredata_fuse && uv run pyright
+	cd bench && uv run pyright
+
+.PHONY: test
+test:
+	cd declaredata_fuse && uv run pytest
 
 .PHONY: run-bench
 run-bench:

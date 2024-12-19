@@ -3,7 +3,13 @@ name = "declaredata_fuse"
 version = "0.1.4"
 description = "Python client bindings for DeclareData Fuse server"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
-dependencies = ["grpcio>=1.67", "protobuf>=5.28", "grpc-stubs>=1.53"]
+dependencies = [
+    "grpcio>=1.67",
+    "protobuf>=5.28",
+    "grpc-stubs>=1.53",
+    "types-protobuf>=5.29.1.20241207",
+    "pytest>=8.3.4",
+]
 readme = "README.md"
 requires-python = ">= 3.10"
 
@@ -19,4 +25,48 @@ allow-direct-references = true
 packages = ["src/declaredata_fuse"]
 
 [tool.pyright]
-exclude = ["**/proto/**/*.py"]
+include = ["src"]
+exclude = ["src/declaredata_fuse/proto"]
+
+typeCheckingMode = "strict"
+reportMissingTypeStubs = true
+reportMissingImports = true
+reportOptionalSubscript = true
+reportOptionalMemberAccess = true
+reportPrivateImportUsage = true
+reportIncompatibleMethodOverride = true
+reportIncompatibleVariableOverride = true
+reportUnsupportedDunderAll = true
+reportUntypedCall = true
+reportUntypedFunctionDecorator = true
+reportUntypedClassDecorator = true
+reportUntypedLambda = true
+reportUntypedBaseClass = true
+reportUnknownParameterType = true
+reportUnknownArgumentType = true
+reportUnknownVariableType = true
+reportUnknownMemberType = true
+reportUnknownType = true
+reportUnusedImport = true
+reportUnusedFunction = true
+reportUnusedVariable = true
+reportUnusedClass = true
+reportUnusedClassVariable = true
+reportPrivateUsage = true
+reportConstantRedefinition = true
+reportFunctionMemberAccess = true
+reportGeneralTypeIssues = true
+reportOptionalCall = true
+reportOptionalIterable = true
+reportOptionalContextManager = true
+reportTypeCommentUsage = true
+reportUnsupportedOperation = true
+reportInvalidTypeVarUse = true
+reportAnySubstitution = true
+reportAnyType = true
+reportTypeVarRequiresBound = true
+reportUnnecessaryTypeIgnore = true
+reportStrictOptional = true
+reportStrictOptionalInferred = true
+reportMissingReturn = true
+reportUnusedTypeIgnoreComment = true

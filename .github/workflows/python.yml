@@ -26,6 +26,12 @@ jobs:
 
       - name: uv sync
         run: uv sync --all-extras --dev
+      - name: install pyright
+        run: uv run pip install pyright
+      - name: pyright
+        run: make typecheck
+      - name: pytest
+        run: make test
       - uses: astral-sh/ruff-action@v1
         with:
           args: "format --check"
