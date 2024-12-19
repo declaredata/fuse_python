@@ -223,6 +223,7 @@ message Column {
     oneof col_spec {
         string col_name = 1;
         NamedDerivedColumn col_derived = 2;
+        LiteralColumn col_lit = 3;
     }
 }
 
@@ -248,6 +249,19 @@ message NamedDerivedColumn {
         int32 i32_val = 5;
         int64 i64_val = 6;
     };
+}
+
+message TypedAny {
+    oneof value {
+        string str_val = 1;
+        string i32_val = 2;
+        string i64_val = 3;
+    }
+}
+
+message LiteralColumn {
+    string name = 1;
+    TypedAny val = 2;
 }
 
 message DropRequest {
