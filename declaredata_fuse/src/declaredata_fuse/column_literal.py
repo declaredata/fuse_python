@@ -4,6 +4,7 @@ from declaredata_fuse.column import BasicColumn
 from declaredata_fuse.column_abc import Column
 from declaredata_fuse.proto import sds_pb2
 
+
 @dataclass(frozen=True)
 class TypedAny:
     val: str | int
@@ -13,6 +14,7 @@ class TypedAny:
             return sds_pb2.TypedAny(str_val=self.val)
         else:
             return sds_pb2.TypedAny(i64_val=str(self.val))
+
 
 @dataclass(frozen=True)
 class LiteralColumn(BasicColumn):
@@ -24,8 +26,5 @@ class LiteralColumn(BasicColumn):
     def to_pb(self) -> sds_pb2.Column:
         typed_any = sds_pb2.TypedAny(str_val=self.lit_val)
         return sds_pb2.Column(
-            col_lit=sds_pb2.LiteralColumn(
-                name=self.cur_name(),
-                val=[typed_any]
-            )
+            col_lit=sds_pb2.LiteralColumn(name=self.cur_name(), val=[typed_any])
         )

@@ -28,8 +28,10 @@ def col(col_name: str) -> Column:
 def column(col_name: str) -> Column:
     return col(col_name)
 
+
 def lit(val: Any) -> Column:
     return LiteralColumn(_name=f"lit_{val}", lit_val=val)
+
 
 def sum(col_name: str) -> "Function":
     """Create a function to sum the values of a column"""
