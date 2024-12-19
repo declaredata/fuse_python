@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
+from declaredata_fuse.column_coalesce import CoalesceColumn
 from declaredata_fuse.column_literal import LiteralColumn
 from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
 from declaredata_fuse.proto.sds_pb2 import (
@@ -31,6 +32,13 @@ def column(col_name: str) -> Column:
 
 def lit(val: Any) -> Column:
     return LiteralColumn(_name=f"lit_{val}", lit_val=val)
+
+
+def coalesce(*cols: ColumnOrName) -> Column:
+    cols_reified: list[Column] = [col_or_name_to_basic(col) for col in cols]
+    names = [col.cur_name() for col in cols_reified]
+    new_col_name = f"coalesce({', '.join(names)})"
+    return CoalesceColumn(_name=new_col_name, cols=cols_reified)
 
 
 def sum(col_name: str) -> "Function":

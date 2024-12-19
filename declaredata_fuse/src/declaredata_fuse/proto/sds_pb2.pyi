@@ -728,21 +728,27 @@ class Column(google.protobuf.message.Message):
     COL_NAME_FIELD_NUMBER: builtins.int
     COL_DERIVED_FIELD_NUMBER: builtins.int
     COL_LIT_FIELD_NUMBER: builtins.int
+    COL_COALESCE_FIELD_NUMBER: builtins.int
     col_name: builtins.str
     @property
     def col_derived(self) -> global___NamedDerivedColumn: ...
     @property
     def col_lit(self) -> global___LiteralColumn: ...
+    @property
+    def col_coalesce(self) -> global___CoalesceColumn: ...
     def __init__(
         self,
         *,
         col_name: builtins.str = ...,
         col_derived: global___NamedDerivedColumn | None = ...,
         col_lit: global___LiteralColumn | None = ...,
+        col_coalesce: global___CoalesceColumn | None = ...,
     ) -> None: ...
     def HasField(
         self,
         field_name: typing.Literal[
+            "col_coalesce",
+            b"col_coalesce",
             "col_derived",
             b"col_derived",
             "col_lit",
@@ -756,6 +762,8 @@ class Column(google.protobuf.message.Message):
     def ClearField(
         self,
         field_name: typing.Literal[
+            "col_coalesce",
+            b"col_coalesce",
             "col_derived",
             b"col_derived",
             "col_lit",
@@ -768,7 +776,9 @@ class Column(google.protobuf.message.Message):
     ) -> None: ...
     def WhichOneof(
         self, oneof_group: typing.Literal["col_spec", b"col_spec"]
-    ) -> typing.Literal["col_name", "col_derived", "col_lit"] | None: ...
+    ) -> (
+        typing.Literal["col_name", "col_derived", "col_lit", "col_coalesce"] | None
+    ): ...
 
 global___Column = Column
 
@@ -908,22 +918,49 @@ class LiteralColumn(google.protobuf.message.Message):
     VAL_FIELD_NUMBER: builtins.int
     name: builtins.str
     @property
-    def val(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___TypedAny
-    ]: ...
+    def val(self) -> global___TypedAny: ...
     def __init__(
         self,
         *,
         name: builtins.str = ...,
-        val: collections.abc.Iterable[global___TypedAny] | None = ...,
+        val: global___TypedAny | None = ...,
     ) -> None: ...
+    def HasField(self, field_name: typing.Literal["val", b"val"]) -> builtins.bool: ...
     def ClearField(
         self, field_name: typing.Literal["name", b"name", "val", b"val"]
     ) -> None: ...
 
 global___LiteralColumn = LiteralColumn
+
+@typing.final
+class CoalesceColumn(google.protobuf.message.Message):
+    """A new column that is created from choosing the first non-null value from
+    one or more columns in a row.
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    COLS_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    """the name of the new column"""
+    @property
+    def cols(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[
+        builtins.str
+    ]: ...
+    def __init__(
+        self,
+        *,
+        name: builtins.str = ...,
+        cols: collections.abc.Iterable[builtins.str] | None = ...,
+    ) -> None: ...
+    def ClearField(
+        self, field_name: typing.Literal["cols", b"cols", "name", b"name"]
+    ) -> None: ...
+
+global___CoalesceColumn = CoalesceColumn
 
 @typing.final
 class DropRequest(google.protobuf.message.Message):

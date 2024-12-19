@@ -4,6 +4,7 @@ from bench.agg import (
     agg_last,
     agg_total_crimes_per_year,
 )
+from bench.coalesce import coalesce_basic
 from bench.distinct import distinct_basic
 from bench.drop import drop
 from bench.selects import select
@@ -92,6 +93,12 @@ def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
             test_name="DataFrame.union.basic",
             file_name=file,
             runner=union_basic,
+            verbose=verbose,
+        ),
+        TestCase(
+            test_name="DataFrame.coalesce.basic",
+            file_name=file,
+            runner=coalesce_basic,
             verbose=verbose,
         ),
     ]
