@@ -26,5 +26,5 @@ class LiteralColumn(BasicColumn):
     def to_pb(self) -> sds_pb2.Column:
         typed_any = sds_pb2.TypedAny(str_val=self.lit_val)
         return sds_pb2.Column(
-            col_lit=sds_pb2.LiteralColumn(name=self.cur_name(), val=[typed_any])
+            col_lit=sds_pb2.LiteralColumn(name=self.cur_name(), val=typed_any)
         )

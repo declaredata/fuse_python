@@ -224,6 +224,7 @@ message Column {
         string col_name = 1;
         NamedDerivedColumn col_derived = 2;
         LiteralColumn col_lit = 3;
+        CoalesceColumn col_coalesce = 4;
     }
 }
 
@@ -262,6 +263,14 @@ message TypedAny {
 message LiteralColumn {
     string name = 1;
     TypedAny val = 2;
+}
+
+// A new column that is created from choosing the first non-null value from
+// one or more columns in a row.
+message CoalesceColumn {
+    // the name of the new column
+    string name = 1;
+    repeated string cols = 2;
 }
 
 message DropRequest {
