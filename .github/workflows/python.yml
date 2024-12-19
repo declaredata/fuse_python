@@ -26,6 +26,8 @@ jobs:
 
       - name: uv sync
         run: uv sync --all-extras --dev
+      - name: ls
+        run: ls
       - name: pyright
         run: make typecheck
       - name: pytest
