@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
-from declaredata_fuse.column_filter import FilterColumn, FilterFunction
 from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
 from declaredata_fuse.proto.sds_pb2 import (
     AggOperation,
@@ -57,10 +56,6 @@ def last(col_name: str) -> "Function":
     """Create a function to find the last value"""
     return Function(col_name=col_name, op=AggOperation.LAST)
 
-
-def filter(col: Column | str, func: FilterFunction) -> Column:
-    col_reified = col.cur_name() if isinstance(col, Column) else col
-    return FilterColumn(col_name=col_reified, func=func)
 
 @dataclass(frozen=True)
 class Function:
