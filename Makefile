@@ -2,6 +2,8 @@
 gen-proto:
 	buf generate
 
+check: ruff typecheck test
+
 .PHONY: ruff-python
 ruff:
 	uv run ruff check

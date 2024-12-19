@@ -39,7 +39,7 @@ class DataFrameWriter:
             dataframe_uid=self.df_uid,
             table_name=table_name,
         )
-        self.stub.SaveDataFrameAsTable(req) # type: ignore
+        self.stub.SaveDataFrameAsTable(req)  # type: ignore
 
 
 @dataclass(frozen=True)
@@ -80,8 +80,8 @@ class DataFrame:
         request = sds_pb2.DataFrameUID(
             dataframe_uid=self.df_uid,
         )
-        response = self.stub.PrettyPrintDataframe(request) # type: ignore
-        print(response.content) # type: ignore
+        response = self.stub.PrettyPrintDataframe(request)  # type: ignore
+        print(response.content)  # type: ignore
 
     def display(self) -> None:
         """
@@ -102,8 +102,8 @@ class DataFrame:
         req = sds_pb2.LimitDataFrameRequest(
             dataframe_uid=self.df_uid, start=start, end=end
         )
-        resp = self.stub.LimitDataFrame(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.LimitDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def take(self, num: int) -> list[Row]:
         """
@@ -175,8 +175,8 @@ class DataFrame:
         a CSV, and return the CSV contents as a str
         """
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
-        resp = self.stub.ExportCSV(req) # type: ignore
-        return resp.content # type: ignore
+        resp = self.stub.ExportCSV(req)  # type: ignore
+        return resp.content  # type: ignore
 
     def sort_typed(self, cols: list[SortedColumn]) -> "DataFrame":
         """
@@ -190,8 +190,8 @@ class DataFrame:
             dataframe_uid=self.df_uid,
             columns=pb_cols,
         )
-        resp = self.stub.SortDataFrame(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.SortDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def sort(
         self, *cols: str | Column | list[str | Column], **kwargs: Any
@@ -231,8 +231,8 @@ class DataFrame:
             dataframe_uid=self.df_uid,
             conditions=[pb_cond],
         )
-        resp = self.stub.FilterDataFrame(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.FilterDataFrame(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def where(self, condition: Condition) -> "DataFrame":
         """An alias for df.filter(self, condition)"""
@@ -249,8 +249,8 @@ class DataFrame:
             new_col_name=new_col_name,
             aggregation=agg,
         )
-        resp = self.stub.WithColumn(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.WithColumn(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def join(
         self,
@@ -270,15 +270,15 @@ class DataFrame:
             left_cols=on_reified,
             right_cols=on_reified,
         )
-        resp = self.stub.Join(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.Join(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def union(self, other: "DataFrame") -> "DataFrame":
         req = sds_pb2.UnionRequest(df_uid_1=self.df_uid, df_uid_2=other.df_uid)
-        resp = self.stub.Union(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.Union(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
 
     def distinct(self) -> "DataFrame":
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
-        resp = self.stub.Distinct(req) # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub) # type: ignore
+        resp = self.stub.Distinct(req)  # type: ignore
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore

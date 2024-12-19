@@ -62,13 +62,6 @@ def filter(col: Column | str, func: FilterFunction) -> Column:
     col_reified = col.cur_name() if isinstance(col, Column) else col
     return FilterColumn(col_name=col_reified, func=func)
 
-
-#     return FilteredColumn(
-#         orig_col=col if isinstance(col, Column) else Column(name=col),
-#         filter_func=func,
-#     )
-
-
 @dataclass(frozen=True)
 class Function:
     """
