@@ -169,8 +169,12 @@ message Agg {
 message WithColumnRequest {
     // the DataFrame from which to compute the new column
     string dataframe_uid = 1;
+    
+    // The name of the new column
+    string name = 2;
+
     // the new column to create
-    Column new_col = 2;
+    Column new_col = 3;
     // // the name of the new column. the new column will be available
     // // in a _new_ dataframe. the existing one will not be modified
     // string new_col_name = 2;

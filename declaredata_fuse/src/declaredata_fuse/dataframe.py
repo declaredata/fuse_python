@@ -7,7 +7,6 @@ from declaredata_fuse.dataframe_impl.select import select_impl
 from declaredata_fuse.dataframe_impl.sort import to_sorted_col_list
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
 from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
-from declaredata_fuse.functions import Function as F
 from declaredata_fuse.column import SelectColumn, DropColumn
 from declaredata_fuse.agg import AggBuilder
 from declaredata_fuse.row import Row
@@ -238,16 +237,15 @@ class DataFrame:
         """An alias for df.filter(self, condition)"""
         return self.filter(condition)
 
-    def withColumn(self, new_col_name: str, f: F) -> "DataFrame":
+    def withColumn(self, new_col_name: str, col: Column) -> "DataFrame":
         """
         Return a new DataFrame with a single column added to it with the given
         name. Values in the new column will be calculated by the given function.
         """
-        agg = f.to_pb()
         req = sds_pb2.WithColumnRequest(
+            name=new_col_name,
             dataframe_uid=self.df_uid,
-            new_col_name=new_col_name,
-            aggregation=agg,
+            new_col=col.to_pb(),
         )
         resp = self.stub.WithColumn(req)  # type: ignore
         return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
