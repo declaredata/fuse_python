@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from declaredata_fuse.functions import Function
 from declaredata_fuse.proto import sds_pb2
 from declaredata_fuse.proto.sds_pb2 import Agg
+from declaredata_fuse.proto.sds_pb2_grpc import sdsStub
 
 if TYPE_CHECKING:
     from declaredata_fuse.dataframe import DataFrame
@@ -13,21 +14,23 @@ if TYPE_CHECKING:
 class Grouped:
     group_cols: list[str]
     """The columns to group by in the aggregation"""
-    orig_df: DataFrame
+    df_uid: str
+    stub: sdsStub
 
-    def agg(self, *funcs: Function) -> DataFrame:
+    def agg(self, *funcs: Function) -> "DataFrame":
         aggs: list[Agg] = []
         for func in funcs:
             aggs.append(func.to_pb())
 
         req = sds_pb2.AggregateRequest(
-            dataframe_uid=self.orig_df.df_uid,
+            dataframe_uid=self.df_uid,
             group_by=self.group_cols,
             aggs=aggs,
         )
-        resp = self.orig_df.stub.Aggregate(req)  # type: ignore
+        resp = self.stub.Aggregate(req)
+        from declaredata_fuse.dataframe import DataFrame
         return DataFrame(
             df_uid=resp.dataframe_uid,
-            stub=self.orig_df.stub
+            stub=self.stub
         )
 
