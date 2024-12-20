@@ -24,7 +24,6 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 * 8GB+ available memory
 * pip package manager
 * Docker (for container deployment)
-* curl (for binary download)
 * Available port 8080 (port customization coming in future versions)
 
 # Components
