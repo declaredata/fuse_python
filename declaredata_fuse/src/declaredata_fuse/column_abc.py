@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 from declaredata_fuse.proto import sds_pb2
-from declaredata_fuse.window import WindowSpec
 
 
 class Column(ABC):
@@ -34,13 +33,13 @@ class Column(ABC):
 
     # TODO: implement this
     # def over(self, window: WindowSpec) -> "Column": ...
-    # 
+    #
     # """
     # Create a new function that will execute the existing function over the
     # given window
     # """
-        # return Function(
-        #     col_name=self.col_name,
-        #     op=self.op,
-        #     alias_col_name=self.alias_col_name,
-        # )
+    # return Function(
+    #     col_name=self.col_name,
+    #     op=self.op,
+    #     alias_col_name=self.alias_col_name,
+    # )
