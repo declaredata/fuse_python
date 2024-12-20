@@ -51,9 +51,9 @@ class FuseSessionBuilder:
         """Build the new FuseSession"""
         channel = insecure_channel(target=f"{self._host}:{self._port}")
         stub = sds_pb2_grpc.sdsStub(channel=channel)
-        resp = stub.CreateSession(sds_pb2.Empty())  # type: ignore
+        resp = stub.CreateSession(sds_pb2.Empty())
         return FuseSession(
-            session_uid=resp.session_uid,  # type: ignore
+            session_uid=resp.session_uid,
             _channel=channel,
             _stub=stub,
             _app_name=self._app_name,
@@ -82,16 +82,16 @@ class FuseDataSource:
         Local filesystem filenames are always supported regardless of
         configuration.
         """
-        load_request = sds_pb2.LoadFileRequest(  # type: ignore
+        load_request = sds_pb2.LoadFileRequest(
             session_id=self.session_uid,
             source=file_name,
         )
 
-        response = self.stub.LoadCSV(load_request)  # type: ignore
-        df_uid: str = response.dataframe_uid  # type: ignore
+        response = self.stub.LoadCSV(load_request)
+        df_uid: str = response.dataframe_uid
         return DataFrame(
             stub=self.stub,
-            df_uid=df_uid,  # type: ignore
+            df_uid=df_uid,
         )
 
 
@@ -146,12 +146,12 @@ class FuseSession:
         Use the existing session to execute SQL and return a DataFrame
         with the results.
         """
-        req = sds_pb2.ExecuteSqlRequest(  # type: ignore[reportAttributeAccessIssue]
+        req = sds_pb2.ExecuteSqlRequest(
             session_uid=self.session_uid,
             query=query,
         )
-        resp = self._stub.ExecuteSql(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self._stub)  # type: ignore
+        resp = self._stub.ExecuteSql(req)
+        return DataFrame(df_uid=resp.dataframe_uid, stub=self._stub)
 
     def stop(self):
         """

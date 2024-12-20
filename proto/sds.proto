@@ -47,7 +47,8 @@ service sds {
     rpc SortDataFrame(SortDataFrameRequest) returns (DataFrameUID);
     // filter a dataframe according to 1 or more filter conditions
     rpc FilterDataFrame(FilterDataFrameRequest) returns (DataFrameUID);
-    // group by, then aggregate a dataframe's data, the return a new dataframe
+    // Group rows in a DataFrame, then compute an aggregate across all the
+    // rows in each group
     rpc Aggregate(AggregateRequest) returns (DataFrameUID);
     // add a new column -- optionally by doing some calculation -- to a 
     // given dataframe
