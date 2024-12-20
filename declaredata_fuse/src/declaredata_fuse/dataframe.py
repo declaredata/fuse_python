@@ -9,7 +9,7 @@ from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
 from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
 from declaredata_fuse.functions import Function as F
 from declaredata_fuse.column import SelectColumn, DropColumn
-from declaredata_fuse.agg import AggBuilder
+from declaredata_fuse.grouped import Grouped
 from declaredata_fuse.row import Row
 from declaredata_fuse.dataframe_impl.join import reify_join_cols, str_to_join_type
 
@@ -127,16 +127,14 @@ class DataFrame:
         new_uid = drop_impl(df_uid=self.df_uid, stub=self.stub, cols=list(cols))
         return DataFrame(df_uid=new_uid, stub=self.stub)
 
-    def groupBy(self, col_name: str | list[str]) -> AggBuilder["DataFrame"]:
+    def groupBy(self, col_name: str | list[str]) -> Grouped:
         """
         Start building an aggregation on this DataFrame. Start by grouping
         the rows by the values in the given column or columns.
         """
-        return AggBuilder(
-            df_uid=self.df_uid,
-            stub=self.stub,
+        return Grouped(
+            orig_df=self,
             group_cols=([col_name] if isinstance(col_name, str) else col_name),
-            new_t=lambda df_uid: DataFrame(df_uid=df_uid, stub=self.stub),
         )
 
     def __getattr__(self, name: str) -> BasicColumn:
