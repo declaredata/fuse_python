@@ -168,6 +168,7 @@ enum Function {
     LAST = 5;
     RANK = 6;
     MEAN = 7;
+    MODE = 8;
 }
 
 message WithColumnRequest {
