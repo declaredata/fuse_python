@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from declaredata_fuse.proto import sds_pb2
+from declaredata_fuse.window import WindowSpec
 
 
 class Column(ABC):
@@ -30,3 +31,10 @@ class Column(ABC):
     Get the protobuf-encoded representation of this column. Not intended
     for public use.
     """
+
+    def over(self, window: WindowSpec) -> "Column":
+        """
+        Apply a window frame to this column. Only some columns implement
+        this, while the rest will raise a not-implemented exception.
+        """
+        raise NotImplementedError("column doesn't support windowing")

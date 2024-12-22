@@ -7,7 +7,7 @@ import abc
 import collections.abc
 import grpc
 import grpc.aio
-from declaredata_fuse.proto import sds_pb2
+import proto.sds_pb2
 import typing
 
 _T = typing.TypeVar("_T")
@@ -30,40 +30,40 @@ class sdsStub:
         self, channel: typing.Union[grpc.Channel, grpc.aio.Channel]
     ) -> None: ...
     ExecuteSql: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.ExecuteSqlRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.ExecuteSqlRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """execute SQL against a session and return a new DataFrame representing
     the result
     """
 
     CreateSession: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.Empty,
-        sds_pb2.SessionUID,
+        proto.sds_pb2.Empty,
+        proto.sds_pb2.SessionUID,
     ]
     """create a new session with no DataFrames therein, then return its UID"""
 
     LoadCSV: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a CSV into a DataFrame, then return its UID"""
 
     LoadParquet: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a Parquet file into a DataFrame, then return its UID"""
 
     LoadJSON: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a JSON file into a DataFrame, then return its UID"""
 
     CloseSession: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.SessionUID,
-        sds_pb2.Empty,
+        proto.sds_pb2.SessionUID,
+        proto.sds_pb2.Empty,
     ]
     """//////////////////////////////////////
     session destruction methods
@@ -77,8 +77,8 @@ class sdsStub:
     """
 
     SaveDataFrameAsTable: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.SaveDataFrameAsTableRequest,
-        sds_pb2.Empty,
+        proto.sds_pb2.SaveDataFrameAsTableRequest,
+        proto.sds_pb2.Empty,
     ]
     """//////////////////////////////////////
     dataframe instance methods
@@ -89,8 +89,8 @@ class sdsStub:
     """
 
     PrettyPrintDataframe: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.PrettyPrintDataframeResponse,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.PrettyPrintDataframeResponse,
     ]
     """pretty-print a given dataframe.
 
@@ -98,68 +98,68 @@ class sdsStub:
     """
 
     LimitDataFrame: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.LimitDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LimitDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """filter an existing DataFrame, and return a new DataFrame"""
 
     SortDataFrame: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.SortDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.SortDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """sort a dataframe by 1 or more column(s)"""
 
     FilterDataFrame: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.FilterDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.FilterDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """filter a dataframe according to 1 or more filter conditions"""
 
     Aggregate: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.AggregateRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.AggregateRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """group by, then aggregate a dataframe's data, the return a new dataframe"""
 
     WithColumn: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.WithColumnRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.WithColumnRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """add a new column -- optionally by doing some calculation -- to a 
     given dataframe
     """
 
     Select: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.SelectRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.SelectRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """project a DataFrame onto a new one, optionally by calculating new
     values
     """
 
     Collect: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.DataFrameContents,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameContents,
     ]
     """eagerly evaluate the dataframe, then return its contents"""
 
     Join: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.JoinRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.JoinRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Join 2 dataframes together into one"""
 
     Distinct: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Return a new DataFrame whose contents are the same as the given
     DataFrame, except with duplicate rows removed
     """
 
     Union: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.UnionRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.UnionRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Combine two DataFrames together to calculate the union of the two.
 
@@ -168,8 +168,8 @@ class sdsStub:
     """
 
     Drop: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.DropRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.DropRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """return a new DataFrame with the given columns missing.
 
@@ -178,8 +178,8 @@ class sdsStub:
     """
 
     ExportCSV: grpc.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.CSVOutput,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.CSVOutput,
     ]
     """export a CSV file and return it in the response"""
 
@@ -190,40 +190,40 @@ class sdsAsyncStub:
     """
 
     ExecuteSql: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.ExecuteSqlRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.ExecuteSqlRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """execute SQL against a session and return a new DataFrame representing
     the result
     """
 
     CreateSession: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.Empty,
-        sds_pb2.SessionUID,
+        proto.sds_pb2.Empty,
+        proto.sds_pb2.SessionUID,
     ]
     """create a new session with no DataFrames therein, then return its UID"""
 
     LoadCSV: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a CSV into a DataFrame, then return its UID"""
 
     LoadParquet: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a Parquet file into a DataFrame, then return its UID"""
 
     LoadJSON: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.LoadFileRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Load a JSON file into a DataFrame, then return its UID"""
 
     CloseSession: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.SessionUID,
-        sds_pb2.Empty,
+        proto.sds_pb2.SessionUID,
+        proto.sds_pb2.Empty,
     ]
     """//////////////////////////////////////
     session destruction methods
@@ -237,8 +237,8 @@ class sdsAsyncStub:
     """
 
     SaveDataFrameAsTable: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.SaveDataFrameAsTableRequest,
-        sds_pb2.Empty,
+        proto.sds_pb2.SaveDataFrameAsTableRequest,
+        proto.sds_pb2.Empty,
     ]
     """//////////////////////////////////////
     dataframe instance methods
@@ -249,8 +249,8 @@ class sdsAsyncStub:
     """
 
     PrettyPrintDataframe: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.PrettyPrintDataframeResponse,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.PrettyPrintDataframeResponse,
     ]
     """pretty-print a given dataframe.
 
@@ -258,68 +258,68 @@ class sdsAsyncStub:
     """
 
     LimitDataFrame: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.LimitDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.LimitDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """filter an existing DataFrame, and return a new DataFrame"""
 
     SortDataFrame: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.SortDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.SortDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """sort a dataframe by 1 or more column(s)"""
 
     FilterDataFrame: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.FilterDataFrameRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.FilterDataFrameRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """filter a dataframe according to 1 or more filter conditions"""
 
     Aggregate: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.AggregateRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.AggregateRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """group by, then aggregate a dataframe's data, the return a new dataframe"""
 
     WithColumn: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.WithColumnRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.WithColumnRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """add a new column -- optionally by doing some calculation -- to a 
     given dataframe
     """
 
     Select: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.SelectRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.SelectRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """project a DataFrame onto a new one, optionally by calculating new
     values
     """
 
     Collect: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.DataFrameContents,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameContents,
     ]
     """eagerly evaluate the dataframe, then return its contents"""
 
     Join: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.JoinRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.JoinRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Join 2 dataframes together into one"""
 
     Distinct: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Return a new DataFrame whose contents are the same as the given
     DataFrame, except with duplicate rows removed
     """
 
     Union: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.UnionRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.UnionRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """Combine two DataFrames together to calculate the union of the two.
 
@@ -328,8 +328,8 @@ class sdsAsyncStub:
     """
 
     Drop: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.DropRequest,
-        sds_pb2.DataFrameUID,
+        proto.sds_pb2.DropRequest,
+        proto.sds_pb2.DataFrameUID,
     ]
     """return a new DataFrame with the given columns missing.
 
@@ -338,8 +338,8 @@ class sdsAsyncStub:
     """
 
     ExportCSV: grpc.aio.UnaryUnaryMultiCallable[
-        sds_pb2.DataFrameUID,
-        sds_pb2.CSVOutput,
+        proto.sds_pb2.DataFrameUID,
+        proto.sds_pb2.CSVOutput,
     ]
     """export a CSV file and return it in the response"""
 
@@ -352,10 +352,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def ExecuteSql(
         self,
-        request: sds_pb2.ExecuteSqlRequest,
+        request: proto.sds_pb2.ExecuteSqlRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """execute SQL against a session and return a new DataFrame representing
         the result
@@ -364,49 +365,54 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def CreateSession(
         self,
-        request: sds_pb2.Empty,
+        request: proto.sds_pb2.Empty,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.SessionUID, collections.abc.Awaitable[sds_pb2.SessionUID]
+        proto.sds_pb2.SessionUID, collections.abc.Awaitable[proto.sds_pb2.SessionUID]
     ]:
         """create a new session with no DataFrames therein, then return its UID"""
 
     @abc.abstractmethod
     def LoadCSV(
         self,
-        request: sds_pb2.LoadFileRequest,
+        request: proto.sds_pb2.LoadFileRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Load a CSV into a DataFrame, then return its UID"""
 
     @abc.abstractmethod
     def LoadParquet(
         self,
-        request: sds_pb2.LoadFileRequest,
+        request: proto.sds_pb2.LoadFileRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Load a Parquet file into a DataFrame, then return its UID"""
 
     @abc.abstractmethod
     def LoadJSON(
         self,
-        request: sds_pb2.LoadFileRequest,
+        request: proto.sds_pb2.LoadFileRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Load a JSON file into a DataFrame, then return its UID"""
 
     @abc.abstractmethod
     def CloseSession(
         self,
-        request: sds_pb2.SessionUID,
+        request: proto.sds_pb2.SessionUID,
         context: _ServicerContext,
-    ) -> typing.Union[sds_pb2.Empty, collections.abc.Awaitable[sds_pb2.Empty]]:
+    ) -> typing.Union[
+        proto.sds_pb2.Empty, collections.abc.Awaitable[proto.sds_pb2.Empty]
+    ]:
         """//////////////////////////////////////
         session destruction methods
         //////////////////////////////////////
@@ -421,9 +427,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def SaveDataFrameAsTable(
         self,
-        request: sds_pb2.SaveDataFrameAsTableRequest,
+        request: proto.sds_pb2.SaveDataFrameAsTableRequest,
         context: _ServicerContext,
-    ) -> typing.Union[sds_pb2.Empty, collections.abc.Awaitable[sds_pb2.Empty]]:
+    ) -> typing.Union[
+        proto.sds_pb2.Empty, collections.abc.Awaitable[proto.sds_pb2.Empty]
+    ]:
         """//////////////////////////////////////
         dataframe instance methods
         //////////////////////////////////////
@@ -435,11 +443,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def PrettyPrintDataframe(
         self,
-        request: sds_pb2.DataFrameUID,
+        request: proto.sds_pb2.DataFrameUID,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.PrettyPrintDataframeResponse,
-        collections.abc.Awaitable[sds_pb2.PrettyPrintDataframeResponse],
+        proto.sds_pb2.PrettyPrintDataframeResponse,
+        collections.abc.Awaitable[proto.sds_pb2.PrettyPrintDataframeResponse],
     ]:
         """pretty-print a given dataframe.
 
@@ -449,50 +457,55 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def LimitDataFrame(
         self,
-        request: sds_pb2.LimitDataFrameRequest,
+        request: proto.sds_pb2.LimitDataFrameRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """filter an existing DataFrame, and return a new DataFrame"""
 
     @abc.abstractmethod
     def SortDataFrame(
         self,
-        request: sds_pb2.SortDataFrameRequest,
+        request: proto.sds_pb2.SortDataFrameRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """sort a dataframe by 1 or more column(s)"""
 
     @abc.abstractmethod
     def FilterDataFrame(
         self,
-        request: sds_pb2.FilterDataFrameRequest,
+        request: proto.sds_pb2.FilterDataFrameRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """filter a dataframe according to 1 or more filter conditions"""
 
     @abc.abstractmethod
     def Aggregate(
         self,
-        request: sds_pb2.AggregateRequest,
+        request: proto.sds_pb2.AggregateRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """group by, then aggregate a dataframe's data, the return a new dataframe"""
 
     @abc.abstractmethod
     def WithColumn(
         self,
-        request: sds_pb2.WithColumnRequest,
+        request: proto.sds_pb2.WithColumnRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """add a new column -- optionally by doing some calculation -- to a
         given dataframe
@@ -501,10 +514,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def Select(
         self,
-        request: sds_pb2.SelectRequest,
+        request: proto.sds_pb2.SelectRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """project a DataFrame onto a new one, optionally by calculating new
         values
@@ -513,30 +527,33 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def Collect(
         self,
-        request: sds_pb2.DataFrameUID,
+        request: proto.sds_pb2.DataFrameUID,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameContents, collections.abc.Awaitable[sds_pb2.DataFrameContents]
+        proto.sds_pb2.DataFrameContents,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameContents],
     ]:
         """eagerly evaluate the dataframe, then return its contents"""
 
     @abc.abstractmethod
     def Join(
         self,
-        request: sds_pb2.JoinRequest,
+        request: proto.sds_pb2.JoinRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Join 2 dataframes together into one"""
 
     @abc.abstractmethod
     def Distinct(
         self,
-        request: sds_pb2.DataFrameUID,
+        request: proto.sds_pb2.DataFrameUID,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Return a new DataFrame whose contents are the same as the given
         DataFrame, except with duplicate rows removed
@@ -545,10 +562,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def Union(
         self,
-        request: sds_pb2.UnionRequest,
+        request: proto.sds_pb2.UnionRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Combine two DataFrames together to calculate the union of the two.
 
@@ -559,10 +577,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def Drop(
         self,
-        request: sds_pb2.DropRequest,
+        request: proto.sds_pb2.DropRequest,
         context: _ServicerContext,
     ) -> typing.Union[
-        sds_pb2.DataFrameUID, collections.abc.Awaitable[sds_pb2.DataFrameUID]
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """return a new DataFrame with the given columns missing.
 
@@ -573,9 +592,11 @@ class sdsServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def ExportCSV(
         self,
-        request: sds_pb2.DataFrameUID,
+        request: proto.sds_pb2.DataFrameUID,
         context: _ServicerContext,
-    ) -> typing.Union[sds_pb2.CSVOutput, collections.abc.Awaitable[sds_pb2.CSVOutput]]:
+    ) -> typing.Union[
+        proto.sds_pb2.CSVOutput, collections.abc.Awaitable[proto.sds_pb2.CSVOutput]
+    ]:
         """export a CSV file and return it in the response"""
 
 def add_sdsServicer_to_server(

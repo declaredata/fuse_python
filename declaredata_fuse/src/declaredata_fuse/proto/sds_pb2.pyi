@@ -39,33 +39,40 @@ ASC: SortDirection.ValueType  # 0
 DESC: SortDirection.ValueType  # 1
 global___SortDirection = SortDirection
 
-class _AggOperation:
+class _Function:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _AggOperationEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-        _AggOperation.ValueType
-    ],
+class _FunctionEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Function.ValueType],
     builtins.type,
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
-    SUM: _AggOperation.ValueType  # 0
-    COUNT: _AggOperation.ValueType  # 1
-    MIN: _AggOperation.ValueType  # 2
-    MAX: _AggOperation.ValueType  # 3
-    FIRST: _AggOperation.ValueType  # 4
-    LAST: _AggOperation.ValueType  # 5
+    SUM: _Function.ValueType  # 0
+    COUNT: _Function.ValueType  # 1
+    MIN: _Function.ValueType  # 2
+    MAX: _Function.ValueType  # 3
+    FIRST: _Function.ValueType  # 4
+    LAST: _Function.ValueType  # 5
 
-class AggOperation(_AggOperation, metaclass=_AggOperationEnumTypeWrapper): ...
+class Function(_Function, metaclass=_FunctionEnumTypeWrapper):
+    """a function called over 1 or more rows that creates a new value, usually
+    to be put into a new column. the rows this function summarizes may be from
+    one of the following sources:
 
-SUM: AggOperation.ValueType  # 0
-COUNT: AggOperation.ValueType  # 1
-MIN: AggOperation.ValueType  # 2
-MAX: AggOperation.ValueType  # 3
-FIRST: AggOperation.ValueType  # 4
-LAST: AggOperation.ValueType  # 5
-global___AggOperation = AggOperation
+    - a window - in this case, the function will be called in a windowing
+      operation
+    - a group - in this case, the function will be called in an aggregation
+      operation
+    """
+
+SUM: Function.ValueType  # 0
+COUNT: Function.ValueType  # 1
+MIN: Function.ValueType  # 2
+MAX: Function.ValueType  # 3
+FIRST: Function.ValueType  # 4
+LAST: Function.ValueType  # 5
+global___Function = Function
 
 class _NullValue:
     ValueType = typing.NewType("ValueType", builtins.int)
@@ -364,7 +371,7 @@ class AggregateRequest(google.protobuf.message.Message):
 
     DATAFRAME_UID_FIELD_NUMBER: builtins.int
     GROUP_BY_FIELD_NUMBER: builtins.int
-    AGGS_FIELD_NUMBER: builtins.int
+    COLS_FIELD_NUMBER: builtins.int
     dataframe_uid: builtins.str
     @property
     def group_by(
@@ -373,22 +380,22 @@ class AggregateRequest(google.protobuf.message.Message):
         builtins.str
     ]: ...
     @property
-    def aggs(
+    def cols(
         self,
     ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___Agg
+        global___Column
     ]: ...
     def __init__(
         self,
         *,
         dataframe_uid: builtins.str = ...,
         group_by: collections.abc.Iterable[builtins.str] | None = ...,
-        aggs: collections.abc.Iterable[global___Agg] | None = ...,
+        cols: collections.abc.Iterable[global___Column] | None = ...,
     ) -> None: ...
     def ClearField(
         self,
         field_name: typing.Literal[
-            "aggs", b"aggs", "dataframe_uid", b"dataframe_uid", "group_by", b"group_by"
+            "cols", b"cols", "dataframe_uid", b"dataframe_uid", "group_by", b"group_by"
         ],
     ) -> None: ...
 
@@ -416,103 +423,34 @@ class SortColumn(google.protobuf.message.Message):
 global___SortColumn = SortColumn
 
 @typing.final
-class Agg(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    COL_NAME_FIELD_NUMBER: builtins.int
-    OP_FIELD_NUMBER: builtins.int
-    ALIAS_FIELD_NUMBER: builtins.int
-    WINDOW_FIELD_NUMBER: builtins.int
-    col_name: builtins.str
-    op: global___AggOperation.ValueType
-    alias: builtins.str
-    @property
-    def window(self) -> global___WindowSpec: ...
-    def __init__(
-        self,
-        *,
-        col_name: builtins.str = ...,
-        op: global___AggOperation.ValueType = ...,
-        alias: builtins.str | None = ...,
-        window: global___WindowSpec | None = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing.Literal[
-            "_alias",
-            b"_alias",
-            "_window",
-            b"_window",
-            "alias",
-            b"alias",
-            "window",
-            b"window",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing.Literal[
-            "_alias",
-            b"_alias",
-            "_window",
-            b"_window",
-            "alias",
-            b"alias",
-            "col_name",
-            b"col_name",
-            "op",
-            b"op",
-            "window",
-            b"window",
-        ],
-    ) -> None: ...
-    @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing.Literal["_alias", b"_alias"]
-    ) -> typing.Literal["alias"] | None: ...
-    @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing.Literal["_window", b"_window"]
-    ) -> typing.Literal["window"] | None: ...
-
-global___Agg = Agg
-
-@typing.final
 class WithColumnRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     DATAFRAME_UID_FIELD_NUMBER: builtins.int
-    NEW_COL_NAME_FIELD_NUMBER: builtins.int
-    AGGREGATION_FIELD_NUMBER: builtins.int
+    NAME_FIELD_NUMBER: builtins.int
+    NEW_COL_FIELD_NUMBER: builtins.int
     dataframe_uid: builtins.str
     """the DataFrame from which to compute the new column"""
-    new_col_name: builtins.str
-    """the name of the new column. the new column will be available
-    in a _new_ dataframe. the existing one will not be modified
-    """
+    name: builtins.str
+    """The name of the new column"""
     @property
-    def aggregation(self) -> global___Agg:
-        """the aggregation to be applied, to create the new column"""
+    def new_col(self) -> global___Column:
+        """the new column to create"""
 
     def __init__(
         self,
         *,
         dataframe_uid: builtins.str = ...,
-        new_col_name: builtins.str = ...,
-        aggregation: global___Agg | None = ...,
+        name: builtins.str = ...,
+        new_col: global___Column | None = ...,
     ) -> None: ...
     def HasField(
-        self, field_name: typing.Literal["aggregation", b"aggregation"]
+        self, field_name: typing.Literal["new_col", b"new_col"]
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing.Literal[
-            "aggregation",
-            b"aggregation",
-            "dataframe_uid",
-            b"dataframe_uid",
-            "new_col_name",
-            b"new_col_name",
+            "dataframe_uid", b"dataframe_uid", "name", b"name", "new_col", b"new_col"
         ],
     ) -> None: ...
 
@@ -529,18 +467,41 @@ class WindowSpec(google.protobuf.message.Message):
     partition_by: builtins.str
     order_by: builtins.str
     left_boundary: builtins.int
+    """The left boundary of this window spec. Passing None here indicates
+    the left side of the window is unbounded.
+    """
     right_boundary: builtins.int
+    """The right boundary of this window spec. Passing None here indicates
+    the right side of the window is unbounded.
+    """
     def __init__(
         self,
         *,
         partition_by: builtins.str = ...,
         order_by: builtins.str = ...,
-        left_boundary: builtins.int = ...,
-        right_boundary: builtins.int = ...,
+        left_boundary: builtins.int | None = ...,
+        right_boundary: builtins.int | None = ...,
     ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing.Literal[
+            "_left_boundary",
+            b"_left_boundary",
+            "_right_boundary",
+            b"_right_boundary",
+            "left_boundary",
+            b"left_boundary",
+            "right_boundary",
+            b"right_boundary",
+        ],
+    ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing.Literal[
+            "_left_boundary",
+            b"_left_boundary",
+            "_right_boundary",
+            b"_right_boundary",
             "left_boundary",
             b"left_boundary",
             "order_by",
@@ -551,6 +512,14 @@ class WindowSpec(google.protobuf.message.Message):
             b"right_boundary",
         ],
     ) -> None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_left_boundary", b"_left_boundary"]
+    ) -> typing.Literal["left_boundary"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_right_boundary", b"_right_boundary"]
+    ) -> typing.Literal["right_boundary"] | None: ...
 
 global___WindowSpec = WindowSpec
 
@@ -729,6 +698,8 @@ class Column(google.protobuf.message.Message):
     COL_DERIVED_FIELD_NUMBER: builtins.int
     COL_LIT_FIELD_NUMBER: builtins.int
     COL_COALESCE_FIELD_NUMBER: builtins.int
+    COL_FUNCTIONAL_FIELD_NUMBER: builtins.int
+    WINDOW_FIELD_NUMBER: builtins.int
     col_name: builtins.str
     @property
     def col_derived(self) -> global___NamedDerivedColumn: ...
@@ -736,6 +707,14 @@ class Column(google.protobuf.message.Message):
     def col_lit(self) -> global___LiteralColumn: ...
     @property
     def col_coalesce(self) -> global___CoalesceColumn: ...
+    @property
+    def col_functional(self) -> global___FunctionalColumn:
+        """calling a function over a window. if this column is present,
+        then window must be present
+        """
+
+    @property
+    def window(self) -> global___WindowSpec: ...
     def __init__(
         self,
         *,
@@ -743,41 +722,63 @@ class Column(google.protobuf.message.Message):
         col_derived: global___NamedDerivedColumn | None = ...,
         col_lit: global___LiteralColumn | None = ...,
         col_coalesce: global___CoalesceColumn | None = ...,
+        col_functional: global___FunctionalColumn | None = ...,
+        window: global___WindowSpec | None = ...,
     ) -> None: ...
     def HasField(
         self,
         field_name: typing.Literal[
+            "_window",
+            b"_window",
             "col_coalesce",
             b"col_coalesce",
             "col_derived",
             b"col_derived",
+            "col_functional",
+            b"col_functional",
             "col_lit",
             b"col_lit",
             "col_name",
             b"col_name",
             "col_spec",
             b"col_spec",
+            "window",
+            b"window",
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing.Literal[
+            "_window",
+            b"_window",
             "col_coalesce",
             b"col_coalesce",
             "col_derived",
             b"col_derived",
+            "col_functional",
+            b"col_functional",
             "col_lit",
             b"col_lit",
             "col_name",
             b"col_name",
             "col_spec",
             b"col_spec",
+            "window",
+            b"window",
         ],
     ) -> None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_window", b"_window"]
+    ) -> typing.Literal["window"] | None: ...
+    @typing.overload
     def WhichOneof(
         self, oneof_group: typing.Literal["col_spec", b"col_spec"]
     ) -> (
-        typing.Literal["col_name", "col_derived", "col_lit", "col_coalesce"] | None
+        typing.Literal[
+            "col_name", "col_derived", "col_lit", "col_coalesce", "col_functional"
+        ]
+        | None
     ): ...
 
 global___Column = Column
@@ -961,6 +962,39 @@ class CoalesceColumn(google.protobuf.message.Message):
     ) -> None: ...
 
 global___CoalesceColumn = CoalesceColumn
+
+@typing.final
+class FunctionalColumn(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    FUNCTION_FIELD_NUMBER: builtins.int
+    PARAMS_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    """the name of the new column"""
+    function: global___Function.ValueType
+    """the function to call over the window"""
+    @property
+    def params(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        """the parameters to pass to the function call"""
+
+    def __init__(
+        self,
+        *,
+        name: builtins.str = ...,
+        function: global___Function.ValueType = ...,
+        params: collections.abc.Iterable[builtins.str] | None = ...,
+    ) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal[
+            "function", b"function", "name", b"name", "params", b"params"
+        ],
+    ) -> None: ...
+
+global___FunctionalColumn = FunctionalColumn
 
 @typing.final
 class DropRequest(google.protobuf.message.Message):

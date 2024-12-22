@@ -139,7 +139,7 @@ message FilterDataFrameRequest {
 message AggregateRequest {
     string dataframe_uid = 1;
     repeated string group_by = 2;
-    repeated Agg aggs = 3;
+    repeated Column cols = 3;
 }
 
 enum SortDirection {
@@ -151,37 +151,44 @@ message SortColumn {
     SortDirection direction = 2;
 }
 
-enum AggOperation {
+// a function called over 1 or more rows that creates a new value, usually
+// to be put into a new column. the rows this function summarizes may be from
+// one of the following sources:
+// 
+// - a window - in this case, the function will be called in a windowing
+//   operation
+// - a group - in this case, the function will be called in an aggregation
+//   operation
+enum Function {
     SUM = 0;
     COUNT = 1;
     MIN = 2;
     MAX = 3;
     FIRST = 4;
     LAST = 5;
-}
-
-message Agg {
-    string col_name = 1;
-    AggOperation op = 2;
-    optional string alias = 3;
-    optional WindowSpec window = 4;
+    RANK = 6;
 }
 
 message WithColumnRequest {
     // the DataFrame from which to compute the new column
     string dataframe_uid = 1;
-    // the name of the new column. the new column will be available
-    // in a _new_ dataframe. the existing one will not be modified
-    string new_col_name = 2;
-    // the aggregation to be applied, to create the new column
-    Agg aggregation = 3;
+    
+    // The name of the new column
+    string name = 2;
+
+    // the new column to create
+    Column new_col = 3;
 }
 
 message WindowSpec {
     string partition_by = 1;
     string order_by = 2;
-    uint64 left_boundary = 3;
-    uint64 right_boundary = 4;
+    // The left boundary of this window spec. Passing None here indicates
+    // the left side of the window is unbounded.
+    optional uint64 left_boundary = 3;
+    // The right boundary of this window spec. Passing None here indicates
+    // the right side of the window is unbounded.
+    optional uint64 right_boundary = 4;
 }
 
 // the data in a single DataFrame row, including the column names.
@@ -226,7 +233,11 @@ message Column {
         NamedDerivedColumn col_derived = 2;
         LiteralColumn col_lit = 3;
         CoalesceColumn col_coalesce = 4;
+        // calling a function over a window. if this column is present,
+        // then window must be present
+        FunctionalColumn col_functional = 5;
     }
+    optional WindowSpec window = 6;
 }
 
 // A new column that is derived by performing a binary operation 
@@ -272,6 +283,15 @@ message CoalesceColumn {
     // the name of the new column
     string name = 1;
     repeated string cols = 2;
+}
+
+message FunctionalColumn {
+    // the name of the new column
+    string name = 1;
+    // the function to call over the window
+    Function function = 2;
+    // the parameters to pass to the function call
+    repeated string params = 3;
 }
 
 message DropRequest {
