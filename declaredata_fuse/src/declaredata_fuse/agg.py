@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from declaredata_fuse.functions import Function
+from declaredata_fuse.column_abc import Column
 from declaredata_fuse.proto import sds_pb2_grpc, sds_pb2
-from declaredata_fuse.proto.sds_pb2 import Agg
 
 
 @dataclass(frozen=True)
@@ -15,15 +14,13 @@ class AggBuilder[T]:
     new_t: Callable[[str], T]
     """The lambda that can convert a dataframe_uid back to a DataFrame"""
 
-    def agg(self, *funcs: Function) -> T:
-        aggs: list[Agg] = []
-        for func in funcs:
-            aggs.append(func.to_pb())
+    def agg(self, *cols: Column) -> T:
+        cols_pb = [col.to_pb() for col in cols]
 
         req = sds_pb2.AggregateRequest(
             dataframe_uid=self.df_uid,
             group_by=self.group_cols,
-            aggs=aggs,
+            cols=cols_pb,
         )
         resp = self.stub.Aggregate(req)  # type: ignore
         return self.new_t(resp.dataframe_uid)  # type: ignore

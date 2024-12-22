@@ -1,13 +1,10 @@
-from dataclasses import dataclass
 from typing import Any
 from declaredata_fuse.column import Column, SortDirection, SortedColumn
 from declaredata_fuse.column_coalesce import CoalesceColumn
+from declaredata_fuse.column_functional import FunctionalColumn
 from declaredata_fuse.column_literal import LiteralColumn
 from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
-from declaredata_fuse.proto.sds_pb2 import (
-    AggOperation,
-    Agg,
-)
+from declaredata_fuse.proto import sds_pb2
 
 
 def asc(col: ColumnOrName) -> SortedColumn:
@@ -39,77 +36,61 @@ def coalesce(*cols: ColumnOrName) -> Column:
     return CoalesceColumn(_name=new_col_name, cols=cols_reified)
 
 
-def sum(col_name: str) -> "Function":
+def sum(col: ColumnOrName) -> Column:
     """Create a function to sum the values of a column"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.SUM)
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("sum", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.SUM,
+    )
 
 
-def count(col_name: str) -> "Function":
+def count(col: ColumnOrName) -> Column:
     """Create a function to count the number of values in a column"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.COUNT)
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("count", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.COUNT,
+    )
 
 
-def min(col_name: str) -> "Function":
+def min(col: ColumnOrName) -> Column:
     """Create a function to find the minimum value"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.MIN)
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("min", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.MIN,
+    )
 
 
-def max(col_name: str) -> "Function":
+def max(col: ColumnOrName) -> Column:
     """Create a function to find the maximum value"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.MAX)
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("max", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.MAX,
+    )
 
 
-def first(col_name: str) -> "Function":
+def first(col: ColumnOrName) -> Column:
     """Create a function to find the first value"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.FIRST)
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("first", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.FIRST,
+    )
 
 
-def last(col_name: str) -> "Function":
+def last(col: ColumnOrName) -> Column:
     """Create a function to find the last value"""
-    # TODO: return type should be Column here
-    return Function(col_name=col_name, op=AggOperation.LAST)
-
-
-@dataclass(frozen=True)
-class Function:
-    """
-    A function that will be executed over the values of 1 or more columns
-    over a series of rows.
-
-    If you don't already have an instance of Function, the best way to create
-    a new one is with one of the free-standing functions like sum() or count()
-
-    If you do already have an instance of Function, you can create new,
-    derivative Functions from that one using methods like alias() and over()
-    """
-
-    col_name: str
-    op: AggOperation.ValueType
-    alias_col_name: str | None = None
-
-    def alias(self, new_col_name: str) -> "Function":
-        """
-        Create a new function that will put the return value of the existing
-        function into a new column with the specified name
-        """
-        return Function(
-            col_name=self.col_name,
-            alias_col_name=new_col_name,
-            op=self.op,
-        )
-
-    def to_pb(self) -> Agg:
-        """
-        Convert this function into a protobuf-compatible structure.
-        Not for public use.
-        """
-        return Agg(
-            col_name=self.col_name,
-            op=self.op,
-            alias=self.alias_col_name,
-        )
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("last", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.LAST,
+    )

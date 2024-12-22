@@ -242,6 +242,7 @@ class DataFrame:
         Return a new DataFrame with a single column added to it with the given
         name. Values in the new column will be calculated by the given function.
         """
+        assert col is not None
         req = sds_pb2.WithColumnRequest(
             name=new_col_name,
             dataframe_uid=self.df_uid,
