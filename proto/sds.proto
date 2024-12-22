@@ -165,6 +165,7 @@ enum Function {
     MAX = 3;
     FIRST = 4;
     LAST = 5;
+    RANK = 6;
 }
 
 message WithColumnRequest {

@@ -13,8 +13,10 @@ def window_total_violent_crimes(df: DataFrame) -> DataFrame:
 
 
 def window_crimes_per_state(df: DataFrame) -> DataFrame:
-    window_spec = Window.orderBy("state_abbr").rowsBetween(
+    orig_col = "state_abbr"
+    new_col_name = "running_total_state_abbr"
+    window_spec = Window.orderBy(col_name=orig_col).rowsBetween(
         Window.unboundedPreceding,
         10,
     )
-    return df.withColumn("running_total_state_abbr", F.sum("year").over(window_spec))
+    return df.withColumn(new_col_name, F.sum("year").over(window_spec))
