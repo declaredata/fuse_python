@@ -82,7 +82,7 @@ class FuseDataSource:
         Local filesystem filenames are always supported regardless of
         configuration.
         """
-        load_request = sds_pb2.LoadFileRequest(  # type: ignore
+        load_request = sds_pb2.LoadFileRequest(
             session_id=self.session_uid,
             source=file_name,
         )
@@ -146,12 +146,15 @@ class FuseSession:
         Use the existing session to execute SQL and return a DataFrame
         with the results.
         """
-        req = sds_pb2.ExecuteSqlRequest(  # type: ignore[reportAttributeAccessIssue]
+        req = sds_pb2.ExecuteSqlRequest(
             session_uid=self.session_uid,
             query=query,
         )
         resp = self._stub.ExecuteSql(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self._stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self._stub,
+        )
 
     def stop(self):
         """

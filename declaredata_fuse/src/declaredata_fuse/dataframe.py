@@ -8,7 +8,7 @@ from declaredata_fuse.dataframe_impl.sort import to_sorted_col_list
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
 from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
 from declaredata_fuse.column import SelectColumn, DropColumn
-from declaredata_fuse.agg import AggBuilder
+from declaredata_fuse.grouped import Grouped
 from declaredata_fuse.row import Row
 from declaredata_fuse.dataframe_impl.join import reify_join_cols, str_to_join_type
 
@@ -80,7 +80,9 @@ class DataFrame:
             dataframe_uid=self.df_uid,
         )
         response = self.stub.PrettyPrintDataframe(request)  # type: ignore
-        print(response.content)  # type: ignore
+        print(
+            response.content  # type: ignore
+        )
 
     def display(self) -> None:
         """
@@ -102,7 +104,10 @@ class DataFrame:
             dataframe_uid=self.df_uid, start=start, end=end
         )
         resp = self.stub.LimitDataFrame(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def take(self, num: int) -> list[Row]:
         """
@@ -126,16 +131,15 @@ class DataFrame:
         new_uid = drop_impl(df_uid=self.df_uid, stub=self.stub, cols=list(cols))
         return DataFrame(df_uid=new_uid, stub=self.stub)
 
-    def groupBy(self, col_name: str | list[str]) -> AggBuilder["DataFrame"]:
+    def groupBy(self, col_name: str | list[str]) -> Grouped:
         """
         Start building an aggregation on this DataFrame. Start by grouping
         the rows by the values in the given column or columns.
         """
-        return AggBuilder(
+        return Grouped(
             df_uid=self.df_uid,
             stub=self.stub,
             group_cols=([col_name] if isinstance(col_name, str) else col_name),
-            new_t=lambda df_uid: DataFrame(df_uid=df_uid, stub=self.stub),
         )
 
     def __getattr__(self, name: str) -> BasicColumn:
@@ -190,7 +194,10 @@ class DataFrame:
             columns=pb_cols,
         )
         resp = self.stub.SortDataFrame(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def sort(
         self, *cols: str | Column | list[str | Column], **kwargs: Any
@@ -231,7 +238,10 @@ class DataFrame:
             conditions=[pb_cond],
         )
         resp = self.stub.FilterDataFrame(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def where(self, condition: Condition) -> "DataFrame":
         """An alias for df.filter(self, condition)"""
@@ -249,7 +259,10 @@ class DataFrame:
             new_col=col.to_pb(),
         )
         resp = self.stub.WithColumn(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def join(
         self,
@@ -270,14 +283,23 @@ class DataFrame:
             right_cols=on_reified,
         )
         resp = self.stub.Join(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def union(self, other: "DataFrame") -> "DataFrame":
         req = sds_pb2.UnionRequest(df_uid_1=self.df_uid, df_uid_2=other.df_uid)
         resp = self.stub.Union(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
 
     def distinct(self) -> "DataFrame":
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
         resp = self.stub.Distinct(req)  # type: ignore
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self.stub)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
