@@ -1,22 +1,28 @@
-from enum import Enum
+from typing import Literal
 from dataclasses import dataclass
 
+from declaredata_fuse.proto import sds_pb2
 
-class RowBoundary(Enum):
-    """Non-numeric row boundaries"""
 
-    UnboundedPreceding = 1
-    """
-    Indicates that the left boundary of a window should be the begininng of
-    the partition
-    """
+@dataclass(frozen=True)
+class RowBoundary:
+    direction: Literal["preceding", "following"]
 
 
 class Window:
     """Builders for WindowSpecs"""
 
-    unboundedPreceding: RowBoundary = RowBoundary.UnboundedPreceding
-    """See the RowBoundary.UnboundedPreceding for details"""
+    unboundedPreceding: RowBoundary = RowBoundary(direction="preceding")
+    """
+    Indicates that the left boundary of a window should be the begininng of
+    the partition
+    """
+
+    unboundedFollowing: RowBoundary = RowBoundary(direction="following")
+    """
+    Indicates that the right boundary of a window should be at the end
+    of the partition.
+    """
 
     @staticmethod
     def orderBy(col_name: str) -> "WindowSpec":
@@ -39,10 +45,18 @@ class Window:
 class WindowSpec:
     """The specification for a window query"""
 
-    left: RowBoundary | int = RowBoundary.UnboundedPreceding
-    """The specification for the left side of the window"""
-    right: RowBoundary | int = 0
-    """The specification for the right side of the window"""
+    left: int | None = None
+    """
+    The specification for the left side of the window.
+
+    Passing None here indicates an unbounded left side of the window.
+    """
+    right: int | None = None
+    """
+    The specification for the right side of the window.
+
+    Passing None here indicates an unbounded right side of the window.
+    """
     order_col: str | None = None
     """
     The column whose values should be used to order the rows in 
@@ -77,13 +91,21 @@ class WindowSpec:
         return self
 
     def rowsBetween(
-        self, left: RowBoundary | int, right: RowBoundary | int
+        self, left: int | RowBoundary, right: int | RowBoundary
     ) -> "WindowSpec":
         """
         Modify this window spec to alter the "window frame". In other words,
         specify the left and right boundaries of each window inside an
         arbitrary partition.
         """
-        self.left = left
-        self.right = right
+        self.left = left if isinstance(left, int) else None
+        self.right = right if isinstance(right, int) else None
         return self
+
+    def to_pb2(self) -> sds_pb2.WindowSpec:
+        return sds_pb2.WindowSpec(
+            partition_by=self.partition_col or "",
+            order_by=self.order_col or "",
+            left_boundary=self.left,
+            right_boundary=self.right,
+        )
