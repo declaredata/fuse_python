@@ -90,7 +90,9 @@ class WindowSpec:
         self.order_col = col_name
         return self
 
-    def rowsBetween(self, left: int | RowBoundary, right: int | RowBoundary) -> "WindowSpec":
+    def rowsBetween(
+        self, left: int | RowBoundary, right: int | RowBoundary
+    ) -> "WindowSpec":
         """
         Modify this window spec to alter the "window frame". In other words,
         specify the left and right boundaries of each window inside an
