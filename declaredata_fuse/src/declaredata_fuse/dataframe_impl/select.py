@@ -7,5 +7,5 @@ def select_impl(
 ) -> str:
     derived_columns = [select_column_to_pb(col) for col in cols]
     req = sds_pb2.SelectRequest(df_uid=df_uid, columns=derived_columns)
-    resp = stub.Select(req)
-    return resp.dataframe_uid
+    resp = stub.Select(req)  # type: ignore
+    return resp.dataframe_uid  # type: ignore

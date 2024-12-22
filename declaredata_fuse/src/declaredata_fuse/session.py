@@ -51,9 +51,9 @@ class FuseSessionBuilder:
         """Build the new FuseSession"""
         channel = insecure_channel(target=f"{self._host}:{self._port}")
         stub = sds_pb2_grpc.sdsStub(channel=channel)
-        resp = stub.CreateSession(sds_pb2.Empty())
+        resp = stub.CreateSession(sds_pb2.Empty())  # type: ignore
         return FuseSession(
-            session_uid=resp.session_uid,
+            session_uid=resp.session_uid,  # type: ignore
             _channel=channel,
             _stub=stub,
             _app_name=self._app_name,
@@ -87,11 +87,11 @@ class FuseDataSource:
             source=file_name,
         )
 
-        response = self.stub.LoadCSV(load_request)
-        df_uid: str = response.dataframe_uid
+        response = self.stub.LoadCSV(load_request)  # type: ignore
+        df_uid: str = response.dataframe_uid  # type: ignore
         return DataFrame(
             stub=self.stub,
-            df_uid=df_uid,
+            df_uid=df_uid,  # type: ignore
         )
 
 
@@ -150,8 +150,11 @@ class FuseSession:
             session_uid=self.session_uid,
             query=query,
         )
-        resp = self._stub.ExecuteSql(req)
-        return DataFrame(df_uid=resp.dataframe_uid, stub=self._stub)
+        resp = self._stub.ExecuteSql(req)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self._stub,
+        )
 
     def stop(self):
         """
