@@ -472,6 +472,7 @@ class WindowSpec(google.protobuf.message.Message):
     ORDER_BY_FIELD_NUMBER: builtins.int
     LEFT_BOUNDARY_FIELD_NUMBER: builtins.int
     RIGHT_BOUNDARY_FIELD_NUMBER: builtins.int
+    IS_RANGE_FIELD_NUMBER: builtins.int
     partition_by: builtins.str
     order_by: builtins.str
     left_boundary: builtins.int
@@ -482,6 +483,10 @@ class WindowSpec(google.protobuf.message.Message):
     """The right boundary of this window spec. Passing None here indicates
     the right side of the window is unbounded.
     """
+    is_range: builtins.bool
+    """true if `left_boundary` and `right_boundary` specify a range of 
+    values, rather than rows. false otherwise
+    """
     def __init__(
         self,
         *,
@@ -489,6 +494,7 @@ class WindowSpec(google.protobuf.message.Message):
         order_by: builtins.str = ...,
         left_boundary: builtins.int | None = ...,
         right_boundary: builtins.int | None = ...,
+        is_range: builtins.bool = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -510,6 +516,8 @@ class WindowSpec(google.protobuf.message.Message):
             b"_left_boundary",
             "_right_boundary",
             b"_right_boundary",
+            "is_range",
+            b"is_range",
             "left_boundary",
             b"left_boundary",
             "order_by",

@@ -81,6 +81,12 @@ class WindowSpec:
     may change over time.
     """
 
+    is_range: bool = False
+    """
+    True if this spec defines a range of values, False if it defines 
+    a range of rows
+    """
+
     def partitionBy(self, col_name: str) -> "WindowSpec":
         """
         Modify this window spec to partition on the values of the given
@@ -91,6 +97,7 @@ class WindowSpec:
             right=self.right,
             order_col=self.order_col,
             partition_col=col_name,
+            is_range=self.is_range,
         )
 
     def orderBy(self, col_name: str) -> "WindowSpec":
@@ -103,6 +110,7 @@ class WindowSpec:
             right=self.right,
             order_col=col_name,
             partition_col=self.partition_col,
+            is_range=self.is_range,
         )
 
     def rowsBetween(
@@ -122,6 +130,7 @@ class WindowSpec:
             right=abs(right) if isinstance(right, int) else None,
             order_col=self.order_col,
             partition_col=self.partition_col,
+            is_range=False,
         )
 
     def rangeBetween(
@@ -130,7 +139,7 @@ class WindowSpec:
         right: int | RowBoundary,
     ) -> "WindowSpec":
         """
-        Similarly to self.rowsBetween(left, right), except left and right 
+        Similar to self.rowsBetween(left, right), except left and right params
         express a range of _values_ rather than rows to include in the window
         frame.
 
@@ -138,7 +147,13 @@ class WindowSpec:
 
         https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.Window.rangeBetween.html
         """
-        return self.rowsBetween(left, right)
+        return WindowSpec(
+            left=left if isinstance(left, int) else None,
+            right=right if isinstance(right, int) else None,
+            order_col=self.order_col,
+            partition_col=self.partition_col,
+            is_range=True,
+        )
 
     def to_pb2(self) -> sds_pb2.WindowSpec:
         return sds_pb2.WindowSpec(
