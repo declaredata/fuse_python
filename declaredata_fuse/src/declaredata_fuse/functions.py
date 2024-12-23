@@ -94,3 +94,29 @@ def last(col: ColumnOrName) -> Column:
         args=[col_name],
         function=sds_pb2.Function.LAST,
     )
+
+
+def mean(col: ColumnOrName) -> Column:
+    """
+    Create a function to find the average of values in a window or group
+    of rows
+    """
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("mean", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.MEAN,
+    )
+
+
+def mode(col: ColumnOrName) -> Column:
+    """
+    Create a function to find the mode of values in a window or group
+    of rows
+    """
+    col_name = col_or_name_to_basic(col).cur_name()
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("mdoe", col_name),
+        args=[col_name],
+        function=sds_pb2.Function.MODE,
+    )

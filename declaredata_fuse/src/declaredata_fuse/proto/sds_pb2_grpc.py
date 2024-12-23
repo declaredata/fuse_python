@@ -233,7 +233,9 @@ class sdsServicer(object):
         raise NotImplementedError("Method not implemented!")
 
     def Aggregate(self, request, context):
-        """group by, then aggregate a dataframe's data, the return a new dataframe"""
+        """Group rows in a DataFrame, then compute an aggregate across all the
+        rows in each group
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")

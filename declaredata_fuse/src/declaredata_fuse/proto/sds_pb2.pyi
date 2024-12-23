@@ -54,6 +54,9 @@ class _FunctionEnumTypeWrapper(
     MAX: _Function.ValueType  # 3
     FIRST: _Function.ValueType  # 4
     LAST: _Function.ValueType  # 5
+    RANK: _Function.ValueType  # 6
+    MEAN: _Function.ValueType  # 7
+    MODE: _Function.ValueType  # 8
 
 class Function(_Function, metaclass=_FunctionEnumTypeWrapper):
     """a function called over 1 or more rows that creates a new value, usually
@@ -72,6 +75,9 @@ MIN: Function.ValueType  # 2
 MAX: Function.ValueType  # 3
 FIRST: Function.ValueType  # 4
 LAST: Function.ValueType  # 5
+RANK: Function.ValueType  # 6
+MEAN: Function.ValueType  # 7
+MODE: Function.ValueType  # 8
 global___Function = Function
 
 class _NullValue:
@@ -709,8 +715,20 @@ class Column(google.protobuf.message.Message):
     def col_coalesce(self) -> global___CoalesceColumn: ...
     @property
     def col_functional(self) -> global___FunctionalColumn:
-        """calling a function over a window. if this column is present,
-        then window must be present
+        """calling a function over 1 or more existing columns to make
+        a new column.
+
+        this Column type is very versatile. many, but not all functions
+        are aggregation functions or window functions. aggregations are
+        handled with the `AggregationRequest` message, so the primary uses
+        of this column type are as follows:
+
+        1. an aggregation over the entire DataFrame (i.e. there is only
+           one group)
+        2. a window function
+
+        if option (2) is intended, then the below window parameter must
+        be passed
         """
 
     @property
