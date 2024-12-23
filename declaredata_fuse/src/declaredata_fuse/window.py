@@ -111,11 +111,15 @@ class WindowSpec:
         """
         Specify the window frame to start at a given number of rows before
         the current one (left), and end a given number of rows after the
-        current one (right)
+        current one (right).
+
+        PySpark docs for reference:
+
+        https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.Window.rowsBetween.html
         """
         return WindowSpec(
-            left=left if isinstance(left, int) else None,
-            right=right if isinstance(right, int) else None,
+            left=abs(left) if isinstance(left, int) else None,
+            right=abs(right) if isinstance(right, int) else None,
             order_col=self.order_col,
             partition_col=self.partition_col,
         )
@@ -125,6 +129,15 @@ class WindowSpec:
         left: int | RowBoundary,
         right: int | RowBoundary,
     ) -> "WindowSpec":
+        """
+        Similarly to self.rowsBetween(left, right), except left and right 
+        express a range of _values_ rather than rows to include in the window
+        frame.
+
+        PySpark docs for reference:
+
+        https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.Window.rangeBetween.html
+        """
         return self.rowsBetween(left, right)
 
     def to_pb2(self) -> sds_pb2.WindowSpec:
