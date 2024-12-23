@@ -57,6 +57,7 @@ class _FunctionEnumTypeWrapper(
     RANK: _Function.ValueType  # 6
     MEAN: _Function.ValueType  # 7
     MODE: _Function.ValueType  # 8
+    ROW_NUMBER: _Function.ValueType  # 9
 
 class Function(_Function, metaclass=_FunctionEnumTypeWrapper):
     """a function called over 1 or more rows that creates a new value, usually
@@ -78,6 +79,7 @@ LAST: Function.ValueType  # 5
 RANK: Function.ValueType  # 6
 MEAN: Function.ValueType  # 7
 MODE: Function.ValueType  # 8
+ROW_NUMBER: Function.ValueType  # 9
 global___Function = Function
 
 class _NullValue:

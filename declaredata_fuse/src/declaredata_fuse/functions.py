@@ -112,11 +112,27 @@ def mean(col: ColumnOrName) -> Column:
 def mode(col: ColumnOrName) -> Column:
     """
     Create a function to find the mode of values in a window or group
-    of rows
+    of rows. If there is no unique mode (i.e. no single value that occurs more
+    often than all others), the value in the new column will be null
     """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
-        _name=FunctionalColumn.col_name("mdoe", col_name),
+        _name=FunctionalColumn.col_name("mode", col_name),
         args=[col_name],
         function=sds_pb2.Function.MODE,
+    )
+
+
+def row_number() -> Column:
+    """
+    Create a function to return a sequential number, starting at 1, representing
+    the current row within a window partition.
+
+    This function must not be used in non-windowed contexts.
+    """
+    col_name = "row_number()"
+    return FunctionalColumn(
+        _name=FunctionalColumn.col_name("row_number", col_name),
+        args=[],
+        function=sds_pb2.Function.ROW_NUMBER,
     )
