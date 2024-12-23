@@ -184,14 +184,14 @@ message WithColumnRequest {
 }
 
 message WindowSpec {
-    string partition_by = 1;
-    string order_by = 2;
+    optional string partition_by = 1;
+    optional string order_by = 2;
     // The left boundary of this window spec. Passing None here indicates
     // the left side of the window is unbounded.
-    optional uint64 left_boundary = 3;
+    optional int64 left_boundary = 3;
     // The right boundary of this window spec. Passing None here indicates
     // the right side of the window is unbounded.
-    optional uint64 right_boundary = 4;
+    optional int64 right_boundary = 4;
     // true if `left_boundary` and `right_boundary` specify a range of 
     // values, rather than rows. false otherwise
     bool is_range = 5;

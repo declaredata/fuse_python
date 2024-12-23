@@ -126,8 +126,8 @@ class WindowSpec:
         https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.Window.rowsBetween.html
         """
         return WindowSpec(
-            left=abs(left) if isinstance(left, int) else None,
-            right=abs(right) if isinstance(right, int) else None,
+            left=left if isinstance(left, int) else None,
+            right=right if isinstance(right, int) else None,
             order_col=self.order_col,
             partition_col=self.partition_col,
             is_range=False,
@@ -157,8 +157,8 @@ class WindowSpec:
 
     def to_pb2(self) -> sds_pb2.WindowSpec:
         return sds_pb2.WindowSpec(
-            partition_by=self.partition_col or "",
-            order_by=self.order_col or "",
+            partition_by=self.partition_col,
+            order_by=self.order_col,
             left_boundary=self.left,
             right_boundary=self.right,
         )

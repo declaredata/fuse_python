@@ -490,8 +490,8 @@ class WindowSpec(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        partition_by: builtins.str = ...,
-        order_by: builtins.str = ...,
+        partition_by: builtins.str | None = ...,
+        order_by: builtins.str | None = ...,
         left_boundary: builtins.int | None = ...,
         right_boundary: builtins.int | None = ...,
         is_range: builtins.bool = ...,
@@ -501,10 +501,18 @@ class WindowSpec(google.protobuf.message.Message):
         field_name: typing.Literal[
             "_left_boundary",
             b"_left_boundary",
+            "_order_by",
+            b"_order_by",
+            "_partition_by",
+            b"_partition_by",
             "_right_boundary",
             b"_right_boundary",
             "left_boundary",
             b"left_boundary",
+            "order_by",
+            b"order_by",
+            "partition_by",
+            b"partition_by",
             "right_boundary",
             b"right_boundary",
         ],
@@ -514,6 +522,10 @@ class WindowSpec(google.protobuf.message.Message):
         field_name: typing.Literal[
             "_left_boundary",
             b"_left_boundary",
+            "_order_by",
+            b"_order_by",
+            "_partition_by",
+            b"_partition_by",
             "_right_boundary",
             b"_right_boundary",
             "is_range",
@@ -532,6 +544,14 @@ class WindowSpec(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing.Literal["_left_boundary", b"_left_boundary"]
     ) -> typing.Literal["left_boundary"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_order_by", b"_order_by"]
+    ) -> typing.Literal["order_by"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_partition_by", b"_partition_by"]
+    ) -> typing.Literal["partition_by"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing.Literal["_right_boundary", b"_right_boundary"]
