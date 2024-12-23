@@ -169,6 +169,7 @@ enum Function {
     RANK = 6;
     MEAN = 7;
     MODE = 8;
+    ROW_NUMBER = 9;
 }
 
 message WithColumnRequest {
