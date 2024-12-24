@@ -1,22 +1,3 @@
-__all__ = [
-    'column',
-    'column_abc',
-    'column_alias',
-    'column_coalesce',
-    'column_filter',
-    'column_functional',
-    'column_literal',
-    'column_op',
-    'column_or_name',
-    'dataframe',
-    'dataframe_impl',
-    'functions',
-    'grouped',
-    'row',
-    'session',
-    'window'
-]
-
 r'''
 # PySpark API for DeclareData Fuse Server
 
@@ -118,3 +99,24 @@ df.groupBy("year").agg(
 ).show(10)
 ```
 '''
+
+__all__ = [
+    'column',
+    'column_abc',
+    'column_alias',
+    'column_coalesce',
+    'column_filter',
+    'column_functional',
+    'column_literal',
+    'column_op',
+    'column_or_name',
+    'dataframe',
+    'dataframe_impl',
+    'functions',
+    'grouped',
+    'row',
+    'session',
+    'window'
+]
+
+__version__ = "0.1.0"  # Add version if you haven't already
