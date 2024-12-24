@@ -54,6 +54,10 @@ class _FunctionEnumTypeWrapper(
     MAX: _Function.ValueType  # 3
     FIRST: _Function.ValueType  # 4
     LAST: _Function.ValueType  # 5
+    RANK: _Function.ValueType  # 6
+    MEAN: _Function.ValueType  # 7
+    MODE: _Function.ValueType  # 8
+    ROW_NUMBER: _Function.ValueType  # 9
 
 class Function(_Function, metaclass=_FunctionEnumTypeWrapper):
     """a function called over 1 or more rows that creates a new value, usually
@@ -72,6 +76,10 @@ MIN: Function.ValueType  # 2
 MAX: Function.ValueType  # 3
 FIRST: Function.ValueType  # 4
 LAST: Function.ValueType  # 5
+RANK: Function.ValueType  # 6
+MEAN: Function.ValueType  # 7
+MODE: Function.ValueType  # 8
+ROW_NUMBER: Function.ValueType  # 9
 global___Function = Function
 
 class _NullValue:
@@ -464,6 +472,7 @@ class WindowSpec(google.protobuf.message.Message):
     ORDER_BY_FIELD_NUMBER: builtins.int
     LEFT_BOUNDARY_FIELD_NUMBER: builtins.int
     RIGHT_BOUNDARY_FIELD_NUMBER: builtins.int
+    IS_RANGE_FIELD_NUMBER: builtins.int
     partition_by: builtins.str
     order_by: builtins.str
     left_boundary: builtins.int
@@ -474,23 +483,36 @@ class WindowSpec(google.protobuf.message.Message):
     """The right boundary of this window spec. Passing None here indicates
     the right side of the window is unbounded.
     """
+    is_range: builtins.bool
+    """true if `left_boundary` and `right_boundary` specify a range of 
+    values, rather than rows. false otherwise
+    """
     def __init__(
         self,
         *,
-        partition_by: builtins.str = ...,
-        order_by: builtins.str = ...,
+        partition_by: builtins.str | None = ...,
+        order_by: builtins.str | None = ...,
         left_boundary: builtins.int | None = ...,
         right_boundary: builtins.int | None = ...,
+        is_range: builtins.bool = ...,
     ) -> None: ...
     def HasField(
         self,
         field_name: typing.Literal[
             "_left_boundary",
             b"_left_boundary",
+            "_order_by",
+            b"_order_by",
+            "_partition_by",
+            b"_partition_by",
             "_right_boundary",
             b"_right_boundary",
             "left_boundary",
             b"left_boundary",
+            "order_by",
+            b"order_by",
+            "partition_by",
+            b"partition_by",
             "right_boundary",
             b"right_boundary",
         ],
@@ -500,8 +522,14 @@ class WindowSpec(google.protobuf.message.Message):
         field_name: typing.Literal[
             "_left_boundary",
             b"_left_boundary",
+            "_order_by",
+            b"_order_by",
+            "_partition_by",
+            b"_partition_by",
             "_right_boundary",
             b"_right_boundary",
+            "is_range",
+            b"is_range",
             "left_boundary",
             b"left_boundary",
             "order_by",
@@ -516,6 +544,14 @@ class WindowSpec(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing.Literal["_left_boundary", b"_left_boundary"]
     ) -> typing.Literal["left_boundary"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_order_by", b"_order_by"]
+    ) -> typing.Literal["order_by"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing.Literal["_partition_by", b"_partition_by"]
+    ) -> typing.Literal["partition_by"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing.Literal["_right_boundary", b"_right_boundary"]
@@ -709,8 +745,20 @@ class Column(google.protobuf.message.Message):
     def col_coalesce(self) -> global___CoalesceColumn: ...
     @property
     def col_functional(self) -> global___FunctionalColumn:
-        """calling a function over a window. if this column is present,
-        then window must be present
+        """calling a function over 1 or more existing columns to make
+        a new column.
+
+        this Column type is very versatile. many, but not all functions
+        are aggregation functions or window functions. aggregations are
+        handled with the `AggregationRequest` message, so the primary uses
+        of this column type are as follows:
+
+        1. an aggregation over the entire DataFrame (i.e. there is only
+           one group)
+        2. a window function
+
+        if option (2) is intended, then the below window parameter must
+        be passed
         """
 
     @property

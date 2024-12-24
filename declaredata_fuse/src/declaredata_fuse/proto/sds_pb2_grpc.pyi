@@ -119,7 +119,9 @@ class sdsStub:
         proto.sds_pb2.AggregateRequest,
         proto.sds_pb2.DataFrameUID,
     ]
-    """group by, then aggregate a dataframe's data, the return a new dataframe"""
+    """Group rows in a DataFrame, then compute an aggregate across all the
+    rows in each group
+    """
 
     WithColumn: grpc.UnaryUnaryMultiCallable[
         proto.sds_pb2.WithColumnRequest,
@@ -279,7 +281,9 @@ class sdsAsyncStub:
         proto.sds_pb2.AggregateRequest,
         proto.sds_pb2.DataFrameUID,
     ]
-    """group by, then aggregate a dataframe's data, the return a new dataframe"""
+    """Group rows in a DataFrame, then compute an aggregate across all the
+    rows in each group
+    """
 
     WithColumn: grpc.aio.UnaryUnaryMultiCallable[
         proto.sds_pb2.WithColumnRequest,
@@ -496,7 +500,9 @@ class sdsServicer(metaclass=abc.ABCMeta):
         proto.sds_pb2.DataFrameUID,
         collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
-        """group by, then aggregate a dataframe's data, the return a new dataframe"""
+        """Group rows in a DataFrame, then compute an aggregate across all the
+        rows in each group
+        """
 
     @abc.abstractmethod
     def WithColumn(

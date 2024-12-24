@@ -167,6 +167,9 @@ enum Function {
     FIRST = 4;
     LAST = 5;
     RANK = 6;
+    MEAN = 7;
+    MODE = 8;
+    ROW_NUMBER = 9;
 }
 
 message WithColumnRequest {
@@ -181,14 +184,17 @@ message WithColumnRequest {
 }
 
 message WindowSpec {
-    string partition_by = 1;
-    string order_by = 2;
+    optional string partition_by = 1;
+    optional string order_by = 2;
     // The left boundary of this window spec. Passing None here indicates
     // the left side of the window is unbounded.
-    optional uint64 left_boundary = 3;
+    optional int64 left_boundary = 3;
     // The right boundary of this window spec. Passing None here indicates
     // the right side of the window is unbounded.
-    optional uint64 right_boundary = 4;
+    optional int64 right_boundary = 4;
+    // true if `left_boundary` and `right_boundary` specify a range of 
+    // values, rather than rows. false otherwise
+    bool is_range = 5;
 }
 
 // the data in a single DataFrame row, including the column names.
@@ -233,8 +239,20 @@ message Column {
         NamedDerivedColumn col_derived = 2;
         LiteralColumn col_lit = 3;
         CoalesceColumn col_coalesce = 4;
-        // calling a function over a window. if this column is present,
-        // then window must be present
+        // calling a function over 1 or more existing columns to make
+        // a new column.
+        // 
+        // this Column type is very versatile. many, but not all functions 
+        // are aggregation functions or window functions. aggregations are
+        // handled with the `AggregationRequest` message, so the primary uses
+        // of this column type are as follows:
+        // 
+        // 1. an aggregation over the entire DataFrame (i.e. there is only
+        //    one group)
+        // 2. a window function
+        // 
+        // if option (2) is intended, then the below window parameter must
+        // be passed
         FunctionalColumn col_functional = 5;
     }
     optional WindowSpec window = 6;
