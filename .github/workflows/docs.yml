@@ -23,8 +23,7 @@ jobs:
       - run: pip install pdoc
       # ADJUST THIS: build your documentation into docs/.
       # We use a custom build script for pdoc itself, ideally you just run `pdoc -o docs/ ...` here.
-      - run: pwd
-      - run: pdoc -o docs/ -t docs/templates/ declaredata_fuse/src/declaredata_fuse/
+      - run: pdoc -o docs/ --no-include-undocumented -t docs/templates/ declaredata_fuse/src/declaredata_fuse/
 
       - uses: actions/upload-pages-artifact@v3
         with:
