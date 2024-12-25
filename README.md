@@ -116,7 +116,7 @@ df.groupBy("year").agg(
 
 # Other Documentation 🚧 WIP
 
-* API documentation is available in the [`declaredata_fuse`](./declaredata_fuse/) directory
+* Additional API documentation is also available [`here`](https://docs.declaredata.com)
 * Usage examples can be found in the [`bench`](./bench/) directory
 
 # Issue Reporting
