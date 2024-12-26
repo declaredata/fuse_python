@@ -1,4 +1,4 @@
-r'''
+r"""
 # PySpark API for DeclareData Fuse Server
 
 A Python client library for **DeclareData Fuse Server** that provides a PySpark-compatible API. Scale down your Apache Spark clusters and speed up workloads without changing your code.
@@ -98,7 +98,7 @@ df.groupBy("year").agg(
     df.highest_population_of_year, ascending=False
 ).show(10)
 ```
-'''
+"""
 
 from declaredata_fuse import column
 from declaredata_fuse import column_abc
@@ -118,22 +118,22 @@ from declaredata_fuse import session
 from declaredata_fuse import window
 
 __all__ = [
-    'column',
-    'column_abc',
-    'column_alias',
-    'column_coalesce',
-    'column_filter',
-    'column_functional',
-    'column_literal',
-    'column_op',
-    'column_or_name',
-    'dataframe',
-    'dataframe_impl',
-    'functions',
-    'grouped',
-    'row',
-    'session',
-    'window'
+    "column",
+    "column_abc",
+    "column_alias",
+    "column_coalesce",
+    "column_filter",
+    "column_functional",
+    "column_literal",
+    "column_op",
+    "column_or_name",
+    "dataframe",
+    "dataframe_impl",
+    "functions",
+    "grouped",
+    "row",
+    "session",
+    "window",
 ]
 
 __version__ = "0.1.0"  # Add version if you haven't already

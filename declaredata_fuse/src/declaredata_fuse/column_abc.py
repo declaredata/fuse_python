@@ -53,7 +53,7 @@ class Column(ABC):
         """
         Specify that the computation used to derive this column should be
         applied over a window of rows.
-        
+
         Note that only some types of computations support windowing. If you
         call this method on a `Column` that is using an unsupported computation,
         this method will raise a `NotImplementedError`.

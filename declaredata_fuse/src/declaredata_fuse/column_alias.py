@@ -12,7 +12,7 @@ class AliasedColumn(Column):
 
     def alias(self, new_name: str) -> "Column":
         """
-        Create a new column with the same data as this one, but with a 
+        Create a new column with the same data as this one, but with a
         new name.
         """
         return AliasedColumn(orig_column=self.orig_column, new_name=new_name)

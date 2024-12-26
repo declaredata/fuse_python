@@ -11,6 +11,7 @@ class CoalesceColumn(BasicColumn):
     A column that is created by selecting the first non-null value from a list
     of other columns in the same row.
     """
+
     cols: list[Column]
     """The columns from which to look for non-null values."""
 
