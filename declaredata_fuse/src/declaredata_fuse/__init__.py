@@ -24,7 +24,7 @@ Run the Fuse server using Docker:
 docker run -p 8080:8080 ghcr.io/declaredata/fuse:latest
 ```
 
-> **Note:** All images are published to our GitHub Package Docker repository, which can be found at [github.com/orgs/declaredata/packages/container/package/fuse](https://github.com/orgs/declaredata/packages/container/package/fuse).
+> **Note:** All images are published to our GitHub Package Docker repository, which can be found at [DeclareData Fuse Packages](https://github.com/orgs/declaredata/packages/container/package/fuse).
 
 <!--
 ### Method 2: Direct Binary Download
