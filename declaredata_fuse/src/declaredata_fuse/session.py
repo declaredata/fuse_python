@@ -86,7 +86,7 @@ class FuseDataSource:
         resp = self.stub.LoadCSV(load_req)  # type: ignore
         return DataFrame(
             stub=self.stub,
-            df_uid=resp.dataframe_uid  # type: ignore
+            df_uid=resp.dataframe_uid,  # type: ignore
         )
 
     def json(self, file_name: str) -> DataFrame:
@@ -100,7 +100,7 @@ class FuseDataSource:
             stub=self.stub,
             df_uid=resp.dataframe_uid,  # type: ignore
         )
-    
+
     def parquet(self, file_name: str) -> DataFrame:
         """
         Same as `self.csv(file_name)`, except this function expects the file
@@ -112,7 +112,15 @@ class FuseDataSource:
             stub=self.stub,
             df_uid=resp.dataframe_uid,  # type: ignore
         )
-    
+
+    def delta(self, file_name: str) -> DataFrame:
+        load_req = self._load_file_req(file_name)
+        resp = self.stub.LoadDeltaTable(load_req)  # type: ignore
+        return DataFrame(
+            stub=self.stub,
+            df_uid=resp.dataframe_uid,  # type: ignore
+        )
+
     def _load_file_req(self, file_name: str) -> sds_pb2.LoadFileRequest:
         return sds_pb2.LoadFileRequest(
             session_id=self.session_uid,

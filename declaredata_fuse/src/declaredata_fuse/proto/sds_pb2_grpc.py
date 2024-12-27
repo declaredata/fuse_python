@@ -48,6 +48,12 @@ class sdsStub(object):
             response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
             _registered_method=True,
         )
+        self.LoadDeltaTable = channel.unary_unary(
+            "/sds.sds/LoadDeltaTable",
+            request_serializer=proto_dot_sds__pb2.LoadFileRequest.SerializeToString,
+            response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            _registered_method=True,
+        )
         self.CloseSession = channel.unary_unary(
             "/sds.sds/CloseSession",
             request_serializer=proto_dot_sds__pb2.SessionUID.SerializeToString,
@@ -174,6 +180,12 @@ class sdsServicer(object):
 
     def LoadJSON(self, request, context):
         """Load a JSON file into a DataFrame, then return its UID"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
+    def LoadDeltaTable(self, request, context):
+        """Load a Delta Table into a DataFrame, then return its UID"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
@@ -327,6 +339,11 @@ def add_sdsServicer_to_server(servicer, server):
         ),
         "LoadJSON": grpc.unary_unary_rpc_method_handler(
             servicer.LoadJSON,
+            request_deserializer=proto_dot_sds__pb2.LoadFileRequest.FromString,
+            response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+        ),
+        "LoadDeltaTable": grpc.unary_unary_rpc_method_handler(
+            servicer.LoadDeltaTable,
             request_deserializer=proto_dot_sds__pb2.LoadFileRequest.FromString,
             response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
         ),
@@ -557,6 +574,36 @@ class sds(object):
             request,
             target,
             "/sds.sds/LoadJSON",
+            proto_dot_sds__pb2.LoadFileRequest.SerializeToString,
+            proto_dot_sds__pb2.DataFrameUID.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True,
+        )
+
+    @staticmethod
+    def LoadDeltaTable(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/sds.sds/LoadDeltaTable",
             proto_dot_sds__pb2.LoadFileRequest.SerializeToString,
             proto_dot_sds__pb2.DataFrameUID.FromString,
             options,
