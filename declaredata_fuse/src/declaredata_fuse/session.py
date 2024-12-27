@@ -82,16 +82,41 @@ class FuseDataSource:
         Local filesystem filenames are always supported regardless of
         configuration.
         """
-        load_request = sds_pb2.LoadFileRequest(
-            session_id=self.session_uid,
-            source=file_name,
-        )
-
-        response = self.stub.LoadCSV(load_request)  # type: ignore
-        df_uid: str = response.dataframe_uid  # type: ignore
+        load_req = self._load_file_req(file_name)
+        resp = self.stub.LoadCSV(load_req)  # type: ignore
         return DataFrame(
             stub=self.stub,
-            df_uid=df_uid,  # type: ignore
+            df_uid=resp.dataframe_uid  # type: ignore
+        )
+
+    def json(self, file_name: str) -> DataFrame:
+        """
+        Same as `self.csv(file_name)`, except this function expects the file
+        located at `file_name` to be a JSON file rather than a CSV
+        """
+        load_req = self._load_file_req(file_name)
+        resp = self.stub.LoadJSON(load_req)  # type: ignore
+        return DataFrame(
+            stub=self.stub,
+            df_uid=resp.dataframe_uid,  # type: ignore
+        )
+    
+    def parquet(self, file_name: str) -> DataFrame:
+        """
+        Same as `self.csv(file_name)`, except this function expects the file
+        located at `file_name` to be a Parquet file rather than a CSV
+        """
+        load_req = self._load_file_req(file_name)
+        resp = self.stub.LoadParquet(load_req)  # type: ignore
+        return DataFrame(
+            stub=self.stub,
+            df_uid=resp.dataframe_uid,  # type: ignore
+        )
+    
+    def _load_file_req(self, file_name: str) -> sds_pb2.LoadFileRequest:
+        return sds_pb2.LoadFileRequest(
+            session_id=self.session_uid,
+            source=file_name,
         )
 
 
