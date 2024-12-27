@@ -18,6 +18,8 @@ service sds {
     rpc LoadParquet(LoadFileRequest) returns (DataFrameUID);
     // Load a JSON file into a DataFrame, then return its UID
     rpc LoadJSON(LoadFileRequest) returns (DataFrameUID);
+    // Load a Delta Table into a DataFrame, then return its UID
+    rpc LoadDeltaTable(LoadFileRequest) returns (DataFrameUID);
 
     ////////////////////////////////////////
     // session destruction methods
