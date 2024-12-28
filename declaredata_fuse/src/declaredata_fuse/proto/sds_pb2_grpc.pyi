@@ -61,6 +61,12 @@ class sdsStub:
     ]
     """Load a JSON file into a DataFrame, then return its UID"""
 
+    LoadDeltaTable: grpc.UnaryUnaryMultiCallable[
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Load a Delta Table into a DataFrame, then return its UID"""
+
     CloseSession: grpc.UnaryUnaryMultiCallable[
         proto.sds_pb2.SessionUID,
         proto.sds_pb2.Empty,
@@ -222,6 +228,12 @@ class sdsAsyncStub:
         proto.sds_pb2.DataFrameUID,
     ]
     """Load a JSON file into a DataFrame, then return its UID"""
+
+    LoadDeltaTable: grpc.aio.UnaryUnaryMultiCallable[
+        proto.sds_pb2.LoadFileRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Load a Delta Table into a DataFrame, then return its UID"""
 
     CloseSession: grpc.aio.UnaryUnaryMultiCallable[
         proto.sds_pb2.SessionUID,
@@ -408,6 +420,17 @@ class sdsServicer(metaclass=abc.ABCMeta):
         collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
     ]:
         """Load a JSON file into a DataFrame, then return its UID"""
+
+    @abc.abstractmethod
+    def LoadDeltaTable(
+        self,
+        request: proto.sds_pb2.LoadFileRequest,
+        context: _ServicerContext,
+    ) -> typing.Union[
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
+    ]:
+        """Load a Delta Table into a DataFrame, then return its UID"""
 
     @abc.abstractmethod
     def CloseSession(
