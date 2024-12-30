@@ -30,6 +30,9 @@ jobs:
           TAG: latest
         run: |
           docker pull ghcr.io/declaredata/fuse:${TAG}
-          docker run -d -p 8080:8080 ghcr.io/declaredata/fuse:${TAG}
+          FUSE_DOCKER_ID=$(docker run -d -p 8080:8080 ghcr.io/declaredata/fuse:${TAG})
+          echo "waiting 2s for Fuse server, then showing logs"
+          sleep 2
+          docker logs ${FUSE_DOCKER_ID}
       - name: run benchmarks
         run: make run-bench
