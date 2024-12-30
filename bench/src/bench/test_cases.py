@@ -8,7 +8,6 @@ from bench.coalesce import coalesce_basic
 from bench.distinct import distinct_basic
 from bench.drop import drop
 from bench.selects import select
-from bench.basic_df import simple, with_lit
 from bench.test_case.runner import TestCase
 from bench.union import union_basic
 from bench.window import window_crimes_per_state, window_total_violent_crimes
@@ -17,18 +16,6 @@ from bench.join import joins_basic
 
 def get_test_cases(file: str, verbose: bool) -> list[TestCase]:
     return [
-        TestCase(
-            test_name="DataFrame.simple",
-            file_name=file,
-            runner=simple,
-            verbose=verbose,
-        ),
-        TestCase(
-            test_name="DataFrame.with_lit",
-            file_name=file,
-            runner=with_lit,
-            verbose=verbose,
-        ),
         TestCase(
             test_name="DataFrame.select",
             file_name=file,
