@@ -1,9 +1,9 @@
 from declaredata_fuse.functions import lit
 from pytest_benchmark.fixture import BenchmarkFixture
-from bench.tests.setup import setup_dataframe
+from bench.tests.setup import get_files, setup_dataframe
 from declaredata_fuse.row import Row
 
-FILE="/crimes.csv"
+FILE = get_files()[0]
 
 def _simple() -> list[Row]:
     with setup_dataframe(test_name="simple", file_name=FILE) as df:

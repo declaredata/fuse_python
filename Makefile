@@ -21,12 +21,20 @@ test:
 
 .PHONY: run-bench
 run-bench:
-	uv run python bench/src/bench/main.py
-	cd bench && uv run pytest
+	./build_scripts/run_bench.sh
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
 	uv run python bench/src/bench/main.py --verbose true
+	cd bench && uv run pytest
+
+.PHONY: pull-fuse
+pull-fuse:
+	./build_scripts/pull_fuse.sh
+
+.PHONY: run-fuse
+run-fuse:
+	./build_scripts/run_fuse.sh
 
 .PHONY: build-release
 build-release:
