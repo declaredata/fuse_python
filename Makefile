@@ -1,8 +1,9 @@
+.PHONY: check
+check: ruff typecheck test
+
 .PHONY: gen-proto
 gen-proto:
 	buf generate
-
-check: ruff typecheck test
 
 .PHONY: ruff-python
 ruff:

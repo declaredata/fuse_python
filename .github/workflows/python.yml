@@ -23,9 +23,9 @@ jobs:
           enable-cache: true
       - name: Set up Python
         run: uv python install
-
       - name: uv sync
         run: uv sync --all-extras --dev
+
       - name: install pyright
         run: uv run pip install pyright
       - name: pyright
