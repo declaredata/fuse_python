@@ -3,7 +3,7 @@ name = "bench"
 version = "0.1.0"
 description = "Benchmarks for the Python Fuse client bindings"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
-dependencies = ["click>=8.1.7", "declaredata_fuse"]
+dependencies = ["click>=8.1.7", "declaredata_fuse", "pytest-benchmark>=5.1.0"]
 readme = "README.md"
 requires-python = ">= 3.10"
 

@@ -10,7 +10,6 @@ ruff:
 	uv run ruff check
 	uv run ruff format
 
-
 .PHONY: pyright
 typecheck:
 	cd declaredata_fuse && uv run pyright
@@ -23,6 +22,7 @@ test:
 .PHONY: run-bench
 run-bench:
 	uv run python bench/src/bench/main.py
+	cd bench && uv run pytest
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
