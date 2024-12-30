@@ -34,7 +34,7 @@ pull-fuse:
 
 .PHONY: run-fuse
 run-fuse:
-	./build_scripts/run_fuse.sh
+	./build_scripts/run_fuse.sh false
 
 .PHONY: build-release
 build-release:
