@@ -23,8 +23,8 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 * Python 3.10 or higher
 * 8GB+ available memory
 * pip package manager
-* Docker (for container deployment)
-* Available port 8080 (port customization coming in future versions)
+* Docker
+* Available port 8080 (required for gRPC) and port 3000 (optional for web interface)
 
 # Components
 
@@ -36,7 +36,7 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 Run the Fuse server using Docker:
 
 ```bash
-docker run -p 8080:8080 ghcr.io/declaredata/fuse:latest
+docker run -p 8080:8080 -p 3000:3000 ghcr.io/declaredata/fuse:latest
 ```
 
 > **Note:** All images are published to our GitHub Package Docker repository, which can be found at [github.com/orgs/declaredata/packages/container/package/fuse](https://github.com/orgs/declaredata/packages/container/package/fuse).
