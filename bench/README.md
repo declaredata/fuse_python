@@ -12,23 +12,19 @@ make run-bench
 
 The Fuse server is packaged as a Docker container, and pushed to [the `DeclareData` GitHub package repository](https://github.com/orgs/declaredata/packages/container/package/fuse).
 
-To run it on your local machine, you need to have Docker installed. If you don't have Docker installed, see instructions for how to do so [here](https://docs.docker.com/get-docker/). Assuming you do have Docker installed, see the instructions below.
-
-### Running on an `x64` (Intel) based machine
-
-If you're on an Intel/x64-based machine, run the following command to start the Fuse server:
+To run it on your local machine, you need to have Docker installed. If you don't have Docker installed, see instructions for how to do so [here](https://docs.docker.com/get-docker/). Assuming you do have Docker installed, run the Fuse server with the following command (from the root of this repository):
 
 ```bash
-docker run --platform linux/amd64 -p 8080:8080 ghcr.io/declaredata/fuse:latest
+make run-fuse
 ```
 
-### Running on an `arm64`-based machine
+### Customizing this command
 
-If you are using an Arm-based machine like a modern Mac with Apple Silicon, run the following command to start the Fuse server:
+This command runs the Fuse server with some default settings. You can customize it by setting the following environment variables:
 
-```bash
-docker run --platform linux/arm64 -p 8080:8080 ghcr.io/declaredata/fuse:latest
-```
+- `FUSE_FOLLOW_LOGS` - Set to `true` to follow the logs of the Fuse server as it runs. Default is `false`.
+  - If you set this to `true`, logs will stream in your terminal window and never exit until you press `ctrl+c`. Doing so will not stop the server, however.
+- `FUSE_PLATFORM` - The Fuse server is built for `linux/amd64` and `linux/arm64`. This variable lets you specify which platform to run the server on. Default is `linux/amd64`.
 
 ### After Fuse is running
 

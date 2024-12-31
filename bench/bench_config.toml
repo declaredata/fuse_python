@@ -1,0 +1,27 @@
+# mapping from local directory (relative to the root of this repo) to 
+# directory inside the running Fuse container
+mount_directories = { "./datasets" = "/datasets" }
+
+# the container tag to pull and run. see the following link for a list
+# of available tags
+# 
+# https://github.com/orgs/declaredata/packages/container/package/fuse
+fuse_tag = "5018e52-dev-amd64"
+
+# a mapping of file tag (for use within benchmark code) to the file location
+# either on disk or in some remote location
+# 
+# The format of remote locations must be:
+#
+# $NAME://$BUCKET/$FILE
+#
+# With the following vars:
+#
+# * NAME - a 'name' field from an s3 entry in your fuse.toml
+# * BUCKET - the bucket associated with the name you gave
+# * FILE - a filename in that bucket
+#
+# If you don't give this format, you'll get a failure
+[files]
+simple-s3 = "do-spaces-dd-test://declaredata-test/estimated_crimes_1979_2022.csv"
+simple-local = "/datasets/census_sf_1.csv"
