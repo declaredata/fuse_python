@@ -21,7 +21,7 @@ test:
 
 .PHONY: run-bench
 run-bench:
-	go run ./bench_runner run-bench
+	mage runbench
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
@@ -30,11 +30,11 @@ run-bench-verbose:
 
 .PHONY: pull-fuse
 pull-fuse:
-	go run ./bench_runner pull-fuse
+	mage pullfuse
 
 .PHONY: run-fuse
 run-fuse:
-	go run ./bench_runner run-fuse
+	mage runfuse
 
 .PHONY: build-release
 build-release:
