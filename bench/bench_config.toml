@@ -24,4 +24,4 @@ fuse_tag = "5018e52-dev-amd64"
 # If you don't give this format, you'll get a failure
 [files]
 simple-s3 = "do-spaces-dd-test://declaredata-test/estimated_crimes_1979_2022.csv"
-simple-local = "/datasets/census_sf_1.csv"
+simple-local = "/datasets/estimated_crimes_1979_2022.csv"
