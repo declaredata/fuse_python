@@ -1,15 +1,25 @@
+# the bench_runner tool consumes this configuration file and uses the data
+# herein to determine how to run the Fuse server docker image and, after
+# it's running, how to run benchmark and e2e tests
+
+
 # mapping from local directory (relative to the root of this repo) to 
 # directory inside the running Fuse container
+# 
+# the bench_runner uses this to configure volume mounts
 mount_directories = { "./datasets" = "/datasets" }
 
 # the container tag to pull and run. see the following link for a list
 # of available tags
 # 
 # https://github.com/orgs/declaredata/packages/container/package/fuse
+# 
+# the bench_runner will pull and run ghcr.io/declaredata/fuse:${fuse_tag}
 fuse_tag = "5018e52-dev-amd64"
 
 # a mapping of file tag (for use within benchmark code) to the file location
-# either on disk or in some remote location
+# either on disk or in some remote location. (python) benchmark tests use this
+# to load files into DataFrames, then operate on them
 # 
 # The format of remote locations must be:
 #
