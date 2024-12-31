@@ -10,12 +10,11 @@ func PullFuse() {
 	image := getFullImage(cfg)
 	platform := "linux/amd64"
 	log.Infof("pulling Fuse server image: %s", image)
-	if err := executeCmd("docker", []string{
-		"pull",
-		"--platform",
-		platform,
-		image,
-	}, false); err != nil {
+	if err := executeCmd(
+		"docker",
+		[]string{"pull", "--platform", platform, image},
+		newCmdOptions(true, false, false, "."),
+	); err != nil {
 		log.Fatal(err)
 	}
 }

@@ -33,7 +33,11 @@ func RunFuse() {
 	dockerRunArgs = append(dockerRunArgs, volumeMounts...)
 	dockerRunArgs = append(dockerRunArgs, image)
 
-	if err := executeCmd("docker", dockerRunArgs, true); err != nil {
+	if err := executeCmd(
+		"docker",
+		dockerRunArgs,
+		newCmdOptions(true, true, true, "."),
+	); err != nil {
 		log.Fatalf("Error running Docker container: %v", err)
 	}
 
@@ -46,13 +50,21 @@ func RunFuse() {
 	if followLogs == "true" {
 		fmt.Printf("Container %s started. Following logs...\n", containerID)
 		dockerLogsArgs := []string{"logs", "-f", containerID}
-		if err := executeCmd("docker", dockerLogsArgs, false); err != nil {
+		if err := executeCmd(
+			"docker",
+			dockerLogsArgs,
+			newCmdOptions(true, true, true, "."),
+		); err != nil {
 			log.Fatalf("Error following Docker logs: %v", err)
 		}
 	} else {
 		fmt.Printf("Container %s started. Not following logs.\n", containerID)
 		dockerLogsArgs := []string{"logs", containerID}
-		if err := executeCmd("docker", dockerLogsArgs, false); err != nil {
+		if err := executeCmd(
+			"docker",
+			dockerLogsArgs,
+			newCmdOptions(true, true, true, "."),
+		); err != nil {
 			log.Fatalf("Error retrieving Docker logs: %v", err)
 		}
 	}
