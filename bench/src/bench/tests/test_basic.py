@@ -6,9 +6,11 @@ from declaredata_fuse.row import Row
 
 FILE = get_files()[0]
 
+
 def _simple() -> list[Row]:
     with setup_dataframe(test_name="simple", file_name=FILE) as df:
         return df.limit(0, 1000).collect()
+
 
 def test_simple_dataframe(benchmark: BenchmarkFixture):
     result = benchmark(_simple)
@@ -16,10 +18,9 @@ def test_simple_dataframe(benchmark: BenchmarkFixture):
 
 
 def _with_lit() -> list[Row]:
-    with setup_dataframe(test_name="with_lit",file_name=FILE) as df:
-        return df.select(
-            lit("1").alias("one"), df.year
-        ).limit(0, 1000).collect()
+    with setup_dataframe(test_name="with_lit", file_name=FILE) as df:
+        return df.select(lit("1").alias("one"), df.year).limit(0, 1000).collect()
+
 
 def test_with_lit(benchmark: BenchmarkFixture) -> None:
     result = benchmark(_with_lit)
