@@ -1,12 +1,8 @@
 package main
 
-import (
-	"log"
+import "log"
 
-	"github.com/spf13/cobra"
-)
-
-func runBench(_ *cobra.Command, _ []string) {
+func RunBench() {
 	log.Println("running homegrown benchmarks")
 	if err := executeCmdInDir(
 		"uv",

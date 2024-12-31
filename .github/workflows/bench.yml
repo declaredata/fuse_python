@@ -21,6 +21,12 @@ jobs:
         with:
           version: "0.4.x"
           enable-cache: true
+      - name: Install Mage
+        uses: magefile/mage-action@v3
+        with:
+          install-only: true
+          version: v1.15.0
+
       - name: Set up Python
         run: uv python install
       - name: uv sync

@@ -15,7 +15,7 @@ type Config struct {
 	Files            map[string]string `toml:"files"`
 }
 
-// readTagFromFile reads the TAG value from the specified file.
+// readConfig reads the TAG value from the specified file.
 // It trims any whitespace and returns the TAG string.
 func readConfig(filePath string) (*Config, error) {
 	absPath, err := filepath.Abs(filePath)

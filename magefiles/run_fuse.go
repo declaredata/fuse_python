@@ -3,11 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
-
-	"github.com/spf13/cobra"
 )
 
-func runFuse(_ *cobra.Command, _ []string) {
+func RunFuse() {
 	// Set default values for environment variables
 	followLogs := getEnv("FUSE_FOLLOW_LOGS", "false")
 	platform := getEnv("FUSE_PLATFORM", "linux/amd64")

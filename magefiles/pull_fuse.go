@@ -1,12 +1,8 @@
 package main
 
-import (
-	"log"
+import "log"
 
-	"github.com/spf13/cobra"
-)
-
-func pullFuse(_ *cobra.Command, _ []string) {
+func PullFuse() {
 	cfg, err := readConfig("bench/bench_config.toml")
 	if err != nil {
 		log.Fatalf("Error reading config: %v", err)

@@ -163,7 +163,7 @@ wheels = [
 
 [[package]]
 name = "declaredata-fuse"
-version = "0.1.6"
+version = "0.1.7"
 source = { editable = "declaredata_fuse" }
 dependencies = [
     { name = "grpc-stubs" },
