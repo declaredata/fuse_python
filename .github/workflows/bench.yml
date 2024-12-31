@@ -1,6 +1,6 @@
 # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
 
-name: Python lints and tests
+name: Python benchmarks and tests
 
 on:
   push:
@@ -11,11 +11,11 @@ on:
       - main
 
 jobs:
-  lint:
+  bench:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v3
         with:
@@ -25,13 +25,12 @@ jobs:
         run: uv python install
       - name: uv sync
         run: uv sync --all-extras --dev
-
-      - name: install pyright
-        run: uv run pip install pyright
-      - name: pyright
-        run: make typecheck
-      - name: pytest
-        run: make test
-      - uses: astral-sh/ruff-action@v1
-        with:
-          args: "format --check"
+      - name: run the fuse server (in the background)
+        env:
+          TAG: latest
+        run: |
+          make pull-fuse
+          make run-fuse
+          sleep 2
+      - name: run benchmarks
+        run: make run-bench

@@ -1,4 +1,5 @@
 import time
+from bench.datasets import get_files
 import click
 
 from bench.collect import df_collect
@@ -8,21 +9,8 @@ from bench.test_cases import get_test_cases
 from bench.basic_sql import sql_api
 from bench.sorts import sorts_api
 
-LOCAL_CSV_FILE = "data/estimated_crimes_1979_2022.csv"
-# The format of this must be:
-#
-# $NAME://$BUCKET/$FILE
-#
-# With the following vars:
-#
-# * NAME - a 'name' field from an s3 entry in your fuse.toml
-# * BUCKET - the bucket associated with the name you gave
-# * FILE - a filename in that bucket
-#
-# If you don't give this format, you'll get a failure
-REMOTE_CSV_FILE = "do-spaces-dd-test://declaredata-test/estimated_crimes_1979_2022.csv"
 
-FILES = [LOCAL_CSV_FILE, REMOTE_CSV_FILE]
+FILES = get_files()
 
 
 @click.command()

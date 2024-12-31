@@ -1,14 +1,14 @@
+.PHONY: check
+check: ruff typecheck test
+
 .PHONY: gen-proto
 gen-proto:
 	buf generate
-
-check: ruff typecheck test
 
 .PHONY: ruff-python
 ruff:
 	uv run ruff check
 	uv run ruff format
-
 
 .PHONY: pyright
 typecheck:
@@ -21,11 +21,20 @@ test:
 
 .PHONY: run-bench
 run-bench:
-	uv run python bench/src/bench/main.py
+	go run ./bench_runner run-bench
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
 	uv run python bench/src/bench/main.py --verbose true
+	cd bench && uv run pytest
+
+.PHONY: pull-fuse
+pull-fuse:
+	go run ./bench_runner pull-fuse
+
+.PHONY: run-fuse
+run-fuse:
+	go run ./bench_runner run-fuse
 
 .PHONY: build-release
 build-release:
