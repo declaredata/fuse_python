@@ -21,7 +21,7 @@ test:
 
 .PHONY: run-bench
 run-bench:
-	./build_scripts/run_bench.sh
+	go run ./bench_runner run-bench
 
 .PHONY: .run-bench-verbose
 run-bench-verbose:
@@ -30,11 +30,11 @@ run-bench-verbose:
 
 .PHONY: pull-fuse
 pull-fuse:
-	./build_scripts/pull_fuse.sh
+	go run ./bench_runner pull-fuse
 
 .PHONY: run-fuse
 run-fuse:
-	./build_scripts/run_fuse.sh false
+	go run ./bench_runner run-fuse
 
 .PHONY: build-release
 build-release:

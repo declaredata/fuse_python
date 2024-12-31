@@ -164,3 +164,4 @@ cython_debug/
 .envrc
 /fuse_server
 .DS_Store
+/bencher
