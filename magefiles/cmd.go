@@ -1,10 +1,11 @@
 package main
 
 import (
-	"log"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/charmbracelet/log"
 )
 
 func executeCmd(cmd string, args []string, logCmd bool) error {

@@ -1,9 +1,9 @@
 package main
 
-import "log"
+import "github.com/charmbracelet/log"
 
 func RunBench() {
-	log.Println("running homegrown benchmarks")
+	log.Info("running homegrown benchmarks")
 	if err := executeCmdInDir(
 		"uv",
 		[]string{
@@ -16,7 +16,7 @@ func RunBench() {
 	); err != nil {
 		log.Fatal(err)
 	}
-	log.Println("running pytest benchmarks")
+	log.Info("running pytest benchmarks")
 	if err := executeCmdInDir(
 		"uv",
 		[]string{"run", "pytest"},

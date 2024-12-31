@@ -1,6 +1,6 @@
 package main
 
-import "log"
+import "github.com/charmbracelet/log"
 
 func PullFuse() {
 	cfg, err := readConfig("bench/bench_config.toml")
@@ -9,13 +9,13 @@ func PullFuse() {
 	}
 	image := getFullImage(cfg)
 	platform := "linux/amd64"
-	log.Printf("pulling Fuse server image: %s", image)
+	log.Infof("pulling Fuse server image: %s", image)
 	if err := executeCmd("docker", []string{
 		"pull",
 		"--platform",
 		platform,
 		image,
-	}, true); err != nil {
+	}, false); err != nil {
 		log.Fatal(err)
 	}
 }

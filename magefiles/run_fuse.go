@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
+
+	"github.com/charmbracelet/log"
 )
 
 func RunFuse() {
