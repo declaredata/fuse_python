@@ -1,13 +1,19 @@
 > DeclareData is under active development. This is a pre-release version and may contain bugs or incomplete features. Please review and contribute to our [compatibility development status](https://github.com/declaredata/fuse_python/issues/6).
 
-<div align="center">
+<div align="left">
   <picture>
-    <img width="15%" src="https://github.com/user-attachments/assets/ef5a2273-2cf1-46be-ab4a-6ddc6c99705e" alt="DeclareData Logo">
+    <img width="150px" src="https://github.com/user-attachments/assets/ef5a2273-2cf1-46be-ab4a-6ddc6c99705e" alt="DeclareData Logo">
   </picture>
-  
-  [![CI](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
-  [![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
-  [![License](https://img.shields.io/github/license/declaredata/fuse_python.svg)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
+</div>
+
+<div>
+
+[![License](https://img.shields.io/github/license/declaredata/fuse_python.svg?color=7E22CE)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
+![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/declaredata/fuse_python/refs/heads/main/pyproject.toml&color=7E22CE)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr-closed/declaredata/fuse_python?color=7E22CE)
+[![CI](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
+[![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main&color=7E22CE)](https://github.com/declaredata/fuse_python/actions)
+
 </div>
 
 # DeclareData Fuse Client Bindings for Python
@@ -16,8 +22,6 @@ A Python client library for **DeclareData Fuse Server** that provides a PySpark-
 
 # Contents
 
-- [DeclareData Fuse Client Bindings for Python](#declaredata-fuse-client-bindings-for-python)
-- [Contents](#contents)
 - [Prerequisites](#prerequisites)
 - [Components](#components)
 - [Server Setup](#server-setup)
