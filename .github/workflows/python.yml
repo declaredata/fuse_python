@@ -1,6 +1,6 @@
 # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
 
-name: Python lints and tests
+name: Python Quality Checks
 
 on:
   push:

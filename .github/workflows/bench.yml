@@ -1,6 +1,6 @@
 # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
 
-name: Python benchmarks and tests
+name: Benchmarks and Tests
 
 on:
   push:
