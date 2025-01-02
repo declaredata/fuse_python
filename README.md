@@ -2,10 +2,10 @@
 
 <div align="center">
   <picture>
-    <img width="15%" src="https://github.com/user-attachments/assets/cc1aa813-a402-455c-87fd-a49b13764f31" alt="DeclareData Logo">
+    <img width="15%" src="https://github.com/user-attachments/assets/ef5a2273-2cf1-46be-ab4a-6ddc6c99705e" alt="DeclareData Logo">
   </picture>
   
-  [![Build Status](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
+  [![CI](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
   [![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
   [![License](https://img.shields.io/github/license/declaredata/fuse_python.svg)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
 </div>
