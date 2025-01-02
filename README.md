@@ -8,9 +8,9 @@
 
 <div>
 
-[![License](https://img.shields.io/github/license/declaredata/fuse_python.svg?color=7E22CE)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
-![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/declaredata/fuse_python/refs/heads/main/pyproject.toml&color=7E22CE)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr-closed/declaredata/fuse_python?color=7E22CE)
+![PyPI - Version](https://img.shields.io/pypi/v/declaredata_fuse?label=PyPi%20Release&color=7E22CE)
+[![License](https://img.shields.io/github/license/declaredata/fuse_python.svg?label=License&color=7E22CE)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
+![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/declaredata/fuse_python/refs/heads/main/pyproject.toml&label=Python%20Version&color=7E22CE)
 [![CI](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
 [![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main&color=7E22CE)](https://github.com/declaredata/fuse_python/actions)
 
