@@ -1,16 +1,18 @@
 > DeclareData is under active development. This is a pre-release version and may contain bugs or incomplete features. Please review and contribute to our [compatibility development status](https://github.com/declaredata/fuse_python/issues/6).
 
 <div align="left">
+  <a href="https://declaredata.com">
   <picture>
     <img width="150px" src="https://github.com/user-attachments/assets/ef5a2273-2cf1-46be-ab4a-6ddc6c99705e" alt="DeclareData Logo">
   </picture>
+  </a>
 </div>
 
 <div>
 
-![PyPI - Version](https://img.shields.io/pypi/v/declaredata_fuse?label=PyPi%20Release&color=7E22CE)
-[![License](https://img.shields.io/github/license/declaredata/fuse_python.svg?label=License&color=7E22CE)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
+[![PyPI - Version](https://img.shields.io/pypi/v/declaredata_fuse?label=PyPi%20Release&color=7E22CE)](https://pypi.org/project/declaredata_fuse/)
 ![Python Version](https://img.shields.io/python/required-version-toml?tomlFilePath=https://raw.githubusercontent.com/declaredata/fuse_python/refs/heads/main/pyproject.toml&label=Python%20Version&color=7E22CE)
+[![License](https://img.shields.io/github/license/declaredata/fuse_python.svg?label=License&color=7E22CE)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
 [![CI](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
 [![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main&color=7E22CE)](https://github.com/declaredata/fuse_python/actions)
 
