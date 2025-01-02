@@ -1,5 +1,15 @@
 > DeclareData is under active development. This is a pre-release version and may contain bugs or incomplete features. Please review and contribute to our [compatibility development status](https://github.com/declaredata/fuse_python/issues/6).
 
+<div align="center">
+  <picture>
+    <img width="15%" src="https://github.com/user-attachments/assets/cc1aa813-a402-455c-87fd-a49b13764f31" alt="DeclareData Logo">
+  </picture>
+  
+  [![Build Status](https://github.com/declaredata/fuse_python/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
+  [![Benchmark](https://github.com/declaredata/fuse_python/actions/workflows/bench.yml/badge.svg?branch=main)](https://github.com/declaredata/fuse_python/actions)
+  [![License](https://img.shields.io/github/license/declaredata/fuse_python.svg)](https://github.com/declaredata/fuse_python/blob/main/LICENSE)
+</div>
+
 # DeclareData Fuse Client Bindings for Python
 
 A Python client library for **DeclareData Fuse Server** that provides a PySpark-compatible API. Scale down your Spark clusters and speed up workloads without changing your code.
