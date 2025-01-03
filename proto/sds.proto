@@ -54,6 +54,9 @@ service sds {
     // Group rows in a DataFrame, then compute an aggregate across all the
     // rows in each group
     rpc Aggregate(AggregateRequest) returns (DataFrameUID);
+    // Alias takes an existing DataFrame UID and creates a new DataFrame 
+    // whose columns are all prefixed with a given name
+    rpc Alias(AliasRequest) returns (DataFrameUID);
     // add a new column -- optionally by doing some calculation -- to a 
     // given dataframe
     rpc WithColumn(WithColumnRequest) returns (DataFrameUID);
@@ -339,4 +342,9 @@ message JoinRequest {
 message UnionRequest {
     string df_uid_1 = 1;
     string df_uid_2 = 2;
+}
+
+message AliasRequest {
+    string df_uid = 1;
+    string alias_prefix = 2;
 }
