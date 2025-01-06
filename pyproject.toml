@@ -1,6 +1,6 @@
 [project]
 name = "fuse"
-version = "0.1.0"
+version = "0.1.8"
 description = "Top-level virtual project for Fuse PySpark API"
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
 requires-python = ">= 3.10"
