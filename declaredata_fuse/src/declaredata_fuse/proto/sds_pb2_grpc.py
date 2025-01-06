@@ -96,6 +96,12 @@ class sdsStub(object):
             response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
             _registered_method=True,
         )
+        self.Alias = channel.unary_unary(
+            "/sds.sds/Alias",
+            request_serializer=proto_dot_sds__pb2.AliasRequest.SerializeToString,
+            response_deserializer=proto_dot_sds__pb2.DataFrameUID.FromString,
+            _registered_method=True,
+        )
         self.WithColumn = channel.unary_unary(
             "/sds.sds/WithColumn",
             request_serializer=proto_dot_sds__pb2.WithColumnRequest.SerializeToString,
@@ -252,6 +258,14 @@ class sdsServicer(object):
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
+    def Alias(self, request, context):
+        """Alias takes an existing DataFrame UID and creates a new DataFrame
+        whose columns are all prefixed with a given name
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
     def WithColumn(self, request, context):
         """add a new column -- optionally by doing some calculation -- to a
         given dataframe
@@ -380,6 +394,11 @@ def add_sdsServicer_to_server(servicer, server):
         "Aggregate": grpc.unary_unary_rpc_method_handler(
             servicer.Aggregate,
             request_deserializer=proto_dot_sds__pb2.AggregateRequest.FromString,
+            response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
+        ),
+        "Alias": grpc.unary_unary_rpc_method_handler(
+            servicer.Alias,
+            request_deserializer=proto_dot_sds__pb2.AliasRequest.FromString,
             response_serializer=proto_dot_sds__pb2.DataFrameUID.SerializeToString,
         ),
         "WithColumn": grpc.unary_unary_rpc_method_handler(
@@ -815,6 +834,36 @@ class sds(object):
             target,
             "/sds.sds/Aggregate",
             proto_dot_sds__pb2.AggregateRequest.SerializeToString,
+            proto_dot_sds__pb2.DataFrameUID.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True,
+        )
+
+    @staticmethod
+    def Alias(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/sds.sds/Alias",
+            proto_dot_sds__pb2.AliasRequest.SerializeToString,
             proto_dot_sds__pb2.DataFrameUID.FromString,
             options,
             channel_credentials,

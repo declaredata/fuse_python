@@ -129,6 +129,14 @@ class sdsStub:
     rows in each group
     """
 
+    Alias: grpc.UnaryUnaryMultiCallable[
+        proto.sds_pb2.AliasRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Alias takes an existing DataFrame UID and creates a new DataFrame 
+    whose columns are all prefixed with a given name
+    """
+
     WithColumn: grpc.UnaryUnaryMultiCallable[
         proto.sds_pb2.WithColumnRequest,
         proto.sds_pb2.DataFrameUID,
@@ -295,6 +303,14 @@ class sdsAsyncStub:
     ]
     """Group rows in a DataFrame, then compute an aggregate across all the
     rows in each group
+    """
+
+    Alias: grpc.aio.UnaryUnaryMultiCallable[
+        proto.sds_pb2.AliasRequest,
+        proto.sds_pb2.DataFrameUID,
+    ]
+    """Alias takes an existing DataFrame UID and creates a new DataFrame 
+    whose columns are all prefixed with a given name
     """
 
     WithColumn: grpc.aio.UnaryUnaryMultiCallable[
@@ -525,6 +541,19 @@ class sdsServicer(metaclass=abc.ABCMeta):
     ]:
         """Group rows in a DataFrame, then compute an aggregate across all the
         rows in each group
+        """
+
+    @abc.abstractmethod
+    def Alias(
+        self,
+        request: proto.sds_pb2.AliasRequest,
+        context: _ServicerContext,
+    ) -> typing.Union[
+        proto.sds_pb2.DataFrameUID,
+        collections.abc.Awaitable[proto.sds_pb2.DataFrameUID],
+    ]:
+        """Alias takes an existing DataFrame UID and creates a new DataFrame
+        whose columns are all prefixed with a given name
         """
 
     @abc.abstractmethod

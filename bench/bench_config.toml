@@ -15,7 +15,7 @@ mount_directories = { "./datasets" = "/datasets" }
 # https://github.com/orgs/declaredata/packages/container/package/fuse
 # 
 # the bench_runner will pull and run ghcr.io/declaredata/fuse:${fuse_tag}
-fuse_tag = "5018e52-dev-amd64"
+fuse_tag = "5e268d2"
 
 # a mapping of file tag (for use within benchmark code) to the file location
 # either on disk or in some remote location. (python) benchmark tests use this

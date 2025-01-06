@@ -1140,3 +1140,26 @@ class UnionRequest(google.protobuf.message.Message):
     ) -> None: ...
 
 global___UnionRequest = UnionRequest
+
+@typing.final
+class AliasRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    DF_UID_FIELD_NUMBER: builtins.int
+    ALIAS_PREFIX_FIELD_NUMBER: builtins.int
+    df_uid: builtins.str
+    alias_prefix: builtins.str
+    def __init__(
+        self,
+        *,
+        df_uid: builtins.str = ...,
+        alias_prefix: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal[
+            "alias_prefix", b"alias_prefix", "df_uid", b"df_uid"
+        ],
+    ) -> None: ...
+
+global___AliasRequest = AliasRequest
