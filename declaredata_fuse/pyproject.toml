@@ -1,6 +1,6 @@
 [project]
 name = "declaredata_fuse"
-version = "0.1.7"
+version = "0.1.8"
 description = "PySpark-compatible Python client for the DeclareData Fuse Server, a blazing fast drop-in data processing engine and alternative to Spark."
 authors = [{ name = "Aaron Schlesinger", email = "aaron@ecomaz.net" }]
 dependencies = [
