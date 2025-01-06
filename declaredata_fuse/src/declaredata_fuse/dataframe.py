@@ -297,8 +297,31 @@ class DataFrame:
         )
 
     def distinct(self) -> "DataFrame":
+        """
+        Return a new `DataFrame` with de-duplicated rows.
+
+        Equivalent to the `PySpark` `DataFrame.distinct` function:
+
+        https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.distinct.html
+        """
         req = sds_pb2.DataFrameUID(dataframe_uid=self.df_uid)
         resp = self.stub.Distinct(req)  # type: ignore
+        return DataFrame(
+            df_uid=resp.dataframe_uid,  # type: ignore
+            stub=self.stub,
+        )
+    
+    def alias(self, new_name: str) -> "DataFrame":
+        """
+        Create a new `DataFrame`  whose columns and rows are equivalent to
+        `self`, but all column names are prefixed with `new_name`.
+
+        Equivalent to the PySpark `DataFrame.alias` function:
+
+        https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.alias.html
+        """
+        req = sds_pb2.AliasRequest(df_uid=self.df_uid, alias_prefix=new_name)
+        resp = self.stub.Alias(req)  # type: ignore
         return DataFrame(
             df_uid=resp.dataframe_uid,  # type: ignore
             stub=self.stub,
