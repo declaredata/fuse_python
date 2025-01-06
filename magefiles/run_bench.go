@@ -23,5 +23,4 @@ func RunBench() {
 	); err != nil {
 		log.Fatal(err)
 	}
-
 }

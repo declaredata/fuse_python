@@ -310,7 +310,7 @@ class DataFrame:
             df_uid=resp.dataframe_uid,  # type: ignore
             stub=self.stub,
         )
-    
+
     def alias(self, new_name: str) -> "DataFrame":
         """
         Create a new `DataFrame`  whose columns and rows are equivalent to
