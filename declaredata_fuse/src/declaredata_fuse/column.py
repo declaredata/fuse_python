@@ -6,6 +6,8 @@ from declaredata_fuse.column_op import BinaryOp, DerivedColumn, NamedDerivedColu
 from declaredata_fuse.proto import sds_pb2
 from typing import Any
 
+from declaredata_fuse.types.data_type import DataType
+
 
 @dataclass
 class Condition:
@@ -102,6 +104,12 @@ class BasicColumn(Column):
 
     def cur_name(self) -> str:
         return self._name
+    
+    def cast(self, dtype: DataType) -> "Column":
+        raise NotImplementedError("can't cast yet")
+    
+    def between(self, start: str, end: str) -> "Column":
+        raise NotImplementedError("can't do between yet")
 
     def to_pb(self) -> sds_pb2.Column:
         return sds_pb2.Column(col_name=self._name)
