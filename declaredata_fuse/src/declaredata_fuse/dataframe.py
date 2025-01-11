@@ -263,6 +263,12 @@ class DataFrame:
             df_uid=resp.dataframe_uid,  # type: ignore
             stub=self.stub,
         )
+    
+    def withColumns(self, cols_dict: dict[str, Column]) -> "DataFrame":
+        df = self
+        for col_name, col in cols_dict.items():
+            df = df.withColumn(col_name, col)
+        return df
 
     def join(
         self,
