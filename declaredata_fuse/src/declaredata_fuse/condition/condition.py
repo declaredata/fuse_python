@@ -1,0 +1,47 @@
+from dataclasses import dataclass
+
+from declaredata_fuse.condition.and_condition import AndCondition
+from declaredata_fuse.condition.or_condition import OrCondition
+from declaredata_fuse.condition.single import SingleCondition
+
+from declaredata_fuse.proto import sds_pb2
+
+
+@dataclass(frozen=True)
+class Condition:
+    single: SingleCondition | None
+    conj: AndCondition | None
+    disj: OrCondition | None
+
+
+    def to_pb(self) -> sds_pb2.FilterCondition:
+        if self.single:
+            return sds_pb2.FilterCondition(single=self.single.to_pb())
+        elif self.conj:
+            return sds_pb2.FilterCondition(conjunction=self.conj.to_pb())
+        elif self.disj:
+            return sds_pb2.FilterCondition(disjunction=self.disj.to_pb())
+        else:
+            raise ValueError("exactly one of [single, conjunction, disjunction] condition must be set")
+        
+    def __and__(self, other: "Condition") -> "Condition":
+        """
+        Return a new `Condition` that is the conjunction (e.g. `&&`) of 
+        `self` and `other`
+        """
+        return Condition(
+            single=None,
+            conj=AndCondition(cond1=self, cond2=other),
+            disj=None,
+        )
+    
+    def __or__(self, other: "Condition") -> "Condition":
+        """
+        Return a new `Condition` that is the disjunction (e.g. `||`) of 
+        `self` and `other`
+        """
+        return Condition(
+            single=None,
+            conj=None,
+            disj=OrCondition(self, other),
+        )

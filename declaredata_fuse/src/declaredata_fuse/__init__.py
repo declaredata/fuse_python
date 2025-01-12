@@ -116,6 +116,7 @@ from declaredata_fuse import grouped
 from declaredata_fuse import row
 from declaredata_fuse import session
 from declaredata_fuse import window
+from declaredata_fuse.table import table
 
 __all__ = [
     "column",
@@ -134,6 +135,7 @@ __all__ = [
     "row",
     "session",
     "window",
+    "table",
 ]
 
 __version__ = "0.1.0"  # Add version if you haven't already

@@ -235,7 +235,7 @@ class DataFrame:
         pb_cond = condition.to_pb()
         req = sds_pb2.FilterDataFrameRequest(
             dataframe_uid=self.df_uid,
-            conditions=[pb_cond],
+            condition=pb_cond,
         )
         resp = self.stub.FilterDataFrame(req)  # type: ignore
         return DataFrame(
@@ -263,7 +263,7 @@ class DataFrame:
             df_uid=resp.dataframe_uid,  # type: ignore
             stub=self.stub,
         )
-    
+
     def withColumns(self, cols_dict: dict[str, Column]) -> "DataFrame":
         df = self
         for col_name, col in cols_dict.items():

@@ -323,6 +323,64 @@ global___SortDataFrameRequest = SortDataFrameRequest
 class FilterCondition(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    SINGLE_FIELD_NUMBER: builtins.int
+    CONJUNCTION_FIELD_NUMBER: builtins.int
+    DISJUNCTION_FIELD_NUMBER: builtins.int
+    @property
+    def single(self) -> global___SingleCondition:
+        """the base case"""
+
+    @property
+    def conjunction(self) -> global___AndCondition:
+        """cond1 & cond2"""
+
+    @property
+    def disjunction(self) -> global___OrCondition:
+        """cond1 | cond2"""
+
+    def __init__(
+        self,
+        *,
+        single: global___SingleCondition | None = ...,
+        conjunction: global___AndCondition | None = ...,
+        disjunction: global___OrCondition | None = ...,
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing.Literal[
+            "cond",
+            b"cond",
+            "conjunction",
+            b"conjunction",
+            "disjunction",
+            b"disjunction",
+            "single",
+            b"single",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing.Literal[
+            "cond",
+            b"cond",
+            "conjunction",
+            b"conjunction",
+            "disjunction",
+            b"disjunction",
+            "single",
+            b"single",
+        ],
+    ) -> None: ...
+    def WhichOneof(
+        self, oneof_group: typing.Literal["cond", b"cond"]
+    ) -> typing.Literal["single", "conjunction", "disjunction"] | None: ...
+
+global___FilterCondition = FilterCondition
+
+@typing.final
+class SingleCondition(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     LEFT_FIELD_NUMBER: builtins.int
     OPERATOR_FIELD_NUMBER: builtins.int
     RIGHT_FIELD_NUMBER: builtins.int
@@ -343,31 +401,80 @@ class FilterCondition(google.protobuf.message.Message):
         ],
     ) -> None: ...
 
-global___FilterCondition = FilterCondition
+global___SingleCondition = SingleCondition
+
+@typing.final
+class AndCondition(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    COND1_FIELD_NUMBER: builtins.int
+    COND2_FIELD_NUMBER: builtins.int
+    @property
+    def cond1(self) -> global___FilterCondition: ...
+    @property
+    def cond2(self) -> global___FilterCondition: ...
+    def __init__(
+        self,
+        *,
+        cond1: global___FilterCondition | None = ...,
+        cond2: global___FilterCondition | None = ...,
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing.Literal["cond1", b"cond1", "cond2", b"cond2"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing.Literal["cond1", b"cond1", "cond2", b"cond2"]
+    ) -> None: ...
+
+global___AndCondition = AndCondition
+
+@typing.final
+class OrCondition(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    COND1_FIELD_NUMBER: builtins.int
+    COND2_FIELD_NUMBER: builtins.int
+    @property
+    def cond1(self) -> global___FilterCondition: ...
+    @property
+    def cond2(self) -> global___FilterCondition: ...
+    def __init__(
+        self,
+        *,
+        cond1: global___FilterCondition | None = ...,
+        cond2: global___FilterCondition | None = ...,
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing.Literal["cond1", b"cond1", "cond2", b"cond2"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing.Literal["cond1", b"cond1", "cond2", b"cond2"]
+    ) -> None: ...
+
+global___OrCondition = OrCondition
 
 @typing.final
 class FilterDataFrameRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     DATAFRAME_UID_FIELD_NUMBER: builtins.int
-    CONDITIONS_FIELD_NUMBER: builtins.int
+    CONDITION_FIELD_NUMBER: builtins.int
     dataframe_uid: builtins.str
     @property
-    def conditions(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        global___FilterCondition
-    ]: ...
+    def condition(self) -> global___FilterCondition: ...
     def __init__(
         self,
         *,
         dataframe_uid: builtins.str = ...,
-        conditions: collections.abc.Iterable[global___FilterCondition] | None = ...,
+        condition: global___FilterCondition | None = ...,
     ) -> None: ...
+    def HasField(
+        self, field_name: typing.Literal["condition", b"condition"]
+    ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing.Literal[
-            "conditions", b"conditions", "dataframe_uid", b"dataframe_uid"
+            "condition", b"condition", "dataframe_uid", b"dataframe_uid"
         ],
     ) -> None: ...
 

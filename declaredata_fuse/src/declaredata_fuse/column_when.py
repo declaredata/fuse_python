@@ -7,6 +7,7 @@ from declaredata_fuse.proto import sds_pb2
 
 ValOrCol = Any | Column
 
+
 @dataclass(frozen=True)
 class WhenClause:
     condition: Condition
@@ -58,17 +59,17 @@ class WhenColumn(Column):
         new_clause = WhenClause(condition=condition, if_match=value)
         return WhenColumn(
             _name=self._name,
-            _clauses=self.clauses + [new_clause],
+            _clauses=self._clauses + [new_clause],
             _otherwise=self._otherwise,
         )
-    
+
     def otherwise(self, otherwise: ValOrCol) -> "WhenColumn":
         return WhenColumn(
             _name=self._name,
-            _clauses=self.clauses,
+            _clauses=self._clauses,
             _otherwise=otherwise,
         )
-    
+
     def cur_name(self) -> str:
         return self._name
 
@@ -81,5 +82,3 @@ class WhenColumn(Column):
 
     def to_pb(self) -> sds_pb2.Column:
         raise NotImplementedError("can't turn a WhenColumn into protobuf yet")
-
-

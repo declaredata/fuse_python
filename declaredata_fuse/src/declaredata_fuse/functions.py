@@ -1,5 +1,11 @@
 from typing import Any
-from declaredata_fuse.column import BasicColumn, Column, Condition, SortDirection, SortedColumn
+from declaredata_fuse.column import (
+    BasicColumn,
+    Column,
+    Condition,
+    SortDirection,
+    SortedColumn,
+)
 from declaredata_fuse.column_coalesce import CoalesceColumn
 from declaredata_fuse.column_functional import FunctionalColumn
 from declaredata_fuse.column_literal import LiteralColumn
@@ -66,13 +72,14 @@ def min(col: ColumnOrName) -> Column:
         function=sds_pb2.Function.MIN,
     )
 
+
 def when(cond: Condition, value: ValOrCol) -> WhenColumn:
     """
     Evaluate the condition described in `cond` and return a new `WhenColumn`
     that has `value` in the row when the condition is met. `value` can be
     a reference to a different `Column` or a constant.
-    
-    If the condition in `col` did not have `otherwise` called on it, and the 
+
+    If the condition in `col` did not have `otherwise` called on it, and the
     condition is not met, `None` is put in the row. If `otherwise` was called
     on `col`, then the value passed to `otherwise` is put in the row.
 
@@ -80,8 +87,11 @@ def when(cond: Condition, value: ValOrCol) -> WhenColumn:
 
     https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.when.html
     """
-    col_name = f"{col_or_name_to_basic(cond.left).cur_name()} {cond.operator} {cond.right}"
+    col_name = (
+        f"{col_or_name_to_basic(cond.left).cur_name()} {cond.operator} {cond.right}"
+    )
     return WhenColumn.from_cond(name=col_name, cond=cond, val=value)
+
 
 def max(col: ColumnOrName) -> Column:
     """Create a function to find the maximum value"""

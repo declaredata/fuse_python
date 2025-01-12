@@ -9,19 +9,6 @@ from typing import Any
 from declaredata_fuse.types.data_type import DataType
 
 
-@dataclass
-class Condition:
-    left: "Column"
-    operator: str
-    right: Any
-
-    def to_pb(self) -> sds_pb2.FilterCondition:
-        right = str(self.right)
-        return sds_pb2.FilterCondition(
-            left=self.left.cur_name(), operator=self.operator, right=right
-        )
-
-
 class SortDirection(Enum):
     """The direction by which to sort"""
 
@@ -104,10 +91,10 @@ class BasicColumn(Column):
 
     def cur_name(self) -> str:
         return self._name
-    
+
     def cast(self, dtype: DataType) -> "Column":
         raise NotImplementedError("can't cast yet")
-    
+
     def between(self, start: str, end: str) -> "Column":
         raise NotImplementedError("can't do between yet")
 
