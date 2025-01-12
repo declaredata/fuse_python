@@ -4,7 +4,8 @@ from bench.test_case import TestCaseResult
 from bench.timing import get_timing
 from declaredata_fuse.dataframe import DataFrame
 from declaredata_fuse.session import session
-from declaredata_fuse.column import Condition, SortDirection, SortedColumn
+from declaredata_fuse.column import SortDirection, SortedColumn
+from declaredata_fuse.condition import Condition
 import declaredata_fuse.functions as F
 
 
@@ -41,7 +42,7 @@ def cases(orig_df: DataFrame) -> list[TestCaseResult]:
 
     # filter California only
     state_col = F.col("state_abbr")
-    condition = Condition(state_col, "==", "CA")
+    condition = Condition.new_single(state_col, "==", "CA")
     filtered_df = orig_df.filter(condition)
     ret.append(
         TestCaseResult(description="filter California only", dataframe=filtered_df)
@@ -58,7 +59,7 @@ def cases(orig_df: DataFrame) -> list[TestCaseResult]:
 
     # filter years > 2010
     year_col = F.col("year")
-    condition = Condition(year_col, ">", 2010)
+    condition = Condition.new_single(year_col, ">", 2010)
     filtered_df = orig_df.filter(condition)
     ret.append(TestCaseResult(description="filter years > 2010", dataframe=filtered_df))
 

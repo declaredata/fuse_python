@@ -6,7 +6,7 @@ from declaredata_fuse.column_op import BinaryOp, DerivedColumn, NamedDerivedColu
 from declaredata_fuse.proto import sds_pb2
 from typing import Any
 
-from declaredata_fuse.types.data_type import DataType
+from declaredata_fuse.sql.types import DataType
 from declaredata_fuse.condition import Condition
 
 
