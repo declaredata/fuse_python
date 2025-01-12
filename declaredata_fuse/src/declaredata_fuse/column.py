@@ -6,18 +6,8 @@ from declaredata_fuse.column_op import BinaryOp, DerivedColumn, NamedDerivedColu
 from declaredata_fuse.proto import sds_pb2
 from typing import Any
 
-
-@dataclass
-class Condition:
-    left: "Column"
-    operator: str
-    right: Any
-
-    def to_pb(self) -> sds_pb2.FilterCondition:
-        right = str(self.right)
-        return sds_pb2.FilterCondition(
-            left=self.left.cur_name(), operator=self.operator, right=right
-        )
+from declaredata_fuse.sql.types import DataType
+from declaredata_fuse.condition import Condition
 
 
 class SortDirection(Enum):
@@ -62,22 +52,22 @@ class BasicColumn(Column):
     _name: str
 
     def __gt__(self, other: Any) -> "Condition":
-        return Condition(self, ">", other)
+        return Condition.new_single(self, ">", other)
 
     def __ge__(self, other: Any) -> "Condition":
-        return Condition(self, ">=", other)
+        return Condition.new_single(self, ">=", other)
 
     def __lt__(self, other: Any) -> "Condition":
-        return Condition(self, "<", other)
+        return Condition.new_single(self, "<", other)
 
     def __le__(self, other: Any) -> "Condition":
-        return Condition(self, "<=", other)
+        return Condition.new_single(self, "<=", other)
 
     def __eq__(self, other: Any) -> "Condition":  # type: ignore
-        return Condition(self, "==", other)
+        return Condition.new_single(self, "==", other)
 
     def __ne__(self, other: Any) -> "Condition":  # type: ignore
-        return Condition(self, "!=", other)
+        return Condition.new_single(self, "!=", other)
 
     def __add__(self, other: Any) -> DerivedColumn:
         return DerivedColumn(src_col=self._name, op=BinaryOp.ADD, const=other)
@@ -102,6 +92,12 @@ class BasicColumn(Column):
 
     def cur_name(self) -> str:
         return self._name
+
+    def cast(self, dtype: DataType) -> "Column":
+        raise NotImplementedError("can't cast yet")
+
+    def between(self, start: str, end: str) -> "Column":
+        raise NotImplementedError("can't do between yet")
 
     def to_pb(self) -> sds_pb2.Column:
         return sds_pb2.Column(col_name=self._name)

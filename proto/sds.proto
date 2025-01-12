@@ -133,14 +133,35 @@ message SortDataFrameRequest {
 }
 
 message FilterCondition {
+    oneof cond {
+        // the base case
+        SingleCondition single = 1;
+        // cond1 & cond2
+        AndCondition conjunction = 2;
+        // cond1 | cond2
+        OrCondition disjunction = 3;
+    }
+}
+
+message SingleCondition {
     string left = 1;
     string operator = 2;
     string right = 3;
 }
 
+message AndCondition {
+    FilterCondition cond1 = 1;
+    FilterCondition cond2 = 2;
+}
+
+message OrCondition {
+    FilterCondition cond1 = 1;
+    FilterCondition cond2 = 2;
+}
+
 message FilterDataFrameRequest {
     string dataframe_uid = 1;
-    repeated FilterCondition conditions = 2;
+    FilterCondition condition = 2;
 }
 
 message AggregateRequest {
