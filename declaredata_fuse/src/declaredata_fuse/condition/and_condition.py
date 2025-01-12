@@ -7,6 +7,7 @@ from declaredata_fuse.proto import sds_pb2
 if TYPE_CHECKING:
     from declaredata_fuse.condition import Condition
 
+
 @dataclass(frozen=True)
 class AndCondition:
     cond1: Condition

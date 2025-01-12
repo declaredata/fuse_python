@@ -1,8 +1,12 @@
 from dataclasses import dataclass
+from typing import Any, TYPE_CHECKING
 
 from declaredata_fuse.condition.and_condition import AndCondition
 from declaredata_fuse.condition.or_condition import OrCondition
 from declaredata_fuse.condition.single import SingleCondition
+
+if TYPE_CHECKING:
+    from declaredata_fuse.column_abc import Column
 
 from declaredata_fuse.proto import sds_pb2
 
@@ -13,6 +17,13 @@ class Condition:
     conj: AndCondition | None
     disj: OrCondition | None
 
+    @staticmethod
+    def new_single(left: "Column", operator: str, right: Any) -> "Condition":
+        return Condition(
+            single=SingleCondition(left=left, operator=operator, right=right),
+            conj=None,
+            disj=None,
+        )
 
     def to_pb(self) -> sds_pb2.FilterCondition:
         if self.single:
@@ -22,11 +33,13 @@ class Condition:
         elif self.disj:
             return sds_pb2.FilterCondition(disjunction=self.disj.to_pb())
         else:
-            raise ValueError("exactly one of [single, conjunction, disjunction] condition must be set")
-        
+            raise ValueError(
+                "exactly one of [single, conjunction, disjunction] condition must be set"
+            )
+
     def __and__(self, other: "Condition") -> "Condition":
         """
-        Return a new `Condition` that is the conjunction (e.g. `&&`) of 
+        Return a new `Condition` that is the conjunction (e.g. `&&`) of
         `self` and `other`
         """
         return Condition(
@@ -34,10 +47,10 @@ class Condition:
             conj=AndCondition(cond1=self, cond2=other),
             disj=None,
         )
-    
+
     def __or__(self, other: "Condition") -> "Condition":
         """
-        Return a new `Condition` that is the disjunction (e.g. `||`) of 
+        Return a new `Condition` that is the disjunction (e.g. `||`) of
         `self` and `other`
         """
         return Condition(

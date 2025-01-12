@@ -7,6 +7,7 @@ from declaredata_fuse.proto import sds_pb2
 if TYPE_CHECKING:
     from declaredata_fuse.column_abc import Column
 
+
 @dataclass(frozen=True)
 class SingleCondition:
     left: "Column"

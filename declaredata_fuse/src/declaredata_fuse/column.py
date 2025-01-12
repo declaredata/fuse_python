@@ -7,6 +7,7 @@ from declaredata_fuse.proto import sds_pb2
 from typing import Any
 
 from declaredata_fuse.types.data_type import DataType
+from declaredata_fuse.condition import Condition
 
 
 class SortDirection(Enum):
@@ -51,22 +52,22 @@ class BasicColumn(Column):
     _name: str
 
     def __gt__(self, other: Any) -> "Condition":
-        return Condition(self, ">", other)
+        return Condition.new_single(self, ">", other)
 
     def __ge__(self, other: Any) -> "Condition":
-        return Condition(self, ">=", other)
+        return Condition.new_single(self, ">=", other)
 
     def __lt__(self, other: Any) -> "Condition":
-        return Condition(self, "<", other)
+        return Condition.new_single(self, "<", other)
 
     def __le__(self, other: Any) -> "Condition":
-        return Condition(self, "<=", other)
+        return Condition.new_single(self, "<=", other)
 
     def __eq__(self, other: Any) -> "Condition":  # type: ignore
-        return Condition(self, "==", other)
+        return Condition.new_single(self, "==", other)
 
     def __ne__(self, other: Any) -> "Condition":  # type: ignore
-        return Condition(self, "!=", other)
+        return Condition.new_single(self, "!=", other)
 
     def __add__(self, other: Any) -> DerivedColumn:
         return DerivedColumn(src_col=self._name, op=BinaryOp.ADD, const=other)
