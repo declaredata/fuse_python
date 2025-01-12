@@ -3,6 +3,7 @@ import sys
 import importlib
 from types import ModuleType
 
+
 class _FuseModuleRedirector:
     def __init__(self, target_base: str) -> None:
         self.target_base = target_base
@@ -16,6 +17,7 @@ class _FuseModuleRedirector:
             sys.modules[f"pyspark.{name}"] = module
         return self.loaded_submodules[name]
 
+
 def toggle_dd_fuse_patcher(*, enabled: bool):
     """
     When `enabled` is set to `True`, patch `sys.modules` so that all `import`s
@@ -27,14 +29,14 @@ def toggle_dd_fuse_patcher(*, enabled: bool):
 
     ```python
     #####
-    # for best results, make sure this is the top line of your Python 
+    # for best results, make sure this is the top line of your Python
     # program's entrypoint, and no code executes before it
     #####
     from fuse import toggle_dd_fuse_patcher
     #####
-    # this line will patch all subsequent `pyspark...` imports to use 
+    # this line will patch all subsequent `pyspark...` imports to use
     # DeclareData's client library.
-    # 
+    #
     # pass `enabled=False` if you want this function to be a no-op
     #####
     toggle_dd_fuse_patcher(enabled=True)
@@ -43,7 +45,8 @@ def toggle_dd_fuse_patcher(*, enabled: bool):
     For more information, see https://github.com/declaredata/fuse_python
     """
     if enabled:
-        sys.modules['pyspark'] = _FuseModuleRedirector('declaredata_fuse')
+        sys.modules["pyspark"] = _FuseModuleRedirector("declaredata_fuse")
+
 
 def toggle_dd_fuse_patcher_from_env() -> None:
     """
@@ -52,7 +55,7 @@ def toggle_dd_fuse_patcher_from_env() -> None:
     environment variable called `DD_FUSE_PATCH`.
 
     If you set the value of that environment variable to a "truthy" value
-    (see below), this function will in turn call 
+    (see below), this function will in turn call
     `toggle_dd_fuse_patcher(enabled=True). Otherwise, it will call
     `toggle_dd_fuse_patcher(enabled=False)`
 
@@ -64,7 +67,7 @@ def toggle_dd_fuse_patcher_from_env() -> None:
     - "1"
 
     Before using this function, please read the rules about where to call this
-    function in the doc for the above `toggle_dd_fuse_patcher` function. 
+    function in the doc for the above `toggle_dd_fuse_patcher` function.
     """
     env_raw = os.getenv("DD_FUSE_PATCH", "false")
     truthy_vals = {"true", "True", "on", "1"}
