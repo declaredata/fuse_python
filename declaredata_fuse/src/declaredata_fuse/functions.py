@@ -25,18 +25,34 @@ def desc(col: ColumnOrName) -> SortedColumn:
 
 
 def col(col_name: str) -> BasicColumn:
+    """Return a reference to a pre-existing column"""
     return col_or_name_to_basic(col_name)
 
 
 def column(col_name: str) -> BasicColumn:
+    """Alias of `col(col_name)`"""
     return col(col_name)
 
 
 def lit(val: Any) -> Column:
+    """
+    Return a new column with `val` in all rows
+    """
     return LiteralColumn(_name=f"lit_{val}", lit_val=val)
 
 
 def coalesce(*cols: ColumnOrName) -> Column:
+    """
+    Create a new column where each row contains the first non-`null` value
+    in the given `cols` list.
+
+    In other words, given a row, this function looks through the values
+    in each of the given columns and copies the first non-`null` value into
+    the new column.
+
+    If all values in `cols` are null, the new column will also contain
+    `null`.
+    """
     cols_reified: list[Column] = [col_or_name_to_basic(col) for col in cols]
     names = [col.cur_name() for col in cols_reified]
     new_col_name = f"coalesce({', '.join(names)})"
@@ -44,7 +60,9 @@ def coalesce(*cols: ColumnOrName) -> Column:
 
 
 def sum(col: ColumnOrName) -> Column:
-    """Create a function to sum the values of a column"""
+    """
+    Return a new column 
+    Create a function to sum the values of a column"""
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
         _name=FunctionalColumn.col_name("sum", col_name),
@@ -91,8 +109,14 @@ def when(cond: Condition, value: ValOrCol) -> WhenColumn:
     return WhenColumn.from_cond(name=col_name, cond=cond, val=value)
 
 
-def max(col: ColumnOrName) -> Column:
-    """Create a function to find the maximum value"""
+def max(col: BasicColumn) -> Column:
+    """
+    Create a new `Column` that contains the maximum value in a given existing
+    `Column`, `col`, across all rows in a window or group.
+
+    Must only be used in windowing or aggregation (i.e. `DataFrame.groupBy`)
+    scenarios.
+    """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
         _name=FunctionalColumn.col_name("max", col_name),
@@ -102,7 +126,13 @@ def max(col: ColumnOrName) -> Column:
 
 
 def first(col: ColumnOrName) -> Column:
-    """Create a function to find the first value"""
+    """
+    Create a new `Column` that extracts the first value in `col` across all the
+    rows in a window or group of rows.
+
+    Must only be used in windowing or aggregation (i.e. `DataFrame.groupBy`)
+    scenarios
+    """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
         _name=FunctionalColumn.col_name("first", col_name),
@@ -112,7 +142,13 @@ def first(col: ColumnOrName) -> Column:
 
 
 def last(col: ColumnOrName) -> Column:
-    """Create a function to find the last value"""
+    """
+    This function creates a new `Column` that extracts the last value in a
+    given existing `Column` from a window or group of rows.
+
+    Must only be used in windowing or aggregation (i.e. `DataFrame.groupBy`)
+    scenarios
+    """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
         _name=FunctionalColumn.col_name("last", col_name),
@@ -123,8 +159,12 @@ def last(col: ColumnOrName) -> Column:
 
 def mean(col: ColumnOrName) -> Column:
     """
-    Create a function to find the average of values in a window or group
-    of rows
+    This function creates a new `Column` that calculates the average value
+    of the values in a given existing column across a set of rows in either
+    a window or group.
+
+    Must only be used in windowing or aggregation (i.e. `DataFrame.groupBy`)
+    scenarios
     """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
@@ -136,9 +176,12 @@ def mean(col: ColumnOrName) -> Column:
 
 def mode(col: ColumnOrName) -> Column:
     """
-    Create a function to find the mode of values in a window or group
-    of rows. If there is no unique mode (i.e. no single value that occurs more
-    often than all others), the value in the new column will be null
+    This function creates a new `Column` that gets the mode (most commonly
+    found value) in a given existing `Column` across a set of rows in a 
+    window or group.
+
+    Must only be used in windowing or aggregation (i.e. `DataFrame.groupBy`)
+    scenarios
     """
     col_name = col_or_name_to_basic(col).cur_name()
     return FunctionalColumn(
@@ -150,10 +193,10 @@ def mode(col: ColumnOrName) -> Column:
 
 def row_number() -> Column:
     """
-    Create a function to return a sequential number, starting at 1, representing
-    the current row within a window partition.
+    This function creates a new `Column` that contains a sequential number, 
+    starting at 1, representing the current row within a window partition.
 
-    This function must not be used in non-windowed contexts.
+    Must only be used in windowing scenarios.
     """
     col_name = "row_number()"
     return FunctionalColumn(
