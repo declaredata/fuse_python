@@ -37,9 +37,3 @@ class SortedColumn:
             col_name=self.col.cur_name(),
             direction=dir,
         )
-
-
-
-
-
-

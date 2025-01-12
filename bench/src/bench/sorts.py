@@ -4,7 +4,8 @@ from bench.test_case import TestCaseResult
 from bench.timing import get_timing
 from declaredata_fuse.dataframe import DataFrame
 from declaredata_fuse.session import session
-from declaredata_fuse.column import Condition, SortDirection, SortedColumn
+from declaredata_fuse.column.sorted import SortDirection, SortedColumn
+from declaredata_fuse.condition import Condition
 import declaredata_fuse.functions as F
 
 

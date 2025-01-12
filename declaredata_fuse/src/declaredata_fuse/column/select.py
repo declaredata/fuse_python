@@ -5,6 +5,7 @@ from declaredata_fuse.proto import sds_pb2
 
 SelectColumn = str | Column | NamedDerivedColumn
 
+
 def select_column_to_pb(src: SelectColumn) -> sds_pb2.Column:
     match src:
         case str():

@@ -3,6 +3,7 @@ from typing import Any
 from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto import sds_pb2
 
+
 @dataclass
 class Condition:
     left: "Column"
