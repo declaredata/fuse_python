@@ -6,8 +6,12 @@ from declaredata_fuse.dataframe_impl.drop import drop_impl
 from declaredata_fuse.dataframe_impl.select import select_impl
 from declaredata_fuse.dataframe_impl.sort import to_sorted_col_list
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
-from declaredata_fuse.column import BasicColumn, Column, Condition, SortedColumn
-from declaredata_fuse.column import SelectColumn, DropColumn
+from declaredata_fuse.column.base import Column
+from declaredata_fuse.column.basic import BasicColumn
+from declaredata_fuse.condition import Condition
+from declaredata_fuse.column.sorted import SortedColumn
+from declaredata_fuse.column.select import SelectColumn
+from declaredata_fuse.column.drop import DropColumn
 from declaredata_fuse.grouped import Grouped
 from declaredata_fuse.row import Row
 from declaredata_fuse.dataframe_impl.join import reify_join_cols, str_to_join_type

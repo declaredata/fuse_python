@@ -1,5 +1,5 @@
-from declaredata_fuse.column import BasicColumn
-from declaredata_fuse.column_abc import Column
+from declaredata_fuse.column.basic import BasicColumn
+from declaredata_fuse.column.base import Column
 
 ColumnOrName = Column | str
 

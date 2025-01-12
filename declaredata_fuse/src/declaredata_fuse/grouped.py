@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 
-from declaredata_fuse.column_abc import Column
+from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto import sds_pb2
 from declaredata_fuse.proto.sds_pb2_grpc import sdsStub
 

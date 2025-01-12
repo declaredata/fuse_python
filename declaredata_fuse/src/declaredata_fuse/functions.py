@@ -1,9 +1,10 @@
 from typing import Any
-from declaredata_fuse.column import Column, SortDirection, SortedColumn
-from declaredata_fuse.column_coalesce import CoalesceColumn
-from declaredata_fuse.column_functional import FunctionalColumn
-from declaredata_fuse.column_literal import LiteralColumn
-from declaredata_fuse.column_or_name import ColumnOrName, col_or_name_to_basic
+from declaredata_fuse.column.base import Column
+from declaredata_fuse.column.coalesced import CoalesceColumn
+from declaredata_fuse.column.column_or_name import col_or_name_to_basic, ColumnOrName
+from declaredata_fuse.column.functional import FunctionalColumn
+from declaredata_fuse.column.literal import LiteralColumn
+from declaredata_fuse.column.sorted import SortDirection, SortedColumn
 from declaredata_fuse.proto import sds_pb2
 
 

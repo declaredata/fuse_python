@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from declaredata_fuse.column_abc import Column
+from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto import sds_pb2
 
 

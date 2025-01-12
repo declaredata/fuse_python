@@ -1,4 +1,4 @@
-from declaredata_fuse.column import Column
+from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto.sds_pb2 import INNER, JoinType, LEFT, RIGHT, FULL
 
 
