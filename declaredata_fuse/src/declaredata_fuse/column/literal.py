@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
-from declaredata_fuse.column import BasicColumn
-from declaredata_fuse.column_abc import Column
+from declaredata_fuse.column.basic import BasicColumn
+from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto import sds_pb2
 
 

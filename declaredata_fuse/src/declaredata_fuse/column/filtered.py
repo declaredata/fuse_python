@@ -1,6 +1,6 @@
 from typing import Callable
 
-from declaredata_fuse.column_abc import Column
+from declaredata_fuse.column.base import Column
 from declaredata_fuse.proto import sds_pb2
 
 FilterFunction = Callable[[Column], bool] | Callable[[Column, int], bool]

@@ -1,6 +1,7 @@
 from itertools import chain
 from typing import Any
-from declaredata_fuse.column import Column, SortedColumn
+from declaredata_fuse.column.base import Column
+from declaredata_fuse.column.sorted import SortedColumn
 from declaredata_fuse.functions import asc, desc
 
 

@@ -1,4 +1,5 @@
-from declaredata_fuse.column import Column, DropColumn
+from declaredata_fuse.column.base import Column
+from declaredata_fuse.column.drop import DropColumn
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
 
 

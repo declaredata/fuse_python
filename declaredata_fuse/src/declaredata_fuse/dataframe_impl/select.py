@@ -1,5 +1,5 @@
 from declaredata_fuse.proto import sds_pb2, sds_pb2_grpc
-from declaredata_fuse.column import SelectColumn, select_column_to_pb
+from declaredata_fuse.column.select import SelectColumn, select_column_to_pb
 
 
 def select_impl(
