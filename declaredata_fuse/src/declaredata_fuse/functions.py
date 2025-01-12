@@ -87,9 +87,7 @@ def when(cond: Condition, value: ValOrCol) -> WhenColumn:
 
     https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.when.html
     """
-    col_name = (
-        f"{col_or_name_to_basic(cond.left).cur_name()} {cond.operator} {cond.right}"
-    )
+    col_name = cond.description()
     return WhenColumn.from_cond(name=col_name, cond=cond, val=value)
 
 

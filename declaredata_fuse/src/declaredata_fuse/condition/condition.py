@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Any, TYPE_CHECKING
 
 from declaredata_fuse.condition.and_condition import AndCondition
+from declaredata_fuse.condition.base import BaseCondition
 from declaredata_fuse.condition.or_condition import OrCondition
 from declaredata_fuse.condition.single import SingleCondition
 
@@ -12,7 +13,7 @@ from declaredata_fuse.proto import sds_pb2
 
 
 @dataclass(frozen=True)
-class Condition:
+class Condition(BaseCondition):
     single: SingleCondition | None
     conj: AndCondition | None
     disj: OrCondition | None
@@ -25,7 +26,21 @@ class Condition:
             disj=None,
         )
 
+    def description(self) -> str:
+        if self.single is not None:
+            return self.single.description()
+        elif self.conj is not None:
+            return self.conj.description()
+        else:
+            assert self.disj is not None
+            return self.disj.description()
+
     def to_pb(self) -> sds_pb2.FilterCondition:
+        """
+        Turn `self` into a Fuse-compatible protobuf payload.
+
+        For internal use only.
+        """
         if self.single:
             return sds_pb2.FilterCondition(single=self.single.to_pb())
         elif self.conj:
